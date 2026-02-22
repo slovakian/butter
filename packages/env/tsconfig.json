@@ -1,0 +1,3 @@
+{
+  "extends": "@butter/config/tsconfig.base.json"
+}
