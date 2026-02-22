@@ -1,57 +1,57 @@
 {
-  "name": "butter",
-  "private": true,
-  "workspaces": {
-    "packages": [
-      "apps/*",
-      "packages/*"
-    ],
-    "catalog": {
-      "dotenv": "^17.2.2",
-      "zod": "^4.1.13",
-      "typescript": "^5",
-      "@types/node": "^22.13.14",
-      "@cloudflare/workers-types": "^4.20251213.0",
-      "hono": "^4.8.2",
-      "@orpc/server": "^1.12.2",
-      "@orpc/openapi": "^1.12.2",
-      "@orpc/zod": "^1.12.2",
-      "better-auth": "^1.4.18",
-      "alchemy": "^0.82.1",
-      "wrangler": "^4.54.0",
-      "@prisma/client": "^7.2.0",
-      "@orpc/client": "^1.12.2",
-      "@polar-sh/better-auth": "^1.6.4"
-    }
-  },
-  "type": "module",
-  "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "check-types": "turbo check-types",
-    "dev:native": "turbo -F native dev",
-    "dev:web": "turbo -F web dev",
-    "dev:server": "turbo -F server dev",
-    "db:push": "turbo -F @butter/db db:push",
-    "db:studio": "turbo -F @butter/db db:studio",
-    "db:generate": "turbo -F @butter/db db:generate",
-    "db:migrate": "turbo -F @butter/db db:migrate",
-    "deploy": "turbo -F @butter/infra deploy",
-    "destroy": "turbo -F @butter/infra destroy",
-    "check": "biome check --write ."
-  },
-  "dependencies": {
-    "@butter/env": "workspace:*",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.2.0",
-    "@butter/config": "workspace:*",
-    "@cloudflare/workers-types": "catalog:",
-    "@types/node": "catalog:",
-    "turbo": "^2.6.3",
-    "typescript": "catalog:"
-  },
-  "packageManager": "bun@1.3.5"
+	"name": "butter",
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"apps/*",
+			"packages/*"
+		],
+		"catalog": {
+			"dotenv": "^17.2.2",
+			"zod": "^4.1.13",
+			"typescript": "^5",
+			"@types/node": "^22.13.14",
+			"@cloudflare/workers-types": "^4.20260228.0",
+			"hono": "^4.8.2",
+			"@orpc/server": "^1.12.2",
+			"@orpc/openapi": "^1.12.2",
+			"@orpc/zod": "^1.12.2",
+			"better-auth": "^1.4.18",
+			"alchemy": "^0.85.1",
+			"wrangler": "^4.67.0",
+			"@prisma/client": "^7.2.0",
+			"@orpc/client": "^1.12.2",
+			"@polar-sh/better-auth": "^1.6.4"
+		}
+	},
+	"type": "module",
+	"scripts": {
+		"dev": "turbo dev",
+		"build": "turbo build",
+		"check-types": "turbo check-types",
+		"dev:native": "turbo -F native dev",
+		"dev:web": "turbo -F web dev",
+		"dev:server": "turbo -F server dev",
+		"db:push": "turbo -F @butter/db db:push",
+		"db:studio": "turbo -F @butter/db db:studio",
+		"db:generate": "turbo -F @butter/db db:generate",
+		"db:migrate": "turbo -F @butter/db db:migrate",
+		"deploy": "turbo -F @butter/infra deploy",
+		"destroy": "turbo -F @butter/infra destroy",
+		"check": "biome check --write ."
+	},
+	"dependencies": {
+		"@butter/env": "workspace:*",
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.0",
+		"@butter/config": "workspace:*",
+		"@cloudflare/workers-types": "catalog:",
+		"@types/node": "catalog:",
+		"turbo": "^2.6.3",
+		"typescript": "catalog:"
+	},
+	"packageManager": "bun@1.3.5"
 }

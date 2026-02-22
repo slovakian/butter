@@ -18,6 +18,8 @@
     "better-auth": "catalog:",
     "dotenv": "catalog:",
     "hono": "catalog:",
+    "hono-party": "^2.0.0",
+    "partyserver": "^0.2.0",
     "zod": "catalog:"
   },
   "devDependencies": {
