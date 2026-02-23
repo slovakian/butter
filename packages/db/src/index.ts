@@ -1,9 +1,13 @@
 import { env } from "@butter/env/server";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "@neondatabase/serverless";
+import { ZenStackClient } from "@zenstackhq/orm";
+import { PostgresDialect } from "@zenstackhq/orm/dialects/postgres";
+import { schema } from "../zenstack/schema/schema";
 
-import { PrismaClient } from "../prisma/generated/client";
-
-const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
-const prisma = new PrismaClient({ adapter });
-
-export default prisma;
+export const db = new ZenStackClient(schema, {
+	dialect: new PostgresDialect({
+		pool: new Pool({
+			connectionString: env.DATABASE_URL,
+		}),
+	}),
+});

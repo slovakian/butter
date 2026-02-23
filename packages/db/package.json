@@ -1,32 +1,30 @@
 {
-  "name": "@butter/db",
-  "type": "module",
-  "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "default": "./src/*.ts"
-    }
-  },
-  "scripts": {
-    "db:push": "prisma db push",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
-  },
-  "dependencies": {
-    "@butter/env": "workspace:*",
-    "@prisma/adapter-pg": "^7.2.0",
-    "@prisma/client": "catalog:",
-    "dotenv": "catalog:",
-    "pg": "^8.17.1",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@butter/config": "workspace:*",
-    "@types/pg": "^8.16.0",
-    "prisma": "^7.2.0",
-    "typescript": "catalog:"
-  }
+	"name": "@butter/db",
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"db:push": "dotenv -e ../../apps/server/.env -- zen db push --schema ./zenstack/schema/base.zmodel",
+		"db:generate": "dotenv -e ../../apps/server/.env -- zen generate --schema ./zenstack/schema/base.zmodel",
+		"db:migrate": "dotenv -e ../../apps/server/.env -- zen migrate dev --schema ./zenstack/schema/base.zmodel"
+	},
+	"dependencies": {
+		"@butter/env": "workspace:*",
+		"@neondatabase/serverless": "^1.0.2",
+		"@zenstackhq/orm": "^3.3.3",
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@butter/config": "workspace:*",
+		"@zenstackhq/cli": "^3.3.3",
+		"dotenv-cli": "catalog:",
+		"typescript": "catalog:"
+	}
 }

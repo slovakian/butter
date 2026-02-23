@@ -1,13 +1,12 @@
-import prisma from "@butter/db";
+import { db } from "@butter/db";
 import { env } from "@butter/env/server";
 import { checkout, polar, portal } from "@polar-sh/better-auth";
+import { zenstackAdapter } from "@zenstackhq/better-auth";
 import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-
 import { polarClient } from "./lib/payments";
 
 export const auth = betterAuth({
-	database: prismaAdapter(prisma, {
+	database: zenstackAdapter(db, {
 		provider: "postgresql",
 	}),
 
