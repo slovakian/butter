@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-
+import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import {
 	Table,
@@ -15,7 +15,7 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { orpc } from "@/utils/orpc";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_auth/")({
 	component: HomeComponent,
 });
 
@@ -166,7 +166,7 @@ function HomeComponent() {
 				setResults((prev) => [`Error: ${error.message}`, ...prev]);
 			},
 		}),
-	);
+	)
 
 	const handleGetSession = async () => {
 		try {
@@ -174,140 +174,143 @@ function HomeComponent() {
 			setResults((prev) => [
 				`Session Result: ${JSON.stringify(result, null, 2)}`,
 				...prev,
-			]);
+			])
 		} catch (error) {
 			setResults((prev) => [
 				`Error fetching session: ${String(error)}`,
 				...prev,
-			]);
+			])
 		}
-	};
+	}
 
 	return (
-		<div className="container mx-auto max-w-4xl space-y-8 px-4 py-8">
-			<pre className="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
+		<>
+			<Header />
+			<div className="container mx-auto max-w-4xl space-y-8 px-4 py-8">
+				<pre className="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
 
-			<div className="grid gap-6 md:grid-cols-2">
-				<section className="rounded-lg border p-4">
-					<h2 className="mb-2 font-medium">API Status</h2>
-					<div className="flex items-center gap-2">
-						<div
-							className={`h-2 w-2 rounded-full ${healthCheck.data ? "bg-green-500" : "bg-red-500"}`}
-						/>
-						<span className="text-muted-foreground text-sm">
-							{healthCheck.isLoading
-								? "Checking..."
-								: healthCheck.data
-									? "Connected"
-									: "Disconnected"}
-						</span>
-					</div>
+				<div className="grid gap-6 md:grid-cols-2">
+					<section className="rounded-lg border p-4">
+						<h2 className="mb-2 font-medium">API Status</h2>
+						<div className="flex items-center gap-2">
+							<div
+								className={`h-2 w-2 rounded-full ${healthCheck.data ? "bg-green-500" : "bg-red-500"}`}
+							/>
+							<span className="text-muted-foreground text-sm">
+								{healthCheck.isLoading
+									? "Checking..."
+									: healthCheck.data
+										? "Connected"
+										: "Disconnected"}
+							</span>
+						</div>
+					</section>
+
+					<section className="rounded-lg border p-4">
+						<div className="mb-4 flex items-center justify-between">
+							<h2 className="font-medium">Test Procedure</h2>
+							<div className="flex gap-2">
+								<Button
+									onClick={() => mutate({ message: "Hello from client!" })}
+									disabled={isPending}
+									size="sm"
+								>
+									{isPending ? "Testing..." : "Run Test"}
+								</Button>
+								<Button onClick={handleGetSession} size="sm" variant="outline">
+									Get Session
+								</Button>
+							</div>
+						</div>
+
+						{results.length > 0 && (
+							<div className="mt-4">
+								<pre className="mt-2 max-h-60 overflow-auto rounded-md bg-muted p-4 font-mono text-xs">
+									{results.join("\n\n")}
+								</pre>
+							</div>
+						)}
+					</section>
+				</div>
+
+				<section className="rounded-lg border p-6">
+					<h2 className="mb-4 font-semibold text-xl">Top Channels</h2>
+					<Table>
+						<TableCaption>A list of the top active channels.</TableCaption>
+						<TableHeader>
+							<TableRow>
+								<TableHead className="w-[150px]">Name</TableHead>
+								<TableHead className="text-right">Active</TableHead>
+								<TableHead className="text-right">Messages</TableHead>
+								<TableHead>Last Message</TableHead>
+								<TableHead>Space</TableHead>
+								<TableHead className="text-right">Last Activity</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
+							{topChannels.map((channel) => (
+								<TableRow key={channel.name}>
+									{/* Removed the # prefix so the emoji is the first thing visible */}
+									<TableCell className="whitespace-nowrap font-medium">
+										{channel.name}
+									</TableCell>
+									<TableCell className="text-right">{channel.active}</TableCell>
+									<TableCell className="text-right">
+										{channel.messages.toLocaleString()}
+									</TableCell>
+									<TableCell
+										className="max-w-[200px] truncate text-muted-foreground italic"
+										title={channel.lastMessage}
+									>
+										"{channel.lastMessage}"
+									</TableCell>
+									<TableCell>{channel.space}</TableCell>
+									<TableCell className="text-right">
+										{channel.lastActivity}
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
 				</section>
 
-				<section className="rounded-lg border p-4">
-					<div className="mb-4 flex items-center justify-between">
-						<h2 className="font-medium">Test Procedure</h2>
-						<div className="flex gap-2">
-							<Button
-								onClick={() => mutate({ message: "Hello from client!" })}
-								disabled={isPending}
-								size="sm"
-							>
-								{isPending ? "Testing..." : "Run Test"}
-							</Button>
-							<Button onClick={handleGetSession} size="sm" variant="outline">
-								Get Session
-							</Button>
-						</div>
-					</div>
-
-					{results.length > 0 && (
-						<div className="mt-4">
-							<pre className="mt-2 max-h-60 overflow-auto rounded-md bg-muted p-4 font-mono text-xs">
-								{results.join("\n\n")}
-							</pre>
-						</div>
-					)}
+				<section className="rounded-lg border p-6">
+					<h2 className="mb-4 font-semibold text-xl">Spaces</h2>
+					<Table>
+						<TableCaption>Overview of all spaces.</TableCaption>
+						<TableHeader>
+							<TableRow>
+								<TableHead>Name</TableHead>
+								<TableHead className="text-right">Members</TableHead>
+								<TableHead className="text-right">Messages</TableHead>
+								<TableHead>Status</TableHead>
+								<TableHead className="text-right">Last Activity</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
+							{spaces.map((space) => (
+								<TableRow key={space.name}>
+									<TableCell className="font-medium">{space.name}</TableCell>
+									<TableCell className="text-right">{space.members}</TableCell>
+									<TableCell className="text-right">
+										{space.messages.toLocaleString()}
+									</TableCell>
+									<TableCell>
+										<span
+											className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium text-xs ${space.status === "Public" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`}
+										>
+											{space.status}
+										</span>
+									</TableCell>
+									<TableCell className="text-right">
+										{space.lastActivity}
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
 				</section>
 			</div>
-
-			<section className="rounded-lg border p-6">
-				<h2 className="mb-4 font-semibold text-xl">Top Channels</h2>
-				<Table>
-					<TableCaption>A list of the top active channels.</TableCaption>
-					<TableHeader>
-						<TableRow>
-							<TableHead className="w-[150px]">Name</TableHead>
-							<TableHead className="text-right">Active</TableHead>
-							<TableHead className="text-right">Messages</TableHead>
-							<TableHead>Last Message</TableHead>
-							<TableHead>Space</TableHead>
-							<TableHead className="text-right">Last Activity</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{topChannels.map((channel) => (
-							<TableRow key={channel.name}>
-								{/* Removed the # prefix so the emoji is the first thing visible */}
-								<TableCell className="whitespace-nowrap font-medium">
-									{channel.name}
-								</TableCell>
-								<TableCell className="text-right">{channel.active}</TableCell>
-								<TableCell className="text-right">
-									{channel.messages.toLocaleString()}
-								</TableCell>
-								<TableCell
-									className="max-w-[200px] truncate text-muted-foreground italic"
-									title={channel.lastMessage}
-								>
-									"{channel.lastMessage}"
-								</TableCell>
-								<TableCell>{channel.space}</TableCell>
-								<TableCell className="text-right">
-									{channel.lastActivity}
-								</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</section>
-
-			<section className="rounded-lg border p-6">
-				<h2 className="mb-4 font-semibold text-xl">Spaces</h2>
-				<Table>
-					<TableCaption>Overview of all spaces.</TableCaption>
-					<TableHeader>
-						<TableRow>
-							<TableHead>Name</TableHead>
-							<TableHead className="text-right">Members</TableHead>
-							<TableHead className="text-right">Messages</TableHead>
-							<TableHead>Status</TableHead>
-							<TableHead className="text-right">Last Activity</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{spaces.map((space) => (
-							<TableRow key={space.name}>
-								<TableCell className="font-medium">{space.name}</TableCell>
-								<TableCell className="text-right">{space.members}</TableCell>
-								<TableCell className="text-right">
-									{space.messages.toLocaleString()}
-								</TableCell>
-								<TableCell>
-									<span
-										className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium text-xs ${space.status === "Public" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`}
-									>
-										{space.status}
-									</span>
-								</TableCell>
-								<TableCell className="text-right">
-									{space.lastActivity}
-								</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</section>
-		</div>
-	);
+		</>
+	)
 }

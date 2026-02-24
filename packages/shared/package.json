@@ -1,0 +1,29 @@
+{
+	"name": "@butter/shared",
+	"version": "0.1.0",
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./themes/validation": {
+			"default": "./src/themes/validation.ts"
+		},
+		"./themes/parsers": {
+			"default": "./src/themes/parsers.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"clean": "rm -rf .turbo node_modules dist"
+	},
+	"dependencies": {
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@butter/config": "workspace:*",
+		"typescript": "catalog:"
+	}
+}

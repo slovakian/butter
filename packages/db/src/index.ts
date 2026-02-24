@@ -2,7 +2,7 @@ import { env } from "@butter/env/server";
 import { Pool } from "@neondatabase/serverless";
 import { ZenStackClient } from "@zenstackhq/orm";
 import { PostgresDialect } from "@zenstackhq/orm/dialects/postgres";
-import { schema } from "../zenstack/schema/schema";
+import { schema } from "../zenstack/generated/schema";
 
 export const db = new ZenStackClient(schema, {
 	dialect: new PostgresDialect({

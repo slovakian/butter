@@ -1,0 +1,43 @@
+type ThemeVariables {
+  background String
+  foreground String
+  card String
+  cardForeground String
+  popover String
+  popoverForeground String
+  primary String
+  primaryForeground String
+  secondary String
+  secondaryForeground String
+  muted String
+  mutedForeground String
+  accent String
+  accentForeground String
+  destructive String
+  destructiveForeground String
+  border String
+  input String
+  ring String
+  radius String
+}
+
+model Theme {
+  id Int @id @default(0)
+  name String
+  slug String @unique
+  
+  // Defines if this specific theme is dark. Determines if we apply the `.dark` class to HTML.
+  isDark Boolean @default(false)
+  
+  // ZenStack typed JSON column
+  variables ThemeVariables @json
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+//   creatorId String
+//   creator User @relation("ThemeCreator", fields: [creatorId], references: [id])
+  
+//   usersUsingAsGlobal User[] @relation("UserGlobalTheme")
+//   spacesUsing Space[] @relation("SpaceTheme")
+}

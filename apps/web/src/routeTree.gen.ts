@@ -9,33 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TodosRouteImport } from './routes/todos'
 import { Route as SuccessRouteImport } from './routes/success'
-import { Route as SidebarRouteImport } from './routes/sidebar'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as DesignRouteImport } from './routes/design'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ChatRouteImport } from './routes/chat'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as AuthIndexRouteImport } from './routes/_auth/index'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AuthSpaceIdRouteRouteImport } from './routes/_auth/$spaceId/route'
+import { Route as AuthSpaceIdChannelidIndexRouteImport } from './routes/_auth/$spaceId/$channelid/index'
+import { Route as AuthThemesEditThemeIdRouteImport } from './routes/_auth/themes/edit/$themeId'
 
-const TodosRoute = TodosRouteImport.update({
-  id: '/todos',
-  path: '/todos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
   path: '/success',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SidebarRoute = SidebarRouteImport.update({
-  id: '/sidebar',
-  path: '/sidebar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignRoute = DesignRouteImport.update({
@@ -53,42 +40,71 @@ const ChatRoute = ChatRouteImport.update({
   path: '/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthSpaceIdRouteRoute = AuthSpaceIdRouteRouteImport.update({
+  id: '/$spaceId',
+  path: '/$spaceId',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthSpaceIdChannelidIndexRoute =
+  AuthSpaceIdChannelidIndexRouteImport.update({
+    id: '/$channelid/',
+    path: '/$channelid/',
+    getParentRoute: () => AuthSpaceIdRouteRoute,
+  } as any)
+const AuthThemesEditThemeIdRoute = AuthThemesEditThemeIdRouteImport.update({
+  id: '/themes/edit/$themeId',
+  path: '/themes/edit/$themeId',
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthIndexRoute
   '/chat': typeof ChatRoute
   '/dashboard': typeof DashboardRoute
   '/design': typeof DesignRoute
-  '/login': typeof LoginRoute
-  '/sidebar': typeof SidebarRoute
   '/success': typeof SuccessRoute
-  '/todos': typeof TodosRoute
+  '/$spaceId': typeof AuthSpaceIdRouteRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/themes/edit/$themeId': typeof AuthThemesEditThemeIdRoute
+  '/$spaceId/$channelid/': typeof AuthSpaceIdChannelidIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/dashboard': typeof DashboardRoute
   '/design': typeof DesignRoute
-  '/login': typeof LoginRoute
-  '/sidebar': typeof SidebarRoute
   '/success': typeof SuccessRoute
-  '/todos': typeof TodosRoute
+  '/$spaceId': typeof AuthSpaceIdRouteRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/': typeof AuthIndexRoute
+  '/themes/edit/$themeId': typeof AuthThemesEditThemeIdRoute
+  '/$spaceId/$channelid': typeof AuthSpaceIdChannelidIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
   '/chat': typeof ChatRoute
   '/dashboard': typeof DashboardRoute
   '/design': typeof DesignRoute
-  '/login': typeof LoginRoute
-  '/sidebar': typeof SidebarRoute
   '/success': typeof SuccessRoute
-  '/todos': typeof TodosRoute
+  '/_auth/$spaceId': typeof AuthSpaceIdRouteRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/': typeof AuthIndexRoute
+  '/_auth/themes/edit/$themeId': typeof AuthThemesEditThemeIdRoute
+  '/_auth/$spaceId/$channelid/': typeof AuthSpaceIdChannelidIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,71 +113,51 @@ export interface FileRouteTypes {
     | '/chat'
     | '/dashboard'
     | '/design'
-    | '/login'
-    | '/sidebar'
     | '/success'
-    | '/todos'
+    | '/$spaceId'
+    | '/login'
+    | '/themes/edit/$themeId'
+    | '/$spaceId/$channelid/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/chat'
     | '/dashboard'
     | '/design'
-    | '/login'
-    | '/sidebar'
     | '/success'
-    | '/todos'
+    | '/$spaceId'
+    | '/login'
+    | '/'
+    | '/themes/edit/$themeId'
+    | '/$spaceId/$channelid'
   id:
     | '__root__'
-    | '/'
+    | '/_auth'
     | '/chat'
     | '/dashboard'
     | '/design'
-    | '/login'
-    | '/sidebar'
     | '/success'
-    | '/todos'
+    | '/_auth/$spaceId'
+    | '/_auth/login'
+    | '/_auth/'
+    | '/_auth/themes/edit/$themeId'
+    | '/_auth/$spaceId/$channelid/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   ChatRoute: typeof ChatRoute
   DashboardRoute: typeof DashboardRoute
   DesignRoute: typeof DesignRoute
-  LoginRoute: typeof LoginRoute
-  SidebarRoute: typeof SidebarRoute
   SuccessRoute: typeof SuccessRoute
-  TodosRoute: typeof TodosRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/todos': {
-      id: '/todos'
-      path: '/todos'
-      fullPath: '/todos'
-      preLoaderRoute: typeof TodosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/success': {
       id: '/success'
       path: '/success'
       fullPath: '/success'
       preLoaderRoute: typeof SuccessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sidebar': {
-      id: '/sidebar'
-      path: '/sidebar'
-      fullPath: '/sidebar'
-      preLoaderRoute: typeof SidebarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/design': {
@@ -185,25 +181,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/': {
+      id: '/_auth/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/$spaceId': {
+      id: '/_auth/$spaceId'
+      path: '/$spaceId'
+      fullPath: '/$spaceId'
+      preLoaderRoute: typeof AuthSpaceIdRouteRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/$spaceId/$channelid/': {
+      id: '/_auth/$spaceId/$channelid/'
+      path: '/$channelid'
+      fullPath: '/$spaceId/$channelid/'
+      preLoaderRoute: typeof AuthSpaceIdChannelidIndexRouteImport
+      parentRoute: typeof AuthSpaceIdRouteRoute
+    }
+    '/_auth/themes/edit/$themeId': {
+      id: '/_auth/themes/edit/$themeId'
+      path: '/themes/edit/$themeId'
+      fullPath: '/themes/edit/$themeId'
+      preLoaderRoute: typeof AuthThemesEditThemeIdRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
   }
 }
 
+interface AuthSpaceIdRouteRouteChildren {
+  AuthSpaceIdChannelidIndexRoute: typeof AuthSpaceIdChannelidIndexRoute
+}
+
+const AuthSpaceIdRouteRouteChildren: AuthSpaceIdRouteRouteChildren = {
+  AuthSpaceIdChannelidIndexRoute: AuthSpaceIdChannelidIndexRoute,
+}
+
+const AuthSpaceIdRouteRouteWithChildren =
+  AuthSpaceIdRouteRoute._addFileChildren(AuthSpaceIdRouteRouteChildren)
+
+interface AuthRouteRouteChildren {
+  AuthSpaceIdRouteRoute: typeof AuthSpaceIdRouteRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthIndexRoute: typeof AuthIndexRoute
+  AuthThemesEditThemeIdRoute: typeof AuthThemesEditThemeIdRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthSpaceIdRouteRoute: AuthSpaceIdRouteRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthIndexRoute: AuthIndexRoute,
+  AuthThemesEditThemeIdRoute: AuthThemesEditThemeIdRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
   ChatRoute: ChatRoute,
   DashboardRoute: DashboardRoute,
   DesignRoute: DesignRoute,
-  LoginRoute: LoginRoute,
-  SidebarRoute: SidebarRoute,
   SuccessRoute: SuccessRoute,
-  TodosRoute: TodosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
