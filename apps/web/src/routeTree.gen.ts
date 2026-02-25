@@ -17,8 +17,8 @@ import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as AuthIndexRouteImport } from './routes/_auth/index'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AuthSpaceIdRouteRouteImport } from './routes/_auth/$spaceId/route'
+import { Route as AuthThemesEditIndexRouteImport } from './routes/_auth/themes/edit/index'
 import { Route as AuthSpaceIdChannelidIndexRouteImport } from './routes/_auth/$spaceId/$channelid/index'
-import { Route as AuthThemesEditThemeIdRouteImport } from './routes/_auth/themes/edit/$themeId'
 
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
@@ -59,17 +59,17 @@ const AuthSpaceIdRouteRoute = AuthSpaceIdRouteRouteImport.update({
   path: '/$spaceId',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const AuthThemesEditIndexRoute = AuthThemesEditIndexRouteImport.update({
+  id: '/themes/edit/',
+  path: '/themes/edit/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 const AuthSpaceIdChannelidIndexRoute =
   AuthSpaceIdChannelidIndexRouteImport.update({
     id: '/$channelid/',
     path: '/$channelid/',
     getParentRoute: () => AuthSpaceIdRouteRoute,
   } as any)
-const AuthThemesEditThemeIdRoute = AuthThemesEditThemeIdRouteImport.update({
-  id: '/themes/edit/$themeId',
-  path: '/themes/edit/$themeId',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthIndexRoute
@@ -79,8 +79,8 @@ export interface FileRoutesByFullPath {
   '/success': typeof SuccessRoute
   '/$spaceId': typeof AuthSpaceIdRouteRouteWithChildren
   '/login': typeof AuthLoginRoute
-  '/themes/edit/$themeId': typeof AuthThemesEditThemeIdRoute
   '/$spaceId/$channelid/': typeof AuthSpaceIdChannelidIndexRoute
+  '/themes/edit/': typeof AuthThemesEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/chat': typeof ChatRoute
@@ -90,8 +90,8 @@ export interface FileRoutesByTo {
   '/$spaceId': typeof AuthSpaceIdRouteRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/': typeof AuthIndexRoute
-  '/themes/edit/$themeId': typeof AuthThemesEditThemeIdRoute
   '/$spaceId/$channelid': typeof AuthSpaceIdChannelidIndexRoute
+  '/themes/edit': typeof AuthThemesEditIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -103,8 +103,8 @@ export interface FileRoutesById {
   '/_auth/$spaceId': typeof AuthSpaceIdRouteRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/': typeof AuthIndexRoute
-  '/_auth/themes/edit/$themeId': typeof AuthThemesEditThemeIdRoute
   '/_auth/$spaceId/$channelid/': typeof AuthSpaceIdChannelidIndexRoute
+  '/_auth/themes/edit/': typeof AuthThemesEditIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -116,8 +116,8 @@ export interface FileRouteTypes {
     | '/success'
     | '/$spaceId'
     | '/login'
-    | '/themes/edit/$themeId'
     | '/$spaceId/$channelid/'
+    | '/themes/edit/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/chat'
@@ -127,8 +127,8 @@ export interface FileRouteTypes {
     | '/$spaceId'
     | '/login'
     | '/'
-    | '/themes/edit/$themeId'
     | '/$spaceId/$channelid'
+    | '/themes/edit'
   id:
     | '__root__'
     | '/_auth'
@@ -139,8 +139,8 @@ export interface FileRouteTypes {
     | '/_auth/$spaceId'
     | '/_auth/login'
     | '/_auth/'
-    | '/_auth/themes/edit/$themeId'
     | '/_auth/$spaceId/$channelid/'
+    | '/_auth/themes/edit/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -209,19 +209,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSpaceIdRouteRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/_auth/themes/edit/': {
+      id: '/_auth/themes/edit/'
+      path: '/themes/edit'
+      fullPath: '/themes/edit/'
+      preLoaderRoute: typeof AuthThemesEditIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
     '/_auth/$spaceId/$channelid/': {
       id: '/_auth/$spaceId/$channelid/'
       path: '/$channelid'
       fullPath: '/$spaceId/$channelid/'
       preLoaderRoute: typeof AuthSpaceIdChannelidIndexRouteImport
       parentRoute: typeof AuthSpaceIdRouteRoute
-    }
-    '/_auth/themes/edit/$themeId': {
-      id: '/_auth/themes/edit/$themeId'
-      path: '/themes/edit/$themeId'
-      fullPath: '/themes/edit/$themeId'
-      preLoaderRoute: typeof AuthThemesEditThemeIdRouteImport
-      parentRoute: typeof AuthRouteRoute
     }
   }
 }
@@ -241,14 +241,14 @@ interface AuthRouteRouteChildren {
   AuthSpaceIdRouteRoute: typeof AuthSpaceIdRouteRouteWithChildren
   AuthLoginRoute: typeof AuthLoginRoute
   AuthIndexRoute: typeof AuthIndexRoute
-  AuthThemesEditThemeIdRoute: typeof AuthThemesEditThemeIdRoute
+  AuthThemesEditIndexRoute: typeof AuthThemesEditIndexRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthSpaceIdRouteRoute: AuthSpaceIdRouteRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
   AuthIndexRoute: AuthIndexRoute,
-  AuthThemesEditThemeIdRoute: AuthThemesEditThemeIdRoute,
+  AuthThemesEditIndexRoute: AuthThemesEditIndexRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(

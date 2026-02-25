@@ -2,8 +2,8 @@ import { themeVariablesSchema } from "@butter/shared/themes/validation";
 import { css } from "@codemirror/lang-css";
 import CodeMirror from "@uiw/react-codemirror";
 import { useEffect, useState } from "react";
+import { useThemeEditor } from "@/features/themes/editor/provider";
 import { formatThemeToCss, parseCssToTheme } from "@/features/themes/parser";
-import { useThemeEditorStore } from "@/features/themes/store/useThemeEditorStore";
 
 interface CssEditorProps {
 	theme: React.ComponentProps<typeof CodeMirror>["theme"];
@@ -11,7 +11,7 @@ interface CssEditorProps {
 }
 
 export function CssEditor({ theme, isActive }: CssEditorProps) {
-	const { variables, setVariables } = useThemeEditorStore();
+	const { variables, setVariables } = useThemeEditor((state) => state);
 	const [code, setCode] = useState(() => formatThemeToCss(variables));
 
 	useEffect(() => {

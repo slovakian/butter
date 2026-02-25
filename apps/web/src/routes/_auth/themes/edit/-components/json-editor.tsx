@@ -4,7 +4,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { jsonSchema } from "codemirror-json-schema";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { useThemeEditorStore } from "@/features/themes/store/useThemeEditorStore";
+import { useThemeEditor } from "@/features/themes/editor/provider";
 
 interface JsonEditorProps {
 	theme: React.ComponentProps<typeof CodeMirror>["theme"];
@@ -12,7 +12,7 @@ interface JsonEditorProps {
 }
 
 export function JsonEditor({ theme, isActive }: JsonEditorProps) {
-	const { variables, setVariables } = useThemeEditorStore();
+	const { variables, setVariables } = useThemeEditor((state) => state);
 	const [code, setCode] = useState(() => JSON.stringify(variables, null, 2));
 
 	// Sync from store when not active
