@@ -1,6 +1,7 @@
-import { createContext } from "@butter/api/context";
+import { type Context, createContext } from "@butter/api/context";
 import { appRouter } from "@butter/api/routers/index";
-import { auth } from "@butter/auth";
+import { type Auth, createAuth } from "@butter/auth";
+import { createDb, type DbClient } from "@butter/db";
 import { env } from "@butter/env/server";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
@@ -15,9 +16,15 @@ import { Server } from "partyserver";
 
 export class Channel extends Server {}
 
-const app = new Hono();
+const app = new Hono<{
+	Variables: {
+		db: DbClient;
+		auth: Auth;
+	};
+}>();
 
 app.use(logger());
+
 app.use(
 	"/*",
 	cors({
@@ -28,7 +35,23 @@ app.use(
 	}),
 );
 
-app.on(["POST", "GET"], "/api/auth/*", (c) => auth.handler(c.req.raw));
+app.use("*", async (c, next) => {
+	const { db, pool } = createDb();
+	const auth = createAuth(db);
+	c.set("db", db);
+	c.set("auth", auth);
+
+	try {
+		await next();
+	} finally {
+		await pool.end();
+	}
+});
+
+app.on(["POST", "GET"], "/api/auth/*", (c) => {
+	const auth = c.get("auth");
+	return auth.handler(c.req.raw);
+});
 
 export const apiHandler = new OpenAPIHandler(appRouter, {
 	plugins: [
@@ -52,7 +75,11 @@ export const rpcHandler = new RPCHandler(appRouter, {
 });
 
 app.use("/*", async (c, next) => {
-	const context = await createContext({ context: c });
+	const context = await createContext({
+		req: c.req.raw,
+		db: c.get("db"),
+		auth: c.get("auth"),
+	});
 
 	const rpcResult = await rpcHandler.handle(c.req.raw, {
 		prefix: "/rpc",

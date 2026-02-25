@@ -1,18 +1,36 @@
-import { auth } from "@butter/auth";
-import type { Context as HonoContext } from "hono";
+import type { Auth, Session } from "@butter/auth";
+import type { DbClient } from "@butter/db";
 
 export type CreateContextOptions = {
-	context: HonoContext;
+	req: Request;
+	db: DbClient;
+	auth: Auth;
 };
 
-export async function createContext({ context }: CreateContextOptions) {
-	// const session = await auth.api.getSession({
-	// 	headers: context.req.raw.headers,
-	// });
-	// return {
-	// 	session,
-	// };
-	return {};
+export type CreateContextOutput = {
+	req: Request;
+	db: DbClient;
+	auth: {
+		client: Auth;
+		session: Session | null;
+	};
+};
+
+export async function createContext({
+	req,
+	db,
+	auth,
+}: CreateContextOptions): Promise<CreateContextOutput> {
+	return {
+		req,
+		db,
+		auth: {
+			client: auth,
+			session: await auth.api.getSession({
+				headers: req.headers,
+			}),
+		},
+	};
 }
 
 export type Context = Awaited<ReturnType<typeof createContext>>;

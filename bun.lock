@@ -132,7 +132,6 @@
       },
       "devDependencies": {
         "@butter/config": "workspace:*",
-        "hono": "catalog:",
         "typescript": "catalog:",
       },
     },
