@@ -1,4 +1,4 @@
-import { type Context, createContext } from "@butter/api/context";
+import { createContext } from "@butter/api/context";
 import { appRouter } from "@butter/api/routers/index";
 import { type Auth, createAuth } from "@butter/auth";
 import { createDb, type DbClient } from "@butter/db";
@@ -106,7 +106,7 @@ app.use(
 	"*",
 	partyserverMiddleware({
 		options: {
-			prefix: "/party", // Handles /party/* routes only
+			prefix: "/api/channels", // Handles /api/channels/* routes only
 		},
 	}),
 );

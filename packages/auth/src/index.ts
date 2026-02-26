@@ -1,9 +1,12 @@
 import type { DbClient } from "@butter/db";
 import { env } from "@butter/env/server";
-import { checkout, polar, portal } from "@polar-sh/better-auth";
 import { zenstackAdapter } from "@zenstackhq/better-auth";
 import { betterAuth } from "better-auth";
-import { polarClient } from "./lib/payments";
+import { adminPlugin } from "./lib/admin/plugin";
+import { organizationPlugin } from "./lib/organization/plugin";
+// TODO: implement payments
+// import { polarClient } from "./lib/payments";
+// import { checkout, polar, portal } from "@polar-sh/better-auth";
 
 export const createAuth = (db: DbClient) =>
 	betterAuth({
@@ -16,12 +19,16 @@ export const createAuth = (db: DbClient) =>
 			enabled: true,
 		},
 		advanced: {
+			database: {
+				generateId: "serial",
+			},
 			defaultCookieAttributes: {
 				sameSite: "none",
 				secure: true,
 				httpOnly: true,
 			},
 		},
+		plugins: [adminPlugin, organizationPlugin],
 		// plugins: [
 		//   polar({
 		//     client: polarClient,

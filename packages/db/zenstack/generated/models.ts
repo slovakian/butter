@@ -6,9 +6,16 @@
 /* eslint-disable */
 
 import { type SchemaType as $Schema } from "./schema";
-import { type ModelResult as $ModelResult } from "@zenstackhq/orm";
+import { type ModelResult as $ModelResult, type TypeDefResult as $TypeDefResult } from "@zenstackhq/orm";
 export type User = $ModelResult<$Schema, "User">;
 export type Session = $ModelResult<$Schema, "Session">;
 export type Account = $ModelResult<$Schema, "Account">;
 export type Verification = $ModelResult<$Schema, "Verification">;
-export type Todo = $ModelResult<$Schema, "Todo">;
+export type Board = $ModelResult<$Schema, "Board">;
+export type Member = $ModelResult<$Schema, "Member">;
+export type Invitation = $ModelResult<$Schema, "Invitation">;
+export type Theme = $ModelResult<$Schema, "Theme">;
+export type Activity = $ModelResult<$Schema, "Activity">;
+export type Channel = $ModelResult<$Schema, "Channel">;
+export type Message = $ModelResult<$Schema, "Message">;
+export type ThemeVariables = $TypeDefResult<$Schema, "ThemeVariables">;

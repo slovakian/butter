@@ -1,0 +1,21 @@
+import "./board"
+import "./message.zmodel"
+
+model Activity {
+    id Int @id @default(autoincrement())
+    name String
+
+    boardId Int
+    board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+    type String
+    @@delegate(type)
+
+    @@map("activities")
+}
+
+model Channel extends Activity{
+    messages Message[]
+
+    @@map("channels")
+}

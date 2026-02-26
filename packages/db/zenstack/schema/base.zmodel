@@ -1,5 +1,8 @@
 import "./auth"
-import "./todo"
+import "./theme"
+import "./board/activity"
+import "./board/board"
+import "./board/message"
 
 datasource db {
   provider = "postgresql"

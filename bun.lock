@@ -100,6 +100,7 @@
         "zustand": "^5.0.11",
       },
       "devDependencies": {
+        "@butter/auth": "workspace:*",
         "@butter/config": "workspace:*",
         "@cloudflare/vite-plugin": "^1.17.1",
         "@tanstack/react-router-devtools": "^1.141.1",

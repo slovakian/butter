@@ -20,3 +20,13 @@ export const createDb = () => {
 
 export type DbInstance = ReturnType<typeof createDb>;
 export type DbClient = DbInstance["db"];
+
+const pool = new Pool({
+	connectionString: env.DATABASE_URL,
+});
+
+export const tempDb = new ZenStackClient(schema, {
+	dialect: new PostgresDialect({
+		pool,
+	}),
+});

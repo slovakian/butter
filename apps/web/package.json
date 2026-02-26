@@ -60,6 +60,7 @@
 	},
 	"devDependencies": {
 		"@butter/config": "workspace:*",
+		"@butter/auth": "workspace:*",
 		"@cloudflare/vite-plugin": "^1.17.1",
 		"@tanstack/react-router-devtools": "^1.141.1",
 		"@testing-library/dom": "^10.4.0",

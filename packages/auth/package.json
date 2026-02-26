@@ -9,7 +9,9 @@
 			"default": "./src/*.ts"
 		}
 	},
-	"scripts": {},
+	"scripts": {
+		"auth:generate": "bun x @better-auth/cli@latest generate --config ./src/lib/auth.ts --output ./src/_schema"
+	},
 	"dependencies": {
 		"@butter/db": "workspace:*",
 		"@butter/env": "workspace:*",

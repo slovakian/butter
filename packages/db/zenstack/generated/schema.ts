@@ -16,9 +16,10 @@ export class SchemaType implements SchemaDef {
             fields: {
                 id: {
                     name: "id",
-                    type: "String",
+                    type: "Int",
                     id: true,
-                    attributes: [{ name: "@id" }]
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
                 },
                 name: {
                     name: "name",
@@ -26,7 +27,9 @@ export class SchemaType implements SchemaDef {
                 },
                 email: {
                     name: "email",
-                    type: "String"
+                    type: "String",
+                    unique: true,
+                    attributes: [{ name: "@unique" }]
                 },
                 emailVerified: {
                     name: "emailVerified",
@@ -49,7 +52,30 @@ export class SchemaType implements SchemaDef {
                     name: "updatedAt",
                     type: "DateTime",
                     updatedAt: true,
-                    attributes: [{ name: "@updatedAt" }]
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.call("now") }] }, { name: "@updatedAt" }],
+                    default: ExpressionUtils.call("now")
+                },
+                role: {
+                    name: "role",
+                    type: "String",
+                    optional: true
+                },
+                banned: {
+                    name: "banned",
+                    type: "Boolean",
+                    optional: true,
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.literal(false) }] }],
+                    default: false
+                },
+                banReason: {
+                    name: "banReason",
+                    type: "String",
+                    optional: true
+                },
+                banExpires: {
+                    name: "banExpires",
+                    type: "DateTime",
+                    optional: true
                 },
                 sessions: {
                     name: "sessions",
@@ -62,15 +88,46 @@ export class SchemaType implements SchemaDef {
                     type: "Account",
                     array: true,
                     relation: { opposite: "user" }
+                },
+                members: {
+                    name: "members",
+                    type: "Member",
+                    array: true,
+                    relation: { opposite: "user" }
+                },
+                invitations: {
+                    name: "invitations",
+                    type: "Invitation",
+                    array: true,
+                    relation: { opposite: "user" }
+                },
+                themes: {
+                    name: "themes",
+                    type: "Theme",
+                    array: true,
+                    attributes: [{ name: "@relation", args: [{ name: "name", value: ExpressionUtils.literal("ThemeCreator") }] }],
+                    relation: { opposite: "creator", name: "ThemeCreator" }
+                },
+                themesUsing: {
+                    name: "themesUsing",
+                    type: "Theme",
+                    array: true,
+                    attributes: [{ name: "@relation", args: [{ name: "name", value: ExpressionUtils.literal("UserTheme") }] }],
+                    relation: { opposite: "usersUsing", name: "UserTheme" }
+                },
+                messages: {
+                    name: "messages",
+                    type: "Message",
+                    array: true,
+                    relation: { opposite: "user" }
                 }
             },
             attributes: [
-                { name: "@@unique", args: [{ name: "fields", value: ExpressionUtils.array("String", [ExpressionUtils.field("email")]) }] },
                 { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("user") }] }
             ],
             idFields: ["id"],
             uniqueFields: {
-                id: { type: "String" },
+                id: { type: "Int" },
                 email: { type: "String" }
             }
         },
@@ -79,9 +136,10 @@ export class SchemaType implements SchemaDef {
             fields: {
                 id: {
                     name: "id",
-                    type: "String",
+                    type: "Int",
                     id: true,
-                    attributes: [{ name: "@id" }]
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
                 },
                 expiresAt: {
                     name: "expiresAt",
@@ -89,7 +147,9 @@ export class SchemaType implements SchemaDef {
                 },
                 token: {
                     name: "token",
-                    type: "String"
+                    type: "String",
+                    unique: true,
+                    attributes: [{ name: "@unique" }]
                 },
                 createdAt: {
                     name: "createdAt",
@@ -115,7 +175,7 @@ export class SchemaType implements SchemaDef {
                 },
                 userId: {
                     name: "userId",
-                    type: "String",
+                    type: "Int",
                     foreignKeyFor: [
                         "user"
                     ]
@@ -123,18 +183,26 @@ export class SchemaType implements SchemaDef {
                 user: {
                     name: "user",
                     type: "User",
-                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("String", [ExpressionUtils.field("userId")]) }, { name: "references", value: ExpressionUtils.array("String", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("userId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
                     relation: { opposite: "sessions", fields: ["userId"], references: ["id"], onDelete: "Cascade" }
+                },
+                activeOrganizationId: {
+                    name: "activeOrganizationId",
+                    type: "String",
+                    optional: true
+                },
+                impersonatedBy: {
+                    name: "impersonatedBy",
+                    type: "String",
+                    optional: true
                 }
             },
             attributes: [
-                { name: "@@unique", args: [{ name: "fields", value: ExpressionUtils.array("String", [ExpressionUtils.field("token")]) }] },
-                { name: "@@index", args: [{ name: "fields", value: ExpressionUtils.array("String", [ExpressionUtils.field("userId")]) }] },
                 { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("session") }] }
             ],
             idFields: ["id"],
             uniqueFields: {
-                id: { type: "String" },
+                id: { type: "Int" },
                 token: { type: "String" }
             }
         },
@@ -143,9 +211,10 @@ export class SchemaType implements SchemaDef {
             fields: {
                 id: {
                     name: "id",
-                    type: "String",
+                    type: "Int",
                     id: true,
-                    attributes: [{ name: "@id" }]
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
                 },
                 accountId: {
                     name: "accountId",
@@ -157,7 +226,7 @@ export class SchemaType implements SchemaDef {
                 },
                 userId: {
                     name: "userId",
-                    type: "String",
+                    type: "Int",
                     foreignKeyFor: [
                         "user"
                     ]
@@ -165,7 +234,7 @@ export class SchemaType implements SchemaDef {
                 user: {
                     name: "user",
                     type: "User",
-                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("String", [ExpressionUtils.field("userId")]) }, { name: "references", value: ExpressionUtils.array("String", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("userId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
                     relation: { opposite: "accounts", fields: ["userId"], references: ["id"], onDelete: "Cascade" }
                 },
                 accessToken: {
@@ -217,12 +286,11 @@ export class SchemaType implements SchemaDef {
                 }
             },
             attributes: [
-                { name: "@@index", args: [{ name: "fields", value: ExpressionUtils.array("String", [ExpressionUtils.field("userId")]) }] },
                 { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("account") }] }
             ],
             idFields: ["id"],
             uniqueFields: {
-                id: { type: "String" }
+                id: { type: "Int" }
             }
         },
         Verification: {
@@ -230,9 +298,10 @@ export class SchemaType implements SchemaDef {
             fields: {
                 id: {
                     name: "id",
-                    type: "String",
+                    type: "Int",
                     id: true,
-                    attributes: [{ name: "@id" }]
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
                 },
                 identifier: {
                     name: "identifier",
@@ -256,20 +325,20 @@ export class SchemaType implements SchemaDef {
                     name: "updatedAt",
                     type: "DateTime",
                     updatedAt: true,
-                    attributes: [{ name: "@updatedAt" }]
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.call("now") }] }, { name: "@updatedAt" }],
+                    default: ExpressionUtils.call("now")
                 }
             },
             attributes: [
-                { name: "@@index", args: [{ name: "fields", value: ExpressionUtils.array("String", [ExpressionUtils.field("identifier")]) }] },
                 { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("verification") }] }
             ],
             idFields: ["id"],
             uniqueFields: {
-                id: { type: "String" }
+                id: { type: "Int" }
             }
         },
-        Todo: {
-            name: "Todo",
+        Board: {
+            name: "Board",
             fields: {
                 id: {
                     name: "id",
@@ -278,23 +347,500 @@ export class SchemaType implements SchemaDef {
                     attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
                     default: ExpressionUtils.call("autoincrement")
                 },
-                text: {
-                    name: "text",
+                name: {
+                    name: "name",
                     type: "String"
                 },
-                completed: {
-                    name: "completed",
-                    type: "Boolean",
-                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.literal(false) }] }],
-                    default: false
+                slug: {
+                    name: "slug",
+                    type: "String",
+                    unique: true,
+                    attributes: [{ name: "@unique" }]
+                },
+                logo: {
+                    name: "logo",
+                    type: "String",
+                    optional: true
+                },
+                createdAt: {
+                    name: "createdAt",
+                    type: "DateTime"
+                },
+                metadata: {
+                    name: "metadata",
+                    type: "String",
+                    optional: true
+                },
+                members: {
+                    name: "members",
+                    type: "Member",
+                    array: true,
+                    relation: { opposite: "board" }
+                },
+                invitations: {
+                    name: "invitations",
+                    type: "Invitation",
+                    array: true,
+                    relation: { opposite: "board" }
+                },
+                themeId: {
+                    name: "themeId",
+                    type: "Int",
+                    optional: true,
+                    foreignKeyFor: [
+                        "theme"
+                    ]
+                },
+                theme: {
+                    name: "theme",
+                    type: "Theme",
+                    optional: true,
+                    attributes: [{ name: "@relation", args: [{ name: "name", value: ExpressionUtils.literal("BoardTheme") }, { name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("themeId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }] }],
+                    relation: { opposite: "boardsUsing", name: "BoardTheme", fields: ["themeId"], references: ["id"] }
+                },
+                activities: {
+                    name: "activities",
+                    type: "Activity",
+                    array: true,
+                    relation: { opposite: "board" }
                 }
             },
             attributes: [
-                { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("todo") }] }
+                { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("organization") }] }
+            ],
+            idFields: ["id"],
+            uniqueFields: {
+                id: { type: "Int" },
+                slug: { type: "String" }
+            }
+        },
+        Member: {
+            name: "Member",
+            fields: {
+                id: {
+                    name: "id",
+                    type: "Int",
+                    id: true,
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
+                },
+                boardId: {
+                    name: "boardId",
+                    type: "Int",
+                    foreignKeyFor: [
+                        "board"
+                    ]
+                },
+                board: {
+                    name: "board",
+                    type: "Board",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("boardId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
+                    relation: { opposite: "members", fields: ["boardId"], references: ["id"], onDelete: "Cascade" }
+                },
+                userId: {
+                    name: "userId",
+                    type: "Int",
+                    foreignKeyFor: [
+                        "user"
+                    ]
+                },
+                user: {
+                    name: "user",
+                    type: "User",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("userId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
+                    relation: { opposite: "members", fields: ["userId"], references: ["id"], onDelete: "Cascade" }
+                },
+                role: {
+                    name: "role",
+                    type: "String",
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.literal("member") }] }],
+                    default: "member"
+                },
+                createdAt: {
+                    name: "createdAt",
+                    type: "DateTime"
+                }
+            },
+            attributes: [
+                { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("member") }] }
             ],
             idFields: ["id"],
             uniqueFields: {
                 id: { type: "Int" }
+            }
+        },
+        Invitation: {
+            name: "Invitation",
+            fields: {
+                id: {
+                    name: "id",
+                    type: "Int",
+                    id: true,
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
+                },
+                boardId: {
+                    name: "boardId",
+                    type: "Int",
+                    foreignKeyFor: [
+                        "board"
+                    ]
+                },
+                board: {
+                    name: "board",
+                    type: "Board",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("boardId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
+                    relation: { opposite: "invitations", fields: ["boardId"], references: ["id"], onDelete: "Cascade" }
+                },
+                email: {
+                    name: "email",
+                    type: "String"
+                },
+                role: {
+                    name: "role",
+                    type: "String",
+                    optional: true
+                },
+                status: {
+                    name: "status",
+                    type: "String",
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.literal("pending") }] }],
+                    default: "pending"
+                },
+                expiresAt: {
+                    name: "expiresAt",
+                    type: "DateTime"
+                },
+                createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.call("now") }] }],
+                    default: ExpressionUtils.call("now")
+                },
+                inviterId: {
+                    name: "inviterId",
+                    type: "Int",
+                    foreignKeyFor: [
+                        "user"
+                    ]
+                },
+                user: {
+                    name: "user",
+                    type: "User",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("inviterId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("Cascade") }] }],
+                    relation: { opposite: "invitations", fields: ["inviterId"], references: ["id"], onDelete: "Cascade" }
+                }
+            },
+            attributes: [
+                { name: "@@map", args: [{ name: "name", value: ExpressionUtils.literal("invitation") }] }
+            ],
+            idFields: ["id"],
+            uniqueFields: {
+                id: { type: "Int" }
+            }
+        },
+        Theme: {
+            name: "Theme",
+            fields: {
+                id: {
+                    name: "id",
+                    type: "Int",
+                    id: true,
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
+                },
+                name: {
+                    name: "name",
+                    type: "String"
+                },
+                slug: {
+                    name: "slug",
+                    type: "String",
+                    unique: true,
+                    attributes: [{ name: "@unique" }]
+                },
+                isDark: {
+                    name: "isDark",
+                    type: "Boolean",
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.literal(false) }] }],
+                    default: false
+                },
+                variables: {
+                    name: "variables",
+                    type: "ThemeVariables",
+                    attributes: [{ name: "@json" }]
+                },
+                createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ name: "@default", args: [{ name: "value", value: ExpressionUtils.call("now") }] }],
+                    default: ExpressionUtils.call("now")
+                },
+                updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    updatedAt: true,
+                    attributes: [{ name: "@updatedAt" }]
+                },
+                creatorId: {
+                    name: "creatorId",
+                    type: "Int",
+                    optional: true,
+                    foreignKeyFor: [
+                        "creator"
+                    ]
+                },
+                creator: {
+                    name: "creator",
+                    type: "User",
+                    optional: true,
+                    attributes: [{ name: "@relation", args: [{ name: "name", value: ExpressionUtils.literal("ThemeCreator") }, { name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("creatorId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }, { name: "onDelete", value: ExpressionUtils.literal("SetNull") }] }],
+                    relation: { opposite: "themes", name: "ThemeCreator", fields: ["creatorId"], references: ["id"], onDelete: "SetNull" }
+                },
+                usersUsing: {
+                    name: "usersUsing",
+                    type: "User",
+                    array: true,
+                    attributes: [{ name: "@relation", args: [{ name: "name", value: ExpressionUtils.literal("UserTheme") }] }],
+                    relation: { opposite: "themesUsing", name: "UserTheme" }
+                },
+                boardsUsing: {
+                    name: "boardsUsing",
+                    type: "Board",
+                    array: true,
+                    attributes: [{ name: "@relation", args: [{ name: "name", value: ExpressionUtils.literal("BoardTheme") }] }],
+                    relation: { opposite: "theme", name: "BoardTheme" }
+                }
+            },
+            idFields: ["id"],
+            uniqueFields: {
+                id: { type: "Int" },
+                slug: { type: "String" }
+            }
+        },
+        Activity: {
+            name: "Activity",
+            fields: {
+                id: {
+                    name: "id",
+                    type: "Int",
+                    id: true,
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
+                },
+                name: {
+                    name: "name",
+                    type: "String"
+                },
+                boardId: {
+                    name: "boardId",
+                    type: "Int",
+                    foreignKeyFor: [
+                        "board"
+                    ]
+                },
+                board: {
+                    name: "board",
+                    type: "Board",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("boardId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }] }],
+                    relation: { opposite: "activities", fields: ["boardId"], references: ["id"] }
+                },
+                type: {
+                    name: "type",
+                    type: "String",
+                    isDiscriminator: true
+                }
+            },
+            attributes: [
+                { name: "@@delegate", args: [{ name: "discriminator", value: ExpressionUtils.field("type") }] }
+            ],
+            idFields: ["id"],
+            uniqueFields: {
+                id: { type: "Int" }
+            },
+            isDelegate: true,
+            subModels: ["Channel"]
+        },
+        Channel: {
+            name: "Channel",
+            baseModel: "Activity",
+            fields: {
+                id: {
+                    name: "id",
+                    type: "Int",
+                    id: true,
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
+                },
+                name: {
+                    name: "name",
+                    type: "String",
+                    originModel: "Activity"
+                },
+                boardId: {
+                    name: "boardId",
+                    type: "Int",
+                    originModel: "Activity",
+                    foreignKeyFor: [
+                        "board"
+                    ]
+                },
+                board: {
+                    name: "board",
+                    type: "Board",
+                    originModel: "Activity",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("boardId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }] }],
+                    relation: { opposite: "activities", fields: ["boardId"], references: ["id"] }
+                },
+                type: {
+                    name: "type",
+                    type: "String",
+                    originModel: "Activity",
+                    isDiscriminator: true
+                },
+                messages: {
+                    name: "messages",
+                    type: "Message",
+                    array: true,
+                    relation: { opposite: "channel" }
+                }
+            },
+            idFields: ["id"],
+            uniqueFields: {
+                id: { type: "Int" }
+            }
+        },
+        Message: {
+            name: "Message",
+            fields: {
+                id: {
+                    name: "id",
+                    type: "Int",
+                    id: true,
+                    attributes: [{ name: "@id" }, { name: "@default", args: [{ name: "value", value: ExpressionUtils.call("autoincrement") }] }],
+                    default: ExpressionUtils.call("autoincrement")
+                },
+                content: {
+                    name: "content",
+                    type: "String"
+                },
+                channelId: {
+                    name: "channelId",
+                    type: "Int",
+                    foreignKeyFor: [
+                        "channel"
+                    ]
+                },
+                channel: {
+                    name: "channel",
+                    type: "Channel",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("channelId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }] }],
+                    relation: { opposite: "messages", fields: ["channelId"], references: ["id"] }
+                },
+                userId: {
+                    name: "userId",
+                    type: "Int",
+                    foreignKeyFor: [
+                        "user"
+                    ]
+                },
+                user: {
+                    name: "user",
+                    type: "User",
+                    attributes: [{ name: "@relation", args: [{ name: "fields", value: ExpressionUtils.array("Int", [ExpressionUtils.field("userId")]) }, { name: "references", value: ExpressionUtils.array("Int", [ExpressionUtils.field("id")]) }] }],
+                    relation: { opposite: "messages", fields: ["userId"], references: ["id"] }
+                }
+            },
+            idFields: ["id"],
+            uniqueFields: {
+                id: { type: "Int" }
+            }
+        }
+    } as const;
+    typeDefs = {
+        ThemeVariables: {
+            name: "ThemeVariables",
+            fields: {
+                background: {
+                    name: "background",
+                    type: "String"
+                },
+                foreground: {
+                    name: "foreground",
+                    type: "String"
+                },
+                card: {
+                    name: "card",
+                    type: "String"
+                },
+                cardForeground: {
+                    name: "cardForeground",
+                    type: "String"
+                },
+                popover: {
+                    name: "popover",
+                    type: "String"
+                },
+                popoverForeground: {
+                    name: "popoverForeground",
+                    type: "String"
+                },
+                primary: {
+                    name: "primary",
+                    type: "String"
+                },
+                primaryForeground: {
+                    name: "primaryForeground",
+                    type: "String"
+                },
+                secondary: {
+                    name: "secondary",
+                    type: "String"
+                },
+                secondaryForeground: {
+                    name: "secondaryForeground",
+                    type: "String"
+                },
+                muted: {
+                    name: "muted",
+                    type: "String"
+                },
+                mutedForeground: {
+                    name: "mutedForeground",
+                    type: "String"
+                },
+                accent: {
+                    name: "accent",
+                    type: "String"
+                },
+                accentForeground: {
+                    name: "accentForeground",
+                    type: "String"
+                },
+                destructive: {
+                    name: "destructive",
+                    type: "String"
+                },
+                destructiveForeground: {
+                    name: "destructiveForeground",
+                    type: "String"
+                },
+                border: {
+                    name: "border",
+                    type: "String"
+                },
+                input: {
+                    name: "input",
+                    type: "String"
+                },
+                ring: {
+                    name: "ring",
+                    type: "String"
+                },
+                radius: {
+                    name: "radius",
+                    type: "String"
+                }
             }
         }
     } as const;

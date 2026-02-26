@@ -1,8 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import Header from "@/components/header";
-import { Button } from "@/components/ui/button";
 import {
 	Table,
 	TableBody,
@@ -12,8 +9,6 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { authClient } from "@/lib/auth-client";
-import { orpc } from "@/utils/orpc";
 
 export const Route = createFileRoute("/_auth/")({
 	component: HomeComponent,
@@ -30,7 +25,7 @@ const TITLE_TEXT = `
  ░    ░  ░░░ ░ ░   ░        ░         ░     ░░   ░ 
  ░         ░                          ░  ░   ░     
       ░
-`;
+`.trim();
 
 const topChannels = [
 	{
@@ -154,84 +149,11 @@ const spaces = [
 ];
 
 function HomeComponent() {
-	const healthCheck = useQuery(orpc.healthCheck.queryOptions());
-	const [results, setResults] = useState<string[]>([]);
-
-	const { mutate, isPending } = useMutation(
-		orpc.test.mutationOptions({
-			onSuccess: (data) => {
-				setResults((prev) => [JSON.stringify(data, null, 2), ...prev]);
-			},
-			onError: (error) => {
-				setResults((prev) => [`Error: ${error.message}`, ...prev]);
-			},
-		}),
-	)
-
-	const handleGetSession = async () => {
-		try {
-			const result = await authClient.getSession();
-			setResults((prev) => [
-				`Session Result: ${JSON.stringify(result, null, 2)}`,
-				...prev,
-			])
-		} catch (error) {
-			setResults((prev) => [
-				`Error fetching session: ${String(error)}`,
-				...prev,
-			])
-		}
-	}
-
 	return (
 		<>
 			<Header />
 			<div className="container mx-auto max-w-4xl space-y-8 px-4 py-8">
 				<pre className="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
-
-				<div className="grid gap-6 md:grid-cols-2">
-					<section className="rounded-lg border p-4">
-						<h2 className="mb-2 font-medium">API Status</h2>
-						<div className="flex items-center gap-2">
-							<div
-								className={`h-2 w-2 rounded-full ${healthCheck.data ? "bg-green-500" : "bg-red-500"}`}
-							/>
-							<span className="text-muted-foreground text-sm">
-								{healthCheck.isLoading
-									? "Checking..."
-									: healthCheck.data
-										? "Connected"
-										: "Disconnected"}
-							</span>
-						</div>
-					</section>
-
-					<section className="rounded-lg border p-4">
-						<div className="mb-4 flex items-center justify-between">
-							<h2 className="font-medium">Test Procedure</h2>
-							<div className="flex gap-2">
-								<Button
-									onClick={() => mutate({ message: "Hello from client!" })}
-									disabled={isPending}
-									size="sm"
-								>
-									{isPending ? "Testing..." : "Run Test"}
-								</Button>
-								<Button onClick={handleGetSession} size="sm" variant="outline">
-									Get Session
-								</Button>
-							</div>
-						</div>
-
-						{results.length > 0 && (
-							<div className="mt-4">
-								<pre className="mt-2 max-h-60 overflow-auto rounded-md bg-muted p-4 font-mono text-xs">
-									{results.join("\n\n")}
-								</pre>
-							</div>
-						)}
-					</section>
-				</div>
 
 				<section className="rounded-lg border p-6">
 					<h2 className="mb-4 font-semibold text-xl">Top Channels</h2>
@@ -312,5 +234,5 @@ function HomeComponent() {
 				</section>
 			</div>
 		</>
-	)
+	);
 }

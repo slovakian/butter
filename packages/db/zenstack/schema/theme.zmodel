@@ -1,3 +1,6 @@
+import "./auth"
+import "./board/board"
+
 type ThemeVariables {
   background String
   foreground String
@@ -22,7 +25,7 @@ type ThemeVariables {
 }
 
 model Theme {
-  id Int @id @default(0)
+  id Int @id @default(autoincrement())
   name String
   slug String @unique
   
@@ -35,9 +38,9 @@ model Theme {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
-//   creatorId String
-//   creator User @relation("ThemeCreator", fields: [creatorId], references: [id])
+  userId Int?
+  user User? @relation("ThemeCreator", fields: [userId], references: [id], onDelete: SetNull)
   
-//   usersUsingAsGlobal User[] @relation("UserGlobalTheme")
-//   spacesUsing Space[] @relation("SpaceTheme")
+  usersUsing User[] @relation("UserTheme")
+  boardsUsing Board[] @relation("BoardTheme")
 }
