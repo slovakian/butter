@@ -10,7 +10,7 @@ config({ path: "./.env" });
 config({ path: "../../apps/web/.env" });
 config({ path: "../../apps/server/.env" });
 
-const app = await alchemy("butter");
+const app = await alchemy("butt3r");
 
 export const web = await TanStackStart("web", {
 	cwd: "../../apps/web",
@@ -25,8 +25,8 @@ export const web = await TanStackStart("web", {
 	},
 });
 
-export const channel = DurableObjectNamespace("channel", {
-	className: "Channel",
+export const chatroom = DurableObjectNamespace("chatroom", {
+	className: "Chatroom",
 	// whether you want a sqllite db per DO (usually yes!)
 	sqlite: true,
 });
@@ -40,10 +40,8 @@ export const server = await Worker("server", {
 		CORS_ORIGIN: alchemy.env.CORS_ORIGIN!,
 		BETTER_AUTH_SECRET: alchemy.secret.env.BETTER_AUTH_SECRET!,
 		BETTER_AUTH_URL: alchemy.env.BETTER_AUTH_URL!,
-		POLAR_ACCESS_TOKEN: alchemy.secret.env.POLAR_ACCESS_TOKEN!,
-		POLAR_SUCCESS_URL: alchemy.env.POLAR_SUCCESS_URL!,
 
-		CHANNEL: channel,
+		Chatroom: chatroom,
 	},
 	dev: {
 		port: 3000,

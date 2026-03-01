@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { authClient } from "@/features/auth/client";
 import { getPayment } from "@/functions/get-payment";
 import { getUser } from "@/functions/get-user";
-import { orpc } from "@/utils/orpc";
+import { api } from "@/utils/orpc";
 
 export const Route = createFileRoute("/dashboard")({
 	component: RouteComponent,
@@ -26,8 +26,6 @@ export const Route = createFileRoute("/dashboard")({
 function RouteComponent() {
 	const { session, customerState } = Route.useRouteContext();
 
-	const privateData = useQuery(orpc.privateData.queryOptions());
-
 	const hasProSubscription =
 		(customerState?.activeSubscriptions?.length ?? 0) > 0;
 	// For debugging: console.log("Active subscriptions:", customerState?.activeSubscriptions);
@@ -36,7 +34,6 @@ function RouteComponent() {
 		<div>
 			<h1>Dashboard</h1>
 			<p>Welcome {session?.user.name}</p>
-			<p>API: {privateData.data?.message}</p>
 			<p>Plan: {hasProSubscription ? "Pro" : "Free"}</p>
 			{hasProSubscription ? (
 				<Button

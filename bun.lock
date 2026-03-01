@@ -141,8 +141,6 @@
       "dependencies": {
         "@butter/db": "workspace:*",
         "@butter/env": "workspace:*",
-        "@polar-sh/better-auth": "catalog:",
-        "@polar-sh/sdk": "^0.42.2",
         "@zenstackhq/better-auth": "^3.3.3",
         "better-auth": "catalog:",
         "dotenv": "catalog:",

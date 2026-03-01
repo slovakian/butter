@@ -1,9 +1,10 @@
-import "./board/board"
-import "./theme"
-import "./board/chatroom"
+datasource db {
+    provider = 'postgresql'
+    url = env('DATABASE_URL')
+}
 
 model User {
-    id            Int          @id @default(autoincrement())
+    id            String       @id
     name          String
     email         String       @unique
     emailVerified Boolean      @default(false)
@@ -20,10 +21,6 @@ model User {
     members       Member[]
     invitations   Invitation[]
 
-    themes        Theme[]      @relation("ThemeCreator")
-    themesUsing   Theme[]      @relation("UserTheme")
-    messages      Message[]
-
     @@map('user')
 }
 
@@ -35,7 +32,7 @@ model Session {
     updatedAt            DateTime @updatedAt
     ipAddress            String?
     userAgent            String?
-    userId               Int
+    userId               String
     user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     impersonatedBy       String?
     activeOrganizationId String?
@@ -47,7 +44,7 @@ model Account {
     id                    String    @id
     accountId             String
     providerId            String
-    userId                Int
+    userId                String
     user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
     accessToken           String?
     refreshToken          String?
@@ -71,4 +68,45 @@ model Verification {
     updatedAt  DateTime @default(now()) @updatedAt
 
     @@map('verification')
+}
+
+model Board {
+    id          String       @id
+    name        String
+    slug        String       @unique
+    logo        String?
+    createdAt   DateTime
+    metadata    String?
+    isOfficial  Boolean?     @default(false)
+    members     Member[]
+    invitations Invitation[]
+
+    @@map('organization')
+}
+
+model Member {
+    id        String   @id
+    boardId   String
+    board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    role      String   @default('member')
+    createdAt DateTime
+
+    @@map('member')
+}
+
+model Invitation {
+    id        String   @id
+    boardId   String
+    board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    email     String
+    role      String?
+    status    String   @default('pending')
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    inviterId String
+    user      User     @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+    @@map('invitation')
 }

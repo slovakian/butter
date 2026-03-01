@@ -1,21 +1,26 @@
-# butter
+# butt3r
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Start, Hono, ORPC, and more.
+Butt3r is a boards site where users can spend time in themed spaces that include chatrooms and written texts.
+
+Butt3r uses a TypeScript stack: React, TanStack Start, Hono, ORPC, and more.
 
 ## Features
 
-- **TypeScript** - For type safety and improved developer experience
-- **TanStack Start** - SSR framework with TanStack Router
+- **TypeScript** - For type safety and JS because we love JavaScript
+- **TanStack Start** - SSR framework with TanStack Router, and a really slick TanStack Query integration that allows for ssr prefetching and data streaming.
 - **TailwindCSS** - Utility-first CSS for rapid UI development
-- **shadcn/ui** - Reusable UI components
+- **shadcn/ui** - Of course. Reusable UI components
 - **Hono** - Lightweight, performant server framework
 - **oRPC** - End-to-end type-safe APIs with OpenAPI integration
-- **workers** - Runtime environment
+- **CloudFlare Workers** - Runtime environment for both front-end app and api server
+- **CloudFlare Durable Objects** - For storing live chatroom data and queuing message syncs to db
+- **Alchemy** - For managing CloudFlare resources
 - **Prisma** - TypeScript-first ORM
 - **PostgreSQL** - Database engine
 - **Authentication** - Better-Auth
 - **Biome** - Linting and formatting
-- **Turborepo** - Optimized monorepo build system
+- **Turborepo** - Monorepo build system
+- **Bun** - Package manager and runtime environment
 
 ## Getting Started
 

@@ -12,15 +12,17 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { partyserverMiddleware } from "hono-party";
-import { Server } from "partyserver";
 
-export class Channel extends Server {}
+import { Chatroom } from "./lib/chatroom";
+
+export { Chatroom };
 
 const app = new Hono<{
 	Variables: {
 		db: DbClient;
 		auth: Auth;
 	};
+	Bindings: Env;
 }>();
 
 app.use(logger());
@@ -103,10 +105,14 @@ app.use("/*", async (c, next) => {
 });
 
 app.use(
-	"*",
+	"/api/party/*",
 	partyserverMiddleware({
 		options: {
-			prefix: "/api/channels", // Handles /api/channels/* routes only
+			prefix: "api/party",
+		},
+		onError: (e) => {
+			console.error("Party request error:", e);
+			return new Response("Internal Server Error", { status: 500 });
 		},
 	}),
 );

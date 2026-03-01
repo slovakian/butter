@@ -3,7 +3,8 @@ import { env } from "@butter/env/server";
 import { zenstackAdapter } from "@zenstackhq/better-auth";
 import { betterAuth } from "better-auth";
 import { adminPlugin } from "./admin/plugin";
-import { organizationPlugin } from "./organization/plugin";
+import { anonymousPlugin } from "./anonymous/plugin";
+import { boardPlugin } from "./boards/plugin";
 
 export const auth = betterAuth({
 	database: zenstackAdapter(tempDb, {
@@ -24,25 +25,5 @@ export const auth = betterAuth({
 			httpOnly: true,
 		},
 	},
-	plugins: [adminPlugin, organizationPlugin],
-	// plugins: [
-	//   polar({
-	//     client: polarClient,
-	//     createCustomerOnSignUp: true,
-	//     enableCustomerPortal: true,
-	//     use: [
-	//       checkout({
-	//         products: [
-	//           {
-	//             productId: "your-product-id",
-	//             slug: "pro",
-	//           },
-	//         ],
-	//         successUrl: env.POLAR_SUCCESS_URL,
-	//         authenticatedUsersOnly: true,
-	//       }),
-	//       portal(),
-	//     ],
-	//   }),
-	// ],
+	plugins: [adminPlugin, boardPlugin, anonymousPlugin],
 });

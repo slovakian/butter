@@ -1,0 +1,48 @@
+import { Link, useParams } from "@tanstack/react-router";
+
+type SidebarNavProps = {
+	items: {
+		id: string;
+		name: string;
+		slug: string;
+		type: string;
+	}[];
+};
+
+export function SidebarNav({ items }: SidebarNavProps) {
+	const { boardSlug } = useParams({ from: "/b/$boardSlug" });
+
+	return (
+		<>
+			{/* HEADER */}
+			<div className="flex h-8 shrink-0 items-center border-border border-b bg-muted/50 px-3 font-bold text-foreground text-xs">
+				🪐 Notai HQ
+			</div>
+
+			{/* SCROLLABLE NAVIGATION */}
+			<nav className="flex flex-1 flex-col gap-3 overflow-y-auto p-2">
+				<details open className="group">
+					<summary className="cursor-pointer select-none bg-secondary px-1 py-0.5 font-bold text-secondary-foreground text-xs uppercase">
+						General
+					</summary>
+					<ul className="mt-1 flex flex-col gap-0.5 pl-1">
+						{items.map((item) => (
+							<li key={item.id}>
+								<Link
+									to="/b/$boardSlug/$itemSlug"
+									params={{ boardSlug, itemSlug: item.slug }}
+									className="block cursor-pointer px-1 py-0.5 text-xs hover:bg-accent hover:text-accent-foreground"
+									activeProps={{
+										className: "bg-accent text-accent-foreground font-bold",
+									}}
+								>
+									{item.type === "Chatroom" ? "💬" : "📄"} {item.name}
+								</Link>
+							</li>
+						))}
+					</ul>
+				</details>
+			</nav>
+		</>
+	);
+}

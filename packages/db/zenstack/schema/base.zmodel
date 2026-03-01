@@ -1,8 +1,7 @@
 import "./auth"
 import "./theme"
-import "./board/activity"
 import "./board/board"
-import "./board/message"
+import "./board/chatroom"
 
 datasource db {
   provider = "postgresql"

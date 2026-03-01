@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_auth/$spaceId/$channelid/")({
+export const Route = createFileRoute("/_auth/board2/$spaceId/$channelid/")({
 	component: RouteComponent,
 });
 

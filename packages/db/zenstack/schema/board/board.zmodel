@@ -1,31 +1,28 @@
+import "../auth"
+import "../theme"
 import "../auth.zmodel"
 import "../theme.zmodel"
-import "./activity.zmodel"
-
-import "../auth.zmodel"
-import "../theme.zmodel"
-import "./activity.zmodel"
 
 model Board {
-    id          Int           @id @default(autoincrement())
+    id          Int          @id @default(autoincrement())
     name        String
-    slug        String        @unique
+    slug        String       @unique
     logo        String?
+    isOfficial  Boolean      @default(false)
     createdAt   DateTime
-    metadata    String
+    metadata    String       @default("{}")
     members     Member[]
     invitations Invitation[]
 
-    themeId Int?
-    theme Theme? @relation("BoardTheme", fields: [themeId], references: [id])
-    activities  Activity[]
+    themeId     Int?
+    theme       Theme?       @relation("BoardTheme", fields: [themeId], references: [id])
+    items       Item[]
 
     @@map("boards")
 }
 
-
 model Member {
-    id        Int       @id @default(autoincrement())
+    id        Int      @id @default(autoincrement())
     boardId   Int
     board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
     userId    Int
@@ -37,17 +34,32 @@ model Member {
 }
 
 model Invitation {
-    id             Int      @id @default(autoincrement())
-    boardId        Int
-    board          Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
-    email          String
-    role           String?
-    status         String   @default('pending')
-    expiresAt      DateTime
-    createdAt      DateTime @default(now())
-    inviterId      Int
-    user           User     @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+    id        Int      @id @default(autoincrement())
+    boardId   Int
+    board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    email     String
+    role      String?
+    status    String   @default('pending')
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    inviterId Int
+    user      User     @relation(fields: [inviterId], references: [id], onDelete: Cascade)
 
     @@map("invitations")
+}
+
+model Item {
+    id      Int    @id @default(autoincrement())
+    name    String
+    slug    String
+
+    boardId Int
+    board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+    type    String
+    @@delegate(type)
+
+    @@unique([boardId, slug])
+    @@map("items")
 }
 

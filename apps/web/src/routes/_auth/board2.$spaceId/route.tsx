@@ -17,7 +17,7 @@ import {
 import { fetchTheme } from "@/features/themes/fns";
 import { SpaceThemeSelector } from "@/features/themes/space-selector";
 
-export const Route = createFileRoute("/_auth/$spaceId")({
+export const Route = createFileRoute("/_auth/board2/$spaceId")({
 	loader: async () => {
 		const theme = await fetchTheme();
 		return { spaceThemeData: theme };
@@ -70,7 +70,7 @@ function SidebarNav() {
 				</details>
 			</nav>
 		</>
-	)
+	);
 }
 
 // ---------------------------------------------------------
@@ -267,7 +267,7 @@ function RouteComponent() {
 				</div>
 			</div>
 		</TooltipProvider>
-	)
+	);
 }
 
 // ---------------------------------------------------------
@@ -303,5 +303,5 @@ function MockChatList() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

@@ -12,7 +12,9 @@
 	"scripts": {
 		"db:push": "dotenv -e ../../apps/server/.env -- zen db push --schema ./zenstack/schema/base.zmodel",
 		"db:generate": "dotenv -e ../../apps/server/.env -- zen generate --schema ./zenstack/schema/base.zmodel --output ./zenstack/generated",
-		"db:migrate": "dotenv -e ../../apps/server/.env -- zen migrate dev --schema ./zenstack/schema/base.zmodel"
+		"db:migrate": "dotenv -e ../../apps/server/.env -- zen migrate dev --schema ./zenstack/schema/base.zmodel",
+		"db:seed": "dotenv -e ../../apps/server/.env -- bun ./zenstack/seed/index.ts",
+		"db:reset": "dotenv -e ../../apps/server/.env -- zen migrate reset --schema ./zenstack/schema/base.zmodel"
 	},
 	"dependencies": {
 		"@butter/env": "workspace:*",
