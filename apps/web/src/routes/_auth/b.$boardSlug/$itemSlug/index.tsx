@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { api } from "@/utils/orpc";
 import { Chatroom } from "./-chatroom";
 
-export const Route = createFileRoute("/b/$boardSlug/$itemSlug/")({
+export const Route = createFileRoute("/_auth/b/$boardSlug/$itemSlug/")({
 	loader: async ({ context, params }) => {
 		await context.queryClient.ensureQueryData(
 			api.board.item.getBySlug.queryOptions({
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/b/$boardSlug/$itemSlug/")({
 				},
 				staleTime: Number.POSITIVE_INFINITY,
 			}),
-		);
+		)
 	},
 	component: RouteComponent,
 });
@@ -29,7 +29,7 @@ function RouteComponent() {
 			},
 			staleTime: Number.POSITIVE_INFINITY,
 		}),
-	);
+	)
 
 	if (!item) return <div>Item not found</div>;
 
@@ -44,5 +44,5 @@ function RouteComponent() {
 				This is a generic view for item type: {item.type}
 			</div>
 		</div>
-	);
+	)
 }

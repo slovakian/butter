@@ -50,15 +50,15 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootDocument() {
-	const matches = useMatches();
-	const spaceMatch = matches.find((m) => m.routeId === "/_auth/$spaceId");
-	const activeTheme = spaceMatch?.loaderData?.spaceThemeData;
+	// const matches = useMatches();
+	// const spaceMatch = matches.find((m) => m.routeId === "/_auth/b/$boardSlug");
+	// const activeTheme = spaceMatch?.loaderData?.spaceThemeData;
 
 	return (
 		<html
 			lang="en"
-			className={cn(activeTheme?.isDark ? "dark" : undefined)}
-			style={activeTheme ? buildThemeStyles(activeTheme.variables) : undefined}
+			// className={cn(activeTheme?.isDark ? "dark" : undefined)}
+			// style={activeTheme ? buildThemeStyles(activeTheme.variables) : undefined}
 		>
 			<head>
 				<HeadContent />

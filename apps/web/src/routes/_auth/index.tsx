@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import Header from "@/components/header";
+import { TopBar } from "@/components/topbar";
 import {
 	Table,
 	TableBody,
@@ -39,10 +40,10 @@ function HomeComponent() {
 	return (
 		<>
 			<WelcomeDialog />
-			<Header />
+			<TopBar />
+			{/* <Header /> */}
 			<div className="container mx-auto max-w-4xl space-y-8 px-4 py-8">
 				<pre className="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
-
 				<section className="rounded-lg border p-6">
 					<h2 className="mb-4 font-semibold text-xl">Boards</h2>
 					<Table>
