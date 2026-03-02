@@ -81,6 +81,7 @@ app.use("/*", async (c, next) => {
 		req: c.req.raw,
 		db: c.get("db"),
 		auth: c.get("auth"),
+		env,
 	});
 
 	const rpcResult = await rpcHandler.handle(c.req.raw, {
