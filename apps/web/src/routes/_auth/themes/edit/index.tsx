@@ -9,6 +9,7 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { DEFAULT_THEME } from "@/features/themes/constants";
 import {
 	ThemeEditorProvider,
 	useThemeEditor,
@@ -19,7 +20,7 @@ import { buildThemeStyles } from "@/features/themes/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { CssEditor } from "./-components/css-editor";
-import { DarkSelector } from "./-components/dark-selector";
+// import { DarkSelector } from "./-components/dark-selector";
 import {
 	EditorTabs,
 	EditorTabsList,
@@ -46,7 +47,7 @@ function RouteComponent() {
 	const { theme } = Route.useLoaderData();
 
 	return (
-		<ThemeEditorProvider initialData={theme}>
+		<ThemeEditorProvider initialData={theme ?? DEFAULT_THEME}>
 			<ThemeEditorContent />
 		</ThemeEditorProvider>
 	);

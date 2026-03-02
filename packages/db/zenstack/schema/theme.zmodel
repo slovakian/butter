@@ -2,45 +2,44 @@ import "./auth"
 import "./board/board"
 
 type ThemeVariables {
-  background String
-  foreground String
-  card String
-  cardForeground String
-  popover String
-  popoverForeground String
-  primary String
-  primaryForeground String
-  secondary String
-  secondaryForeground String
-  muted String
-  mutedForeground String
-  accent String
-  accentForeground String
-  destructive String
+  background            String
+  foreground            String
+  card                  String
+  cardForeground        String
+  popover               String
+  popoverForeground     String
+  primary               String
+  primaryForeground     String
+  secondary             String
+  secondaryForeground   String
+  muted                 String
+  mutedForeground       String
+  accent                String
+  accentForeground      String
+  destructive           String
   destructiveForeground String
-  border String
-  input String
-  ring String
-  radius String
+  border                String
+  input                 String
+  ring                  String
+  radius                String
 }
 
 model Theme {
-  id Int @id @default(autoincrement())
-  name String
-  slug String @unique
+  id          Int            @id @default(autoincrement())
+  name        String
   
   // Defines if this specific theme is dark. Determines if we apply the `.dark` class to HTML.
-  isDark Boolean @default(false)
+  isDark      Boolean        @default(false)
   
   // ZenStack typed JSON column
-  variables ThemeVariables @json
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  userId Int?
-  user User? @relation("ThemeCreator", fields: [userId], references: [id], onDelete: SetNull)
-  
-  usersUsing User[] @relation("UserTheme")
-  boardsUsing Board[] @relation("BoardTheme")
+  variables   ThemeVariables @json
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  userId      Int?
+  user        User?          @relation("ThemeCreator", fields: [userId], references: [id], onDelete: SetNull)
+
+  usersUsing  User[]         @relation("UserTheme")
+  boardsUsing Board[]        @relation("BoardTheme")
 }

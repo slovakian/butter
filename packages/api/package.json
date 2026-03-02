@@ -14,6 +14,7 @@
 		"@butter/auth": "workspace:*",
 		"@butter/db": "workspace:*",
 		"@butter/env": "workspace:*",
+		"@butter/shared": "workspace:*",
 		"@orpc/client": "catalog:",
 		"@orpc/openapi": "catalog:",
 		"@orpc/server": "catalog:",

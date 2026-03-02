@@ -123,6 +123,7 @@
         "@butter/auth": "workspace:*",
         "@butter/db": "workspace:*",
         "@butter/env": "workspace:*",
+        "@butter/shared": "workspace:*",
         "@orpc/client": "catalog:",
         "@orpc/experimental-ratelimit": "catalog:",
         "@orpc/openapi": "catalog:",

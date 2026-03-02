@@ -33,6 +33,15 @@ All administrative procedures must be **strictly isolated** under an `admin` nam
 - **Example**: `admin.user.ban`
 - **File Location**: `routers/admin/user/ban.ts`
 
+### Procedure Naming & Exposure
+When aggregating procedures in `index.ts` or defining leaf routes, **strip redundant context** from the exposed key. The route path itself provides the namespace.
+- **Concept**: The implementation function usually has a specific name (e.g., `applyThemeToUser`) to avoid conflicts, but the router key should be concise.
+- **Rule**: The procedure key should not repeat the parent router's name.
+- **Example**:
+  - **Implementation**: `const applyThemeToUser = ...`
+  - **Router Definition**: `export const themeRouter = { applyToUser: applyThemeToUser }`
+  - **Resulting Path**: `theme.applyToUser` (NOT `theme.applyThemeToUser`)
+
 ## 2. Procedures & Context
 
 ### Available Procedures
@@ -136,3 +145,17 @@ If the human explicitly requests a change to:
 - Global middlewares
 
 The agent **must** update this `AGENTS.md` file to reflect those new structural changes immediately.
+
+## 5. Strict Type System Standards
+
+### ZERO TOLERANCE for `any`
+**Rule**: You must **NEVER** use `any`. This includes explicit `any` types (e.g., `arg: any`) and type assertions (e.g., `as any`).
+- **Reasoning**: `any` silences the compiler and introduces potential runtime crashes. It is a failure of strict typing.
+- **Methodology**:
+  1.  **Unknown**: If you genuinely don't know a type, use `unknown`.
+  2.  **Narrowing**: You must perform runtime checks (`typeof`, `instanceof`, `Array.isArray`) or use Zod schemas to narrow `unknown` to a specific type safely.
+  3.  **Generics**: Use proper generic constraints (e.g., `<T extends SomeBase>`) instead of loose typing.
+
+### Type Assertions & Casting
+- **Avoid `as`**: Type assertions (e.g., `variable as User`) are dangerous and should be avoided unless strictly necessary for platform-specific reasons.
+- **Preference**: Use **Type Guards** (functions returning `x is T`) or **Zod Parsing** to ensure data matches the expected shape at runtime.

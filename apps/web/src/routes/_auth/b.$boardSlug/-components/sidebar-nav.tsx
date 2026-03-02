@@ -10,7 +10,7 @@ type SidebarNavProps = {
 };
 
 export function SidebarNav({ items }: SidebarNavProps) {
-	const { boardSlug } = useParams({ from: "/b/$boardSlug" });
+	const { boardSlug } = useParams({ from: "/_auth/b/$boardSlug/" });
 
 	return (
 		<>

@@ -72,14 +72,13 @@ export const themeVariablesSchema = z.object({
 export const themeSchema = z.object({
 	id: z.number().int(), // Note: Changed z.int() to z.number().int() for correct Zod syntax
 	name: z.string(),
-	slug: z.string(),
 	isDark: z.boolean(),
 	variables: themeVariablesSchema,
 	createdAt: z.date(),
 	updatedAt: z.date(),
 });
 
-export const themeInsertSchema = themeSchema.partial({
+export const themeInsertSchema = themeSchema.omit({
 	id: true,
 	createdAt: true,
 	updatedAt: true,

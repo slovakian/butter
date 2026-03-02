@@ -614,12 +614,6 @@ export class SchemaType implements SchemaDef {
                     name: "name",
                     type: "String"
                 },
-                slug: {
-                    name: "slug",
-                    type: "String",
-                    unique: true,
-                    attributes: [{ name: "@unique" }]
-                },
                 isDark: {
                     name: "isDark",
                     type: "Boolean",
@@ -675,8 +669,7 @@ export class SchemaType implements SchemaDef {
             },
             idFields: ["id"],
             uniqueFields: {
-                id: { type: "Int" },
-                slug: { type: "String" }
+                id: { type: "Int" }
             }
         },
         Chatroom: {

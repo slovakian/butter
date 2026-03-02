@@ -1,5 +1,7 @@
+import { useMutation } from "@tanstack/react-query";
 import type React from "react";
 import { useState } from "react";
+import { toast } from "sonner";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -10,55 +12,75 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { api } from "@/utils/orpc";
 import { ThemeSelector } from "./selector";
 
-interface SpaceThemeSelectorProps {
-	spaceId: string;
+interface BoardThemeSelectorProps {
+	boardId: string;
 	children: (props: { openDialog: () => void }) => React.ReactNode;
 }
 
-export function SpaceThemeSelector({
-	spaceId,
+export function BoardThemeSelector({
+	boardId,
 	children,
-}: SpaceThemeSelectorProps) {
+}: BoardThemeSelectorProps) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
 
-	// Mock mutation function
-	const mutateSpaceTheme = async (selectedThemeId: string) => {
-		console.log(
-			`[Mock Mutation] Applying theme '${selectedThemeId}' to space '${spaceId}'...`,
-		);
-		// Example implementation: await trpc/oRPC mutation here
+	const { mutate, isPending } = useMutation(
+		api.theme.applyToBoard.mutationOptions({
+			onSuccess: () => {
+				toast.success("Theme applied successfully");
+				setIsOpen(false);
+			},
+			onError: (error) => {
+				toast.error(error.message);
+			},
+		}),
+	);
 
-		// Close the dialog on success
-		setIsOpen(false);
+	const handleApply = () => {
+		if (!selectedThemeId) return;
+		const themeIdNum = Number.parseInt(selectedThemeId);
+		const boardIdNum = Number.parseInt(boardId);
+
+		if (Number.isNaN(themeIdNum) || Number.isNaN(boardIdNum)) {
+			toast.error("Invalid board or theme ID");
+			return;
+		}
+
+		mutate({
+			boardId: boardIdNum,
+			themeId: themeIdNum,
+		});
 	};
-
-	const openDialog = () => setIsOpen(true);
 
 	return (
 		<>
 			{/* The render prop function: 
         Passes the openDialog trigger down to whatever button/element you want 
       */}
-			{children({ openDialog })}
+			{children({ openDialog: () => setIsOpen(true) })}
 
 			{/* Sibling Dialog */}
 			<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
 				<AlertDialogContent className="max-w-2xl border-border bg-background">
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-foreground">
-							Select Space Theme
+							Select Board Theme
 						</AlertDialogTitle>
 						<AlertDialogDescription className="text-muted-foreground">
-							Choose a theme to apply to this space. You can select from your
+							Choose a theme to apply to this board. You can select from your
 							favorites or browse popular themes on Butter.
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 
 					{/* The ThemeSelector we built previously */}
 					<div className="max-h-[60vh] overflow-y-auto">
-						<ThemeSelector />
+						<ThemeSelector
+							selectedThemeId={selectedThemeId}
+							onSelect={setSelectedThemeId}
+						/>
 					</div>
 
 					<AlertDialogFooter>
@@ -66,10 +88,11 @@ export function SpaceThemeSelector({
 							Cancel
 						</AlertDialogCancel>
 						<AlertDialogAction
-							onClick={() => mutateSpaceTheme("mock-selected-theme-id")}
+							onClick={handleApply}
+							disabled={!selectedThemeId || isPending}
 							className="bg-primary text-primary-foreground hover:bg-primary/90"
 						>
-							Apply Theme
+							{isPending ? "Applying..." : "Apply Theme"}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogContent>

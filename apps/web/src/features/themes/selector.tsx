@@ -1,5 +1,5 @@
 import { Edit2, Search, Star } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,33 +23,37 @@ export type Theme = {
 // Mock data to illustrate the split between favorited and popular themes
 const FAVORITED_THEMES: Theme[] = [
 	{
-		id: "sys-1",
+		id: "1",
 		name: "Butter Default Light",
 		isSystem: true,
 		author: "Butter",
 	},
-	{ id: "usr-1", name: "Neon Nights Dark", isSystem: false, author: "jason_p" },
+	{ id: "2", name: "Neon Nights Dark", isSystem: false, author: "jason_p" },
 ];
 
 const POPULAR_THEMES: Theme[] = [
 	{
-		id: "sys-2",
+		id: "3",
 		name: "Butter Midnight Dark",
 		isSystem: true,
 		author: "Butter",
 	},
 	{
-		id: "usr-2",
+		id: "4",
 		name: "Minimalist Paper Light",
 		isSystem: false,
 		author: "ui_guy",
 	},
-	{ id: "usr-3", name: "Hacker Terminal", isSystem: false, author: "dev_guru" },
+	{ id: "5", name: "Hacker Terminal", isSystem: false, author: "dev_guru" },
 ];
 
 export function ThemeSelector({
+	selectedThemeId,
+	onSelect,
 	onEdit,
 }: {
+	selectedThemeId?: string | null;
+	onSelect?: (themeId: string) => void;
 	onEdit?: (themeId: string) => void;
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
@@ -93,7 +97,12 @@ export function ThemeSelector({
 							Favorited Themes
 						</h3>
 						<div className="overflow-hidden rounded-md border border-border">
-							<ThemeTable themes={filteredFavorites} />
+							<ThemeTable
+								themes={filteredFavorites}
+								selectedThemeId={selectedThemeId}
+								onSelect={onSelect}
+								onEdit={onEdit}
+							/>
 						</div>
 					</div>
 				)}
@@ -105,7 +114,12 @@ export function ThemeSelector({
 							Popular on Butter
 						</h3>
 						<div className="overflow-hidden rounded-md border border-border">
-							<ThemeTable themes={filteredPopular} />
+							<ThemeTable
+								themes={filteredPopular}
+								selectedThemeId={selectedThemeId}
+								onSelect={onSelect}
+								onEdit={onEdit}
+							/>
 						</div>
 					</div>
 				)}
@@ -122,7 +136,17 @@ export function ThemeSelector({
 }
 
 // Reusable table sub-component to keep the main component clean
-function ThemeTable({ themes }: { themes: Theme[] }) {
+function ThemeTable({
+	themes,
+	selectedThemeId,
+	onSelect,
+	onEdit,
+}: {
+	themes: Theme[];
+	selectedThemeId?: string | null;
+	onSelect?: (themeId: string) => void;
+	onEdit?: (themeId: string) => void;
+}) {
 	return (
 		<Table>
 			<TableHeader className="bg-muted/50">
@@ -134,37 +158,55 @@ function ThemeTable({ themes }: { themes: Theme[] }) {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{themes.map((theme) => (
-					<TableRow key={theme.id} className="border-border">
-						<TableCell className="font-medium">{theme.name}</TableCell>
-						<TableCell className="text-muted-foreground">
-							{theme.author}
-						</TableCell>
-						<TableCell className="text-right">
-							{theme.isSystem ? (
-								<Badge variant="secondary">System</Badge>
-							) : (
-								<span className="text-muted-foreground text-xs">User</span>
-							)}
-						</TableCell>
-						<TableCell className="text-right">
-							{!theme.isSystem && (
-								<Button
-									variant="ghost"
-									size="icon"
-									className="h-8 w-8 text-muted-foreground hover:text-foreground"
-									onClick={(e) => {
-										e.stopPropagation(); // Don't trigger a row selection
-										onEdit?.(theme.id);
-									}}
-								>
-									<Edit2 className="h-4 w-4" />
-									<span className="sr-only">Edit theme</span>
-								</Button>
-							)}
-						</TableCell>
-					</TableRow>
-				))}
+				{themes.map((theme) => {
+					const isSelected = selectedThemeId === theme.id;
+					return (
+						<TableRow
+							key={theme.id}
+							className={`cursor-pointer border-border transition-colors ${
+								isSelected
+									? "bg-primary/10 hover:bg-primary/20"
+									: "hover:bg-muted/50"
+							}`}
+							onClick={() => onSelect?.(theme.id)}
+						>
+							<TableCell className="font-medium">
+								<div className="flex items-center gap-2">
+									{isSelected && (
+										<div className="h-2 w-2 rounded-full bg-primary" />
+									)}
+									{theme.name}
+								</div>
+							</TableCell>
+							<TableCell className="text-muted-foreground">
+								{theme.author}
+							</TableCell>
+							<TableCell className="text-right">
+								{theme.isSystem ? (
+									<Badge variant="secondary">System</Badge>
+								) : (
+									<span className="text-muted-foreground text-xs">User</span>
+								)}
+							</TableCell>
+							<TableCell className="text-right">
+								{!theme.isSystem && (
+									<Button
+										variant="ghost"
+										size="icon"
+										className="h-8 w-8 text-muted-foreground hover:text-foreground"
+										onClick={(e) => {
+											e.stopPropagation(); // Don't trigger a row selection
+											onEdit?.(theme.id);
+										}}
+									>
+										<Edit2 className="h-4 w-4" />
+										<span className="sr-only">Edit theme</span>
+									</Button>
+								)}
+							</TableCell>
+						</TableRow>
+					);
+				})}
 			</TableBody>
 		</Table>
 	);
