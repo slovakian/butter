@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import { z } from "zod";
 import { publicProcedure } from "../../procedures";
 
@@ -9,7 +8,7 @@ export const getBySlug = publicProcedure
 			itemSlug: z.string(),
 		}),
 	)
-	.handler(async ({ input, context }) => {
+	.handler(async ({ input, context, errors }) => {
 		const item = await context.db.item.findFirst({
 			where: {
 				slug: input.itemSlug,
@@ -20,8 +19,11 @@ export const getBySlug = publicProcedure
 		});
 
 		if (!item) {
-			throw new ORPCError("NOT_FOUND", {
+			throw errors.NOT_FOUND({
 				message: "Item not found",
+				data: {
+					resource: "Item",
+				},
 			});
 		}
 

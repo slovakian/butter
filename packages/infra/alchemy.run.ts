@@ -1,6 +1,7 @@
 import alchemy from "alchemy";
 import {
 	DurableObjectNamespace,
+	RateLimit,
 	TanStackStart,
 	Worker,
 } from "alchemy/cloudflare";
@@ -27,8 +28,15 @@ export const web = await TanStackStart("web", {
 
 export const chatroom = DurableObjectNamespace("chatroom", {
 	className: "Chatroom",
-	// whether you want a sqllite db per DO (usually yes!)
 	sqlite: true,
+});
+
+const rateLimit = RateLimit({
+	namespace_id: 1001,
+	simple: {
+		limit: 100,
+		period: 60,
+	},
 });
 
 export const server = await Worker("server", {
@@ -40,8 +48,8 @@ export const server = await Worker("server", {
 		CORS_ORIGIN: alchemy.env.CORS_ORIGIN!,
 		BETTER_AUTH_SECRET: alchemy.secret.env.BETTER_AUTH_SECRET!,
 		BETTER_AUTH_URL: alchemy.env.BETTER_AUTH_URL!,
-
-		Chatroom: chatroom,
+		CHATROOM: chatroom,
+		RATE_LIMIT: rateLimit,
 	},
 	dev: {
 		port: 3000,

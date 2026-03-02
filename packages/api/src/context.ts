@@ -1,11 +1,11 @@
-import type { Auth, Session } from "@butter/auth";
+import type { AuthClient, Session } from "@butter/auth";
 import type { DbClient } from "@butter/db";
 import type { CloudflareEnv } from "../../env/env";
 
 export type CreateContextOptions = {
 	req: Request;
 	db: DbClient;
-	auth: Auth;
+	auth: AuthClient;
 	env: CloudflareEnv;
 };
 
@@ -13,7 +13,7 @@ export type CreateContextOutput = {
 	req: Request;
 	db: DbClient;
 	auth: {
-		client: Auth;
+		client: AuthClient;
 		session: Session | null;
 	};
 	env: CloudflareEnv;

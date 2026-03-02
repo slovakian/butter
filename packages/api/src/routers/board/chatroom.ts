@@ -1,4 +1,3 @@
-import { ORPCError } from "@orpc/server";
 import { z } from "zod";
 import { publicProcedure } from "../../procedures";
 
@@ -9,7 +8,7 @@ export const getBySlug = publicProcedure
 			chatroomSlug: z.string(),
 		}),
 	)
-	.handler(async ({ input, context }) => {
+	.handler(async ({ input, context, errors }) => {
 		const chatroom = await context.db.chatroom.findFirst({
 			where: {
 				slug: input.chatroomSlug,
@@ -20,8 +19,11 @@ export const getBySlug = publicProcedure
 		});
 
 		if (!chatroom) {
-			throw new ORPCError("NOT_FOUND", {
+			throw errors.NOT_FOUND({
 				message: "Chatroom not found",
+				data: {
+					resource: "Chatroom",
+				},
 			});
 		}
 

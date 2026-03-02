@@ -11,7 +11,6 @@ export const createAuth = (db: DbClient) =>
 		database: zenstackAdapter(db, {
 			provider: "postgresql",
 		}),
-
 		trustedOrigins: [env.CORS_ORIGIN],
 		emailAndPassword: {
 			enabled: true,
@@ -29,6 +28,6 @@ export const createAuth = (db: DbClient) =>
 		plugins: [adminPlugin, boardPlugin, anonymous()],
 	});
 
-export type Auth = ReturnType<typeof createAuth>;
-export type Session = Auth["$Infer"]["Session"];
+export type AuthClient = ReturnType<typeof createAuth>;
+export type Session = AuthClient["$Infer"]["Session"];
 export * from "./lib/boards/permissions";

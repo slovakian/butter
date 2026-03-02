@@ -1,6 +1,6 @@
 import { createContext } from "@butter/api/context";
 import { appRouter } from "@butter/api/routers/index";
-import { type Auth, createAuth } from "@butter/auth";
+import { type AuthClient, createAuth } from "@butter/auth";
 import { createDb, type DbClient } from "@butter/db";
 import { env } from "@butter/env/server";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
@@ -20,7 +20,7 @@ export { Chatroom };
 const app = new Hono<{
 	Variables: {
 		db: DbClient;
-		auth: Auth;
+		auth: AuthClient;
 	};
 	Bindings: Env;
 }>();

@@ -1,10 +1,9 @@
-import { ORPCError } from "@orpc/server";
 import { z } from "zod";
 import { publicProcedure } from "../../procedures";
 
 export const getBySlug = publicProcedure
 	.input(z.object({ slug: z.string() }))
-	.handler(async ({ input, context }) => {
+	.handler(async ({ input, context, errors }) => {
 		const board = await context.db.board.findUnique({
 			where: { slug: input.slug },
 			include: {
@@ -13,8 +12,11 @@ export const getBySlug = publicProcedure
 		});
 
 		if (!board) {
-			throw new ORPCError("NOT_FOUND", {
+			throw errors.NOT_FOUND({
 				message: "Board not found",
+				data: {
+					resource: "Board",
+				},
 			});
 		}
 
