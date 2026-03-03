@@ -9,9 +9,13 @@ export function buildThemeStyles(
 	const { throw: shouldThrow = false } = options;
 
 	try {
-		const theme = shouldThrow
-			? themeVariablesSchema.parse(data)
-			: themeVariablesSchema.safeParse(data).data;
+		const result = themeVariablesSchema.safeParse(data);
+		if (!result.success) {
+			console.error("[buildThemeStyles] Validation failed:", result.error);
+			if (shouldThrow) throw result.error;
+			return undefined;
+		}
+		const theme = result.data;
 
 		if (!theme) return undefined;
 
@@ -35,7 +39,7 @@ export function buildThemeStyles(
 			"--border": `oklch(${theme.border})`,
 			"--input": `oklch(${theme.input})`,
 			"--ring": `oklch(${theme.ring})`,
-			"--radius": theme.radius,
+			"--radius": `${theme.radius}rem`,
 			"--chart-1": `oklch(${theme.chart1})`,
 			"--chart-2": `oklch(${theme.chart2})`,
 			"--chart-3": `oklch(${theme.chart3})`,
@@ -49,6 +53,14 @@ export function buildThemeStyles(
 			"--sidebar-accent-foreground": `oklch(${theme.sidebarAccentForeground})`,
 			"--sidebar-border": `oklch(${theme.sidebarBorder})`,
 			"--sidebar-ring": `oklch(${theme.sidebarRing})`,
+			"--topbar": `oklch(${theme.topbar})`,
+			"--topbar-foreground": `oklch(${theme.topbarForeground})`,
+			"--topbar-primary": `oklch(${theme.topbarPrimary})`,
+			"--topbar-primary-foreground": `oklch(${theme.topbarPrimaryForeground})`,
+			"--topbar-accent": `oklch(${theme.topbarAccent})`,
+			"--topbar-accent-foreground": `oklch(${theme.topbarAccentForeground})`,
+			"--topbar-border": `oklch(${theme.topbarBorder})`,
+			"--topbar-ring": `oklch(${theme.topbarRing})`,
 		} as React.CSSProperties;
 	} catch (e) {
 		if (shouldThrow) throw e;

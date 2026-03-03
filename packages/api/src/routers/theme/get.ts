@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { publicProcedure } from "../../procedures";
+import { protectedProcedure, publicProcedure } from "../../procedures";
 
 export const getTheme = publicProcedure
 	.input(
@@ -25,3 +25,14 @@ export const getTheme = publicProcedure
 
 		return theme;
 	});
+
+export const getUserTheme = protectedProcedure.handler(async ({ context }) => {
+	const theme = await context.db.user.findFirst({
+		where: { id: Number(context.auth.session.user.id) },
+		select: {
+			themesUsing: true,
+		},
+	});
+
+	return theme?.themesUsing[0];
+});

@@ -1,23 +1,24 @@
 import { env } from "@butter/env/web";
 import { useQuery } from "@tanstack/react-query";
-import { Menu } from "lucide-react";
+// import { Menu } from "lucide-react";
 import { usePartySocket } from "partysocket/react";
 import { useEffect, useRef, useState } from "react";
-import {
-	Drawer,
-	DrawerContent,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Separator } from "@/components/ui/separator";
+// import {
+// 	Drawer,
+// 	DrawerContent,
+// 	DrawerHeader,
+// 	DrawerTitle,
+// 	DrawerTrigger,
+// } from "@/components/ui/drawer";
+// import { Separator } from "@/components/ui/separator";
 // import {
 // 	Tooltip,
 // 	TooltipContent,
 // 	TooltipTrigger,
 // } from "@/components/ui/tooltip";
 import { api } from "@/utils/orpc";
-import { SidebarNav } from "../../-components/sidebar-nav";
+
+// import { SidebarNav } from "../../-components/sidebar-nav";
 
 type ChatroomProps = {
 	boardSlug: string;
@@ -45,13 +46,6 @@ export function Chatroom({ boardSlug, itemSlug }: ChatroomProps) {
 		}),
 	);
 
-	const { data: board } = useQuery(
-		api.board.getBySlug.queryOptions({
-			input: { slug: boardSlug },
-			staleTime: Number.POSITIVE_INFINITY,
-		}),
-	);
-
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [inputValue, setInputValue] = useState("");
 
@@ -61,6 +55,7 @@ export function Chatroom({ boardSlug, itemSlug }: ChatroomProps) {
 
 	// Keep ref in sync for event handlers
 	const viewingPageRef = useRef(viewingPage);
+
 	useEffect(() => {
 		viewingPageRef.current = viewingPage;
 	}, [viewingPage]);
@@ -138,36 +133,6 @@ export function Chatroom({ boardSlug, itemSlug }: ChatroomProps) {
 			{/* ITEM DETAILS BAR */}
 			<div className="flex h-8 shrink-0 items-center justify-between border-border border-b bg-muted/50 px-3 text-foreground text-xs">
 				<div className="flex items-center gap-2">
-					<div className="md:hidden">
-						<Drawer>
-							<DrawerTrigger asChild>
-								<button
-									type="button"
-									className="flex cursor-pointer items-center justify-center rounded-none p-1 hover:bg-accent hover:text-accent-foreground"
-								>
-									<Menu className="h-4 w-4" />
-								</button>
-							</DrawerTrigger>
-							<Separator orientation="vertical" />
-							<DrawerContent className="h-[75vh] font-mono">
-								<DrawerHeader className="sr-only">
-									<DrawerTitle>Navigation Menu</DrawerTitle>
-								</DrawerHeader>
-								<div className="flex h-full flex-col overflow-hidden text-foreground">
-									<SidebarNav
-										items={
-											board?.items?.map((item) => ({
-												id: String(item.id),
-												name: item.name,
-												slug: item.slug,
-												type: item.type,
-											})) || []
-										}
-									/>
-								</div>
-							</DrawerContent>
-						</Drawer>
-					</div>
 					<div className="truncate font-bold">💬 {chatroom.name}</div>
 				</div>
 

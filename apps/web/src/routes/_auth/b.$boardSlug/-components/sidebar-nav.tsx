@@ -1,22 +1,31 @@
-import { Link, useParams } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { api } from "@/utils/orpc";
 
 type SidebarNavProps = {
 	items: {
-		id: string;
+		id: number;
 		name: string;
 		slug: string;
 		type: string;
 	}[];
+	slug: string;
 };
 
-export function SidebarNav({ items }: SidebarNavProps) {
-	const { boardSlug } = useParams({ from: "/_auth/b/$boardSlug/" });
+export function SidebarNav({ items, slug }: SidebarNavProps) {
+	const { data: board } = useQuery(
+		api.board.getBySlug.queryOptions({
+			input: {
+				slug: slug,
+			},
+		}),
+	);
 
 	return (
 		<>
 			{/* HEADER */}
 			<div className="flex h-8 shrink-0 items-center border-border border-b bg-muted/50 px-3 font-bold text-foreground text-xs">
-				🪐 Notai HQ
+				{board?.name}
 			</div>
 
 			{/* SCROLLABLE NAVIGATION */}
@@ -30,7 +39,7 @@ export function SidebarNav({ items }: SidebarNavProps) {
 							<li key={item.id}>
 								<Link
 									to="/b/$boardSlug/$itemSlug"
-									params={{ boardSlug, itemSlug: item.slug }}
+									params={{ boardSlug: slug, itemSlug: item.slug }}
 									className="block cursor-pointer px-1 py-0.5 text-xs hover:bg-accent hover:text-accent-foreground"
 									activeProps={{
 										className: "bg-accent text-accent-foreground font-bold",

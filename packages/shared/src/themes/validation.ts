@@ -23,8 +23,8 @@ const oklchSchema = z
 
 const remSchema = z
 	.string()
-	.describe("CSS rem unit. Examples: '0.5rem', '.75rem'.")
-	.regex(/^-?(\d*\.?\d+)rem$/, "Invalid REM unit format.");
+	.describe("CSS rem unit (numeric string). Examples: '0.5', '.75'.")
+	.regex(/^-?(\d*\.?\d+)$/, "Invalid number format for REM unit.");
 
 export const themeVariablesSchema = z.object({
 	// Base Colors
@@ -65,12 +65,23 @@ export const themeVariablesSchema = z.object({
 	sidebarBorder: oklchSchema,
 	sidebarRing: oklchSchema,
 
+	// Topbar
+	topbar: oklchSchema,
+	topbarForeground: oklchSchema,
+	topbarPrimary: oklchSchema,
+	topbarPrimaryForeground: oklchSchema,
+	topbarAccent: oklchSchema,
+	topbarAccentForeground: oklchSchema,
+	topbarBorder: oklchSchema,
+	topbarRing: oklchSchema,
+
 	// Layout
-	radius: remSchema.optional(), // Optional since it usually only exists on :root
+	radius: remSchema.nullish(), // Optional since it usually only exists on :root
 });
 
 export const themeSchema = z.object({
-	id: z.number().int(), // Note: Changed z.int() to z.number().int() for correct Zod syntax
+	id: z.int(),
+	userId: z.int().nullable(),
 	name: z.string(),
 	isDark: z.boolean(),
 	variables: themeVariablesSchema,

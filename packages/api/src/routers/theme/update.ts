@@ -49,7 +49,7 @@ export const updateTheme = protectedProcedure
 			};
 
 			if (!newVariables.radius) {
-				newVariables.radius = "0.5rem";
+				newVariables.radius = "0.5";
 			}
 		}
 

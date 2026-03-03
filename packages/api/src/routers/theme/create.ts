@@ -9,7 +9,7 @@ export const createTheme = protectedProcedure
 
 		const variables = {
 			...input.variables,
-			radius: input.variables.radius ?? "0.5rem",
+			radius: input.variables.radius ?? "0.5",
 		};
 
 		const theme = await db.theme.create({

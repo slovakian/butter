@@ -16,7 +16,7 @@ import { api } from "@/utils/orpc";
 import { ThemeSelector } from "./selector";
 
 interface BoardThemeSelectorProps {
-	boardId: string;
+	boardId: number;
 	children: (props: { openDialog: () => void }) => React.ReactNode;
 }
 
@@ -28,7 +28,7 @@ export function BoardThemeSelector({
 	const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
 
 	const { mutate, isPending } = useMutation(
-		api.theme.applyToBoard.mutationOptions({
+		api.theme.apply.toBoard.mutationOptions({
 			onSuccess: () => {
 				toast.success("Theme applied successfully");
 				setIsOpen(false);
@@ -42,15 +42,14 @@ export function BoardThemeSelector({
 	const handleApply = () => {
 		if (!selectedThemeId) return;
 		const themeIdNum = Number.parseInt(selectedThemeId);
-		const boardIdNum = Number.parseInt(boardId);
 
-		if (Number.isNaN(themeIdNum) || Number.isNaN(boardIdNum)) {
-			toast.error("Invalid board or theme ID");
+		if (Number.isNaN(themeIdNum)) {
+			toast.error("Invalid theme ID");
 			return;
 		}
 
 		mutate({
-			boardId: boardIdNum,
+			boardId,
 			themeId: themeIdNum,
 		});
 	};

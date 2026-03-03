@@ -6,10 +6,10 @@ import {
 	HeadContent,
 	Outlet,
 	Scripts,
-	useMatches,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "@/components/ui/sonner";
+import { useTheme } from "@/features/themes/query";
 import { buildThemeStyles } from "@/features/themes/utils";
 import { cn } from "@/lib/utils";
 import type { api } from "@/utils/orpc";
@@ -50,15 +50,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootDocument() {
-	// const matches = useMatches();
-	// const spaceMatch = matches.find((m) => m.routeId === "/_auth/b/$boardSlug");
-	// const activeTheme = spaceMatch?.loaderData?.spaceThemeData;
+	const theme = useTheme();
 
 	return (
 		<html
 			lang="en"
-			// className={cn(activeTheme?.isDark ? "dark" : undefined)}
-			// style={activeTheme ? buildThemeStyles(activeTheme.variables) : undefined}
+			className={cn(theme?.isDark ? "dark" : undefined)}
+			style={theme ? buildThemeStyles(theme.variables) : undefined}
 		>
 			<head>
 				<HeadContent />

@@ -1,13 +1,13 @@
+import type { AuthClient } from "@butter/auth";
 import { env } from "@butter/env/web";
-import { polarClient } from "@polar-sh/better-auth";
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
-import { adminClient } from "better-auth/client/plugins";
+import { adminClient, customSessionClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 
 const authOptions = {
 	baseURL: env.VITE_SERVER_URL,
-	plugins: [polarClient(), adminClient()],
+	plugins: [customSessionClient<AuthClient>(), adminClient()],
 };
 
 const getAuthClient = createIsomorphicFn()

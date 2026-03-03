@@ -1,42 +1,50 @@
 import type { ThemeInsert } from "@butter/shared/themes/types";
 
 export const DEFAULT_THEME = {
-	name: "Butter Default Light",
-	slug: "butter-default-light",
-	isDark: false,
+	name: "Minecraft",
+	isDark: true,
+	// oklch colors and rem radius
 	variables: {
-		background: "oklch(0.985 0.021 108)",
-		foreground: "oklch(0.36 0.12 25)",
-		card: "oklch(0.9 0.03 54)",
-		cardForeground: "oklch(0.36 0.12 25)",
-		popover: "oklch(0.9 0.03 54)",
-		popoverForeground: "oklch(0.36 0.12 25)",
-		primary: "oklch(0.86 0.09 61)",
-		primaryForeground: "oklch(0.36 0.12 25)",
-		secondary: "oklch(0.85 0.05 50)",
-		secondaryForeground: "oklch(0.36 0.12 25)",
-		muted: "oklch(0.9 0.03 54)",
-		mutedForeground: "oklch(0.45 0.16 29)",
-		accent: "oklch(0.9 0.03 54)",
-		accentForeground: "oklch(0.45 0.3 264)",
-		destructive: "oklch(0.628 0.257 29.2)",
-		destructiveForeground: "oklch(0.985 0.021 108)", // Assuming background color for destructive foreground
-		border: "oklch(0.81 0.04 49)",
-		input: "oklch(0.81 0.04 49)",
-		ring: "oklch(0.86 0.09 61)",
-		radius: "0.625rem",
-		chart1: "oklch(0.809 0.105 251.813)",
-		chart2: "oklch(0.623 0.214 259.815)",
-		chart3: "oklch(0.546 0.245 262.881)",
-		chart4: "oklch(0.488 0.243 264.376)",
-		chart5: "oklch(0.424 0.199 265.638)",
-		sidebar: "oklch(0.985 0.021 108)",
-		sidebarForeground: "oklch(0.36 0.12 25)",
-		sidebarPrimary: "oklch(0.86 0.09 61)",
-		sidebarPrimaryForeground: "oklch(0.36 0.12 25)",
-		sidebarAccent: "oklch(0.9 0.03 54)",
-		sidebarAccentForeground: "oklch(0.36 0.12 25)",
-		sidebarBorder: "oklch(0.81 0.04 49)",
-		sidebarRing: "oklch(0.86 0.09 61)",
+		background: "0.25 0.02 90", // Dark dirt/stone background
+		foreground: "0.98 0 0", // White text
+		card: "0.35 0.02 90", // Lighter stone for cards
+		cardForeground: "0.98 0 0",
+		popover: "0.25 0.02 90",
+		popoverForeground: "0.98 0 0",
+		primary: "0.6 0.18 145", // Grass Green
+		primaryForeground: "0.98 0 0",
+		secondary: "0.45 0.05 70", // Stone/Cobblestone
+		secondaryForeground: "0.98 0 0",
+		muted: "0.3 0.02 90",
+		mutedForeground: "0.7 0 0",
+		accent: "0.85 0.15 230", // Diamond Blue
+		accentForeground: "0.15 0 0",
+		destructive: "0.5 0.2 25", // TNT Red
+		destructiveForeground: "0.98 0 0",
+		border: "0.5 0.02 90",
+		input: "0.2 0.02 90",
+		ring: "0.6 0.18 145",
+		radius: "0", // Blocky!
+		chart1: "0.6 0.18 145", // Green
+		chart2: "0.48 0.12 60", // Dirt
+		chart3: "0.85 0.15 230", // Diamond
+		chart4: "0.9 0.15 95", // Gold
+		chart5: "0.4 0.2 25", // Redstone
+		sidebar: "0.2 0.02 90",
+		sidebarForeground: "0.98 0 0",
+		sidebarPrimary: "0.6 0.18 145",
+		sidebarPrimaryForeground: "0.98 0 0",
+		sidebarAccent: "0.3 0.02 90",
+		sidebarAccentForeground: "0.98 0 0",
+		sidebarBorder: "0.5 0.02 90",
+		sidebarRing: "0.6 0.18 145",
+		topbar: "0.2 0.02 90",
+		topbarForeground: "0.98 0 0",
+		topbarPrimary: "0.6 0.18 145",
+		topbarPrimaryForeground: "0.98 0 0",
+		topbarAccent: "0.3 0.02 90",
+		topbarAccentForeground: "0.98 0 0",
+		topbarBorder: "0.5 0.02 90",
+		topbarRing: "0.6 0.18 145",
 	},
-} satisfies ThemeInsert;
+} satisfies Omit<ThemeInsert, "userId" | "id">;

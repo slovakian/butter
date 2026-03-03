@@ -864,9 +864,94 @@ export class SchemaType implements SchemaDef {
                     name: "ring",
                     type: "String"
                 },
+                chart1: {
+                    name: "chart1",
+                    type: "String"
+                },
+                chart2: {
+                    name: "chart2",
+                    type: "String"
+                },
+                chart3: {
+                    name: "chart3",
+                    type: "String"
+                },
+                chart4: {
+                    name: "chart4",
+                    type: "String"
+                },
+                chart5: {
+                    name: "chart5",
+                    type: "String"
+                },
+                sidebar: {
+                    name: "sidebar",
+                    type: "String"
+                },
+                sidebarForeground: {
+                    name: "sidebarForeground",
+                    type: "String"
+                },
+                sidebarPrimary: {
+                    name: "sidebarPrimary",
+                    type: "String"
+                },
+                sidebarPrimaryForeground: {
+                    name: "sidebarPrimaryForeground",
+                    type: "String"
+                },
+                sidebarAccent: {
+                    name: "sidebarAccent",
+                    type: "String"
+                },
+                sidebarAccentForeground: {
+                    name: "sidebarAccentForeground",
+                    type: "String"
+                },
+                sidebarBorder: {
+                    name: "sidebarBorder",
+                    type: "String"
+                },
+                sidebarRing: {
+                    name: "sidebarRing",
+                    type: "String"
+                },
+                topbar: {
+                    name: "topbar",
+                    type: "String"
+                },
+                topbarForeground: {
+                    name: "topbarForeground",
+                    type: "String"
+                },
+                topbarPrimary: {
+                    name: "topbarPrimary",
+                    type: "String"
+                },
+                topbarPrimaryForeground: {
+                    name: "topbarPrimaryForeground",
+                    type: "String"
+                },
+                topbarAccent: {
+                    name: "topbarAccent",
+                    type: "String"
+                },
+                topbarAccentForeground: {
+                    name: "topbarAccentForeground",
+                    type: "String"
+                },
+                topbarBorder: {
+                    name: "topbarBorder",
+                    type: "String"
+                },
+                topbarRing: {
+                    name: "topbarRing",
+                    type: "String"
+                },
                 radius: {
                     name: "radius",
-                    type: "String"
+                    type: "String",
+                    optional: true
                 }
             }
         }
