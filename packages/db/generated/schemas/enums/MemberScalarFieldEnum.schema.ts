@@ -1,5 +1,11 @@
-import * as z from 'zod';
+import * as z from "zod";
 
-export const MemberScalarFieldEnumSchema = z.enum(['id', 'boardId', 'userId', 'role', 'createdAt'])
+export const MemberScalarFieldEnumSchema = z.enum([
+	"id",
+	"boardId",
+	"userId",
+	"role",
+	"createdAt",
+]);
 
 export type MemberScalarFieldEnum = z.infer<typeof MemberScalarFieldEnumSchema>;

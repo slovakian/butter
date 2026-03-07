@@ -1,8 +1,18 @@
-import type { Prisma } from '../../prisma/generated/client';
-import * as z from 'zod';
-import { ThemeUpdateManyMutationInputObjectSchema as ThemeUpdateManyMutationInputObjectSchema } from './objects/ThemeUpdateManyMutationInput.schema';
-import { ThemeWhereInputObjectSchema as ThemeWhereInputObjectSchema } from './objects/ThemeWhereInput.schema';
+import * as z from "zod";
+import type { Prisma } from "../../prisma/generated/client";
+import { ThemeUpdateManyMutationInputObjectSchema } from "./objects/ThemeUpdateManyMutationInput.schema";
+import { ThemeWhereInputObjectSchema } from "./objects/ThemeWhereInput.schema";
 
-export const ThemeUpdateManySchema: z.ZodType<Prisma.ThemeUpdateManyArgs> = z.object({ data: ThemeUpdateManyMutationInputObjectSchema, where: ThemeWhereInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ThemeUpdateManyArgs>;
+export const ThemeUpdateManySchema: z.ZodType<Prisma.ThemeUpdateManyArgs> = z
+	.object({
+		data: ThemeUpdateManyMutationInputObjectSchema,
+		where: ThemeWhereInputObjectSchema.optional(),
+	})
+	.strict() as unknown as z.ZodType<Prisma.ThemeUpdateManyArgs>;
 
-export const ThemeUpdateManyZodSchema = z.object({ data: ThemeUpdateManyMutationInputObjectSchema, where: ThemeWhereInputObjectSchema.optional() }).strict();
+export const ThemeUpdateManyZodSchema = z
+	.object({
+		data: ThemeUpdateManyMutationInputObjectSchema,
+		where: ThemeWhereInputObjectSchema.optional(),
+	})
+	.strict();

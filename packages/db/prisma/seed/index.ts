@@ -1,4 +1,5 @@
-import { PrismaNeonHttp } from "@prisma/adapter-neon";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 import { PrismaClient } from "../generated/client";
 import { seedBoards } from "./data";
 
@@ -10,7 +11,8 @@ if (!DATABASE_URL) {
 	process.exit(1);
 }
 
-const adapter = new PrismaNeonHttp(DATABASE_URL, {});
+const pool = new Pool({ connectionString: DATABASE_URL });
+const adapter = new PrismaPg(pool);
 const db = new PrismaClient({ adapter });
 
 async function main() {
@@ -60,4 +62,5 @@ main()
 	})
 	.finally(async () => {
 		await db.$disconnect();
+		await pool.end();
 	});

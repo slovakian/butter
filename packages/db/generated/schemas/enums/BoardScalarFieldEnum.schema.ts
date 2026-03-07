@@ -1,5 +1,14 @@
-import * as z from 'zod';
+import * as z from "zod";
 
-export const BoardScalarFieldEnumSchema = z.enum(['id', 'name', 'slug', 'logo', 'isOfficial', 'createdAt', 'metadata', 'themeId'])
+export const BoardScalarFieldEnumSchema = z.enum([
+	"id",
+	"name",
+	"slug",
+	"logo",
+	"isOfficial",
+	"createdAt",
+	"metadata",
+	"themeId",
+]);
 
 export type BoardScalarFieldEnum = z.infer<typeof BoardScalarFieldEnumSchema>;

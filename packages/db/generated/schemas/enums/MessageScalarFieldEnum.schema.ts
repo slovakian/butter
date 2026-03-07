@@ -1,5 +1,13 @@
-import * as z from 'zod';
+import * as z from "zod";
 
-export const MessageScalarFieldEnumSchema = z.enum(['id', 'content', 'pageNumber', 'chatroomId', 'userId'])
+export const MessageScalarFieldEnumSchema = z.enum([
+	"id",
+	"content",
+	"pageNumber",
+	"chatroomId",
+	"userId",
+]);
 
-export type MessageScalarFieldEnum = z.infer<typeof MessageScalarFieldEnumSchema>;
+export type MessageScalarFieldEnum = z.infer<
+	typeof MessageScalarFieldEnumSchema
+>;

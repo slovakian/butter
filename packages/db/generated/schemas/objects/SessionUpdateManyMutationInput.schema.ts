@@ -1,18 +1,66 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { DateTimeFieldUpdateOperationsInputObjectSchema as DateTimeFieldUpdateOperationsInputObjectSchema } from './DateTimeFieldUpdateOperationsInput.schema';
-import { StringFieldUpdateOperationsInputObjectSchema as StringFieldUpdateOperationsInputObjectSchema } from './StringFieldUpdateOperationsInput.schema';
-import { NullableStringFieldUpdateOperationsInputObjectSchema as NullableStringFieldUpdateOperationsInputObjectSchema } from './NullableStringFieldUpdateOperationsInput.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { DateTimeFieldUpdateOperationsInputObjectSchema } from "./DateTimeFieldUpdateOperationsInput.schema";
+import { NullableStringFieldUpdateOperationsInputObjectSchema } from "./NullableStringFieldUpdateOperationsInput.schema";
+import { StringFieldUpdateOperationsInputObjectSchema } from "./StringFieldUpdateOperationsInput.schema";
 
-const makeSchema = () => z.object({
-  expiresAt: z.union([z.coerce.date(), z.lazy(() => DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(),
-  token: z.union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputObjectSchema)]).optional(),
-  createdAt: z.union([z.coerce.date(), z.lazy(() => DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(),
-  updatedAt: z.union([z.coerce.date(), z.lazy(() => DateTimeFieldUpdateOperationsInputObjectSchema)]).optional(),
-  ipAddress: z.union([z.string(), z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema)]).optional().nullable(),
-  userAgent: z.union([z.string(), z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema)]).optional().nullable(),
-  impersonatedBy: z.union([z.string(), z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema)]).optional().nullable(),
-  activeOrganizationId: z.union([z.string(), z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema)]).optional().nullable()
-}).strict();
-export const SessionUpdateManyMutationInputObjectSchema: z.ZodType<Prisma.SessionUpdateManyMutationInput> = makeSchema() as unknown as z.ZodType<Prisma.SessionUpdateManyMutationInput>;
+const makeSchema = () =>
+	z
+		.object({
+			expiresAt: z
+				.union([
+					z.coerce.date(),
+					z.lazy(() => DateTimeFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional(),
+			token: z
+				.union([
+					z.string(),
+					z.lazy(() => StringFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional(),
+			createdAt: z
+				.union([
+					z.coerce.date(),
+					z.lazy(() => DateTimeFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional(),
+			updatedAt: z
+				.union([
+					z.coerce.date(),
+					z.lazy(() => DateTimeFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional(),
+			ipAddress: z
+				.union([
+					z.string(),
+					z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional()
+				.nullable(),
+			userAgent: z
+				.union([
+					z.string(),
+					z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional()
+				.nullable(),
+			impersonatedBy: z
+				.union([
+					z.string(),
+					z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional()
+				.nullable(),
+			activeOrganizationId: z
+				.union([
+					z.string(),
+					z.lazy(() => NullableStringFieldUpdateOperationsInputObjectSchema),
+				])
+				.optional()
+				.nullable(),
+		})
+		.strict();
+export const SessionUpdateManyMutationInputObjectSchema: z.ZodType<Prisma.SessionUpdateManyMutationInput> =
+	makeSchema() as unknown as z.ZodType<Prisma.SessionUpdateManyMutationInput>;
 export const SessionUpdateManyMutationInputObjectZodSchema = makeSchema();

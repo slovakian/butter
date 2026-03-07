@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "unknown",
-  "generatedAt": "2026-03-07T06:46:07.544Z",
+  "generatedAt": "2026-03-07T18:30:07.530Z",
   "outputPath": "/Users/jason/dev/butter/packages/shared/src/schemas",
   "files": [
     "enums/TransactionIsolationLevel.schema.ts",

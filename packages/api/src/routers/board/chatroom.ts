@@ -1,13 +1,19 @@
+import {
+	BoardInputSchema,
+	ChatroomInputSchema,
+	ChatroomSchema,
+} from "@butter/shared/schemas";
 import { z } from "zod";
 import { publicProcedure } from "../../procedures";
 
 export const getBySlug = publicProcedure
 	.input(
 		z.object({
-			boardSlug: z.string(),
-			chatroomSlug: z.string(),
+			boardSlug: BoardInputSchema.shape.slug,
+			chatroomSlug: ChatroomInputSchema.shape.slug,
 		}),
 	)
+	.output(ChatroomSchema)
 	.handler(async ({ input, context, errors }) => {
 		const chatroom = await context.db.chatroom.findFirst({
 			where: {

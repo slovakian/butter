@@ -1,5 +1,16 @@
-import * as z from 'zod';
+import * as z from "zod";
 
-export const InvitationScalarFieldEnumSchema = z.enum(['id', 'boardId', 'email', 'role', 'status', 'expiresAt', 'createdAt', 'inviterId'])
+export const InvitationScalarFieldEnumSchema = z.enum([
+	"id",
+	"boardId",
+	"email",
+	"role",
+	"status",
+	"expiresAt",
+	"createdAt",
+	"inviterId",
+]);
 
-export type InvitationScalarFieldEnum = z.infer<typeof InvitationScalarFieldEnumSchema>;
+export type InvitationScalarFieldEnum = z.infer<
+	typeof InvitationScalarFieldEnumSchema
+>;

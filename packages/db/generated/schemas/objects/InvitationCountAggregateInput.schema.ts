@@ -1,17 +1,20 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
 
-
-const makeSchema = () => z.object({
-  id: z.literal(true).optional(),
-  boardId: z.literal(true).optional(),
-  email: z.literal(true).optional(),
-  role: z.literal(true).optional(),
-  status: z.literal(true).optional(),
-  expiresAt: z.literal(true).optional(),
-  createdAt: z.literal(true).optional(),
-  inviterId: z.literal(true).optional(),
-  _all: z.literal(true).optional()
-}).strict();
-export const InvitationCountAggregateInputObjectSchema: z.ZodType<Prisma.InvitationCountAggregateInputType> = makeSchema() as unknown as z.ZodType<Prisma.InvitationCountAggregateInputType>;
+const makeSchema = () =>
+	z
+		.object({
+			id: z.literal(true).optional(),
+			boardId: z.literal(true).optional(),
+			email: z.literal(true).optional(),
+			role: z.literal(true).optional(),
+			status: z.literal(true).optional(),
+			expiresAt: z.literal(true).optional(),
+			createdAt: z.literal(true).optional(),
+			inviterId: z.literal(true).optional(),
+			_all: z.literal(true).optional(),
+		})
+		.strict();
+export const InvitationCountAggregateInputObjectSchema: z.ZodType<Prisma.InvitationCountAggregateInputType> =
+	makeSchema() as unknown as z.ZodType<Prisma.InvitationCountAggregateInputType>;
 export const InvitationCountAggregateInputObjectZodSchema = makeSchema();

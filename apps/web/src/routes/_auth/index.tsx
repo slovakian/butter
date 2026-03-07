@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import Header from "@/components/header";
 import { TopBar } from "@/components/topbar";
 import {
 	Table,

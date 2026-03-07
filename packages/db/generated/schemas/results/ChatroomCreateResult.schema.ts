@@ -1,9 +1,9 @@
-import * as z from 'zod';
+import * as z from "zod";
 export const ChatroomCreateResultSchema = z.object({
-  id: z.number().int(),
-  name: z.string(),
-  slug: z.string(),
-  boardId: z.number().int(),
-  board: z.unknown(),
-  messages: z.array(z.unknown())
+	id: z.number().int(),
+	name: z.string(),
+	slug: z.string(),
+	boardId: z.number().int(),
+	board: z.unknown(),
+	messages: z.array(z.unknown()),
 });

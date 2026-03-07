@@ -1,7 +1,23 @@
-import type { Prisma } from '../../prisma/generated/client';
-import * as z from 'zod';
-import { MemberCreateManyInputObjectSchema as MemberCreateManyInputObjectSchema } from './objects/MemberCreateManyInput.schema';
+import * as z from "zod";
+import type { Prisma } from "../../prisma/generated/client";
+import { MemberCreateManyInputObjectSchema } from "./objects/MemberCreateManyInput.schema";
 
-export const MemberCreateManySchema: z.ZodType<Prisma.MemberCreateManyArgs> = z.object({ data: z.union([ MemberCreateManyInputObjectSchema, z.array(MemberCreateManyInputObjectSchema) ]), skipDuplicates: z.boolean().optional() }).strict() as unknown as z.ZodType<Prisma.MemberCreateManyArgs>;
+export const MemberCreateManySchema: z.ZodType<Prisma.MemberCreateManyArgs> = z
+	.object({
+		data: z.union([
+			MemberCreateManyInputObjectSchema,
+			z.array(MemberCreateManyInputObjectSchema),
+		]),
+		skipDuplicates: z.boolean().optional(),
+	})
+	.strict() as unknown as z.ZodType<Prisma.MemberCreateManyArgs>;
 
-export const MemberCreateManyZodSchema = z.object({ data: z.union([ MemberCreateManyInputObjectSchema, z.array(MemberCreateManyInputObjectSchema) ]), skipDuplicates: z.boolean().optional() }).strict();
+export const MemberCreateManyZodSchema = z
+	.object({
+		data: z.union([
+			MemberCreateManyInputObjectSchema,
+			z.array(MemberCreateManyInputObjectSchema),
+		]),
+		skipDuplicates: z.boolean().optional(),
+	})
+	.strict();

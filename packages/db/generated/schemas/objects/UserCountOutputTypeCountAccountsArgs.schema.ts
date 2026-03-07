@@ -1,9 +1,12 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { AccountWhereInputObjectSchema as AccountWhereInputObjectSchema } from './AccountWhereInput.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { AccountWhereInputObjectSchema } from "./AccountWhereInput.schema";
 
-const makeSchema = () => z.object({
-  where: z.lazy(() => AccountWhereInputObjectSchema).optional()
-}).strict();
+const makeSchema = () =>
+	z
+		.object({
+			where: z.lazy(() => AccountWhereInputObjectSchema).optional(),
+		})
+		.strict();
 export const UserCountOutputTypeCountAccountsArgsObjectSchema = makeSchema();
 export const UserCountOutputTypeCountAccountsArgsObjectZodSchema = makeSchema();

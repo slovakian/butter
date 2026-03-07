@@ -1,12 +1,20 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { UserWhereUniqueInputObjectSchema as UserWhereUniqueInputObjectSchema } from './UserWhereUniqueInput.schema';
-import { UserCreateWithoutThemesUsingInputObjectSchema as UserCreateWithoutThemesUsingInputObjectSchema } from './UserCreateWithoutThemesUsingInput.schema';
-import { UserUncheckedCreateWithoutThemesUsingInputObjectSchema as UserUncheckedCreateWithoutThemesUsingInputObjectSchema } from './UserUncheckedCreateWithoutThemesUsingInput.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { UserCreateWithoutThemesUsingInputObjectSchema } from "./UserCreateWithoutThemesUsingInput.schema";
+import { UserUncheckedCreateWithoutThemesUsingInputObjectSchema } from "./UserUncheckedCreateWithoutThemesUsingInput.schema";
+import { UserWhereUniqueInputObjectSchema } from "./UserWhereUniqueInput.schema";
 
-const makeSchema = () => z.object({
-  where: z.lazy(() => UserWhereUniqueInputObjectSchema),
-  create: z.union([z.lazy(() => UserCreateWithoutThemesUsingInputObjectSchema), z.lazy(() => UserUncheckedCreateWithoutThemesUsingInputObjectSchema)])
-}).strict();
-export const UserCreateOrConnectWithoutThemesUsingInputObjectSchema: z.ZodType<Prisma.UserCreateOrConnectWithoutThemesUsingInput> = makeSchema() as unknown as z.ZodType<Prisma.UserCreateOrConnectWithoutThemesUsingInput>;
-export const UserCreateOrConnectWithoutThemesUsingInputObjectZodSchema = makeSchema();
+const makeSchema = () =>
+	z
+		.object({
+			where: z.lazy(() => UserWhereUniqueInputObjectSchema),
+			create: z.union([
+				z.lazy(() => UserCreateWithoutThemesUsingInputObjectSchema),
+				z.lazy(() => UserUncheckedCreateWithoutThemesUsingInputObjectSchema),
+			]),
+		})
+		.strict();
+export const UserCreateOrConnectWithoutThemesUsingInputObjectSchema: z.ZodType<Prisma.UserCreateOrConnectWithoutThemesUsingInput> =
+	makeSchema() as unknown as z.ZodType<Prisma.UserCreateOrConnectWithoutThemesUsingInput>;
+export const UserCreateOrConnectWithoutThemesUsingInputObjectZodSchema =
+	makeSchema();

@@ -1,13 +1,26 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { BoardArgsObjectSchema as BoardArgsObjectSchema } from './BoardArgs.schema';
-import { MessageFindManySchema as MessageFindManySchema } from '../findManyMessage.schema';
-import { ChatroomCountOutputTypeArgsObjectSchema as ChatroomCountOutputTypeArgsObjectSchema } from './ChatroomCountOutputTypeArgs.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { MessageFindManySchema } from "../findManyMessage.schema";
+import { BoardArgsObjectSchema } from "./BoardArgs.schema";
+import { ChatroomCountOutputTypeArgsObjectSchema } from "./ChatroomCountOutputTypeArgs.schema";
 
-const makeSchema = () => z.object({
-  board: z.union([z.boolean(), z.lazy(() => BoardArgsObjectSchema)]).optional(),
-  messages: z.union([z.boolean(), z.lazy(() => MessageFindManySchema)]).optional(),
-  _count: z.union([z.boolean(), z.lazy(() => ChatroomCountOutputTypeArgsObjectSchema)]).optional()
-}).strict();
-export const ChatroomIncludeObjectSchema: z.ZodType<Prisma.ChatroomInclude> = makeSchema() as unknown as z.ZodType<Prisma.ChatroomInclude>;
+const makeSchema = () =>
+	z
+		.object({
+			board: z
+				.union([z.boolean(), z.lazy(() => BoardArgsObjectSchema)])
+				.optional(),
+			messages: z
+				.union([z.boolean(), z.lazy(() => MessageFindManySchema)])
+				.optional(),
+			_count: z
+				.union([
+					z.boolean(),
+					z.lazy(() => ChatroomCountOutputTypeArgsObjectSchema),
+				])
+				.optional(),
+		})
+		.strict();
+export const ChatroomIncludeObjectSchema: z.ZodType<Prisma.ChatroomInclude> =
+	makeSchema() as unknown as z.ZodType<Prisma.ChatroomInclude>;
 export const ChatroomIncludeObjectZodSchema = makeSchema();

@@ -72,13 +72,13 @@ function RouteComponent() {
 								<DrawerTitle>Navigation Menu</DrawerTitle>
 							</DrawerHeader>
 							<div className="flex h-full flex-col overflow-hidden text-foreground">
-								<SidebarNav slug={boardSlug} items={board?.items || []} />
+								<SidebarNav slug={boardSlug} chatrooms={board?.chatrooms || []} />
 							</div>
 						</DrawerContent>
 					</Drawer>
 				</div> */}
 				<aside className="w-56 shrink-0 flex-col border-border border-r bg-muted/30 md:flex">
-					<SidebarNav slug={boardSlug} items={board?.items || []} />
+					<SidebarNav slug={boardSlug} chatrooms={board?.chatrooms || []} />
 				</aside>
 				{/* MAIN CONTENT AREA */}
 				<main className="flex min-w-0 flex-1 flex-col bg-background">

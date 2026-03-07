@@ -1,3 +1,4 @@
+// biome-ignore-all lint/style/noNonNullAssertion: Used for environment variables in alchemy config
 import alchemy from "alchemy";
 import {
 	DurableObjectNamespace,

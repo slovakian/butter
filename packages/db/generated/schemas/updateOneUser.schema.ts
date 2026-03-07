@@ -1,11 +1,31 @@
-import type { Prisma } from '../../prisma/generated/client';
-import * as z from 'zod';
-import { UserSelectObjectSchema as UserSelectObjectSchema } from './objects/UserSelect.schema';
-import { UserIncludeObjectSchema as UserIncludeObjectSchema } from './objects/UserInclude.schema';
-import { UserUpdateInputObjectSchema as UserUpdateInputObjectSchema } from './objects/UserUpdateInput.schema';
-import { UserUncheckedUpdateInputObjectSchema as UserUncheckedUpdateInputObjectSchema } from './objects/UserUncheckedUpdateInput.schema';
-import { UserWhereUniqueInputObjectSchema as UserWhereUniqueInputObjectSchema } from './objects/UserWhereUniqueInput.schema';
+import * as z from "zod";
+import type { Prisma } from "../../prisma/generated/client";
+import { UserIncludeObjectSchema } from "./objects/UserInclude.schema";
+import { UserSelectObjectSchema } from "./objects/UserSelect.schema";
+import { UserUncheckedUpdateInputObjectSchema } from "./objects/UserUncheckedUpdateInput.schema";
+import { UserUpdateInputObjectSchema } from "./objects/UserUpdateInput.schema";
+import { UserWhereUniqueInputObjectSchema } from "./objects/UserWhereUniqueInput.schema";
 
-export const UserUpdateOneSchema: z.ZodType<Prisma.UserUpdateArgs> = z.object({ select: UserSelectObjectSchema.optional(), include: UserIncludeObjectSchema.optional(), data: z.union([UserUpdateInputObjectSchema, UserUncheckedUpdateInputObjectSchema]), where: UserWhereUniqueInputObjectSchema }).strict() as unknown as z.ZodType<Prisma.UserUpdateArgs>;
+export const UserUpdateOneSchema: z.ZodType<Prisma.UserUpdateArgs> = z
+	.object({
+		select: UserSelectObjectSchema.optional(),
+		include: UserIncludeObjectSchema.optional(),
+		data: z.union([
+			UserUpdateInputObjectSchema,
+			UserUncheckedUpdateInputObjectSchema,
+		]),
+		where: UserWhereUniqueInputObjectSchema,
+	})
+	.strict() as unknown as z.ZodType<Prisma.UserUpdateArgs>;
 
-export const UserUpdateOneZodSchema = z.object({ select: UserSelectObjectSchema.optional(), include: UserIncludeObjectSchema.optional(), data: z.union([UserUpdateInputObjectSchema, UserUncheckedUpdateInputObjectSchema]), where: UserWhereUniqueInputObjectSchema }).strict();
+export const UserUpdateOneZodSchema = z
+	.object({
+		select: UserSelectObjectSchema.optional(),
+		include: UserIncludeObjectSchema.optional(),
+		data: z.union([
+			UserUpdateInputObjectSchema,
+			UserUncheckedUpdateInputObjectSchema,
+		]),
+		where: UserWhereUniqueInputObjectSchema,
+	})
+	.strict();

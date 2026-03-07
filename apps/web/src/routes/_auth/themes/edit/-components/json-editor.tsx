@@ -1,5 +1,4 @@
 import { themeVariablesSchema } from "@butter/shared/themes/validation";
-import { okaidia } from "@uiw/codemirror-theme-okaidia";
 import CodeMirror from "@uiw/react-codemirror";
 import { jsonSchema } from "codemirror-json-schema";
 import type React from "react";

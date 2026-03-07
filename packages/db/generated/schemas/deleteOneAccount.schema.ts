@@ -1,9 +1,21 @@
-import type { Prisma } from '../../prisma/generated/client';
-import * as z from 'zod';
-import { AccountSelectObjectSchema as AccountSelectObjectSchema } from './objects/AccountSelect.schema';
-import { AccountIncludeObjectSchema as AccountIncludeObjectSchema } from './objects/AccountInclude.schema';
-import { AccountWhereUniqueInputObjectSchema as AccountWhereUniqueInputObjectSchema } from './objects/AccountWhereUniqueInput.schema';
+import * as z from "zod";
+import type { Prisma } from "../../prisma/generated/client";
+import { AccountIncludeObjectSchema } from "./objects/AccountInclude.schema";
+import { AccountSelectObjectSchema } from "./objects/AccountSelect.schema";
+import { AccountWhereUniqueInputObjectSchema } from "./objects/AccountWhereUniqueInput.schema";
 
-export const AccountDeleteOneSchema: z.ZodType<Prisma.AccountDeleteArgs> = z.object({ select: AccountSelectObjectSchema.optional(), include: AccountIncludeObjectSchema.optional(), where: AccountWhereUniqueInputObjectSchema }).strict() as unknown as z.ZodType<Prisma.AccountDeleteArgs>;
+export const AccountDeleteOneSchema: z.ZodType<Prisma.AccountDeleteArgs> = z
+	.object({
+		select: AccountSelectObjectSchema.optional(),
+		include: AccountIncludeObjectSchema.optional(),
+		where: AccountWhereUniqueInputObjectSchema,
+	})
+	.strict() as unknown as z.ZodType<Prisma.AccountDeleteArgs>;
 
-export const AccountDeleteOneZodSchema = z.object({ select: AccountSelectObjectSchema.optional(), include: AccountIncludeObjectSchema.optional(), where: AccountWhereUniqueInputObjectSchema }).strict();
+export const AccountDeleteOneZodSchema = z
+	.object({
+		select: AccountSelectObjectSchema.optional(),
+		include: AccountIncludeObjectSchema.optional(),
+		where: AccountWhereUniqueInputObjectSchema,
+	})
+	.strict();

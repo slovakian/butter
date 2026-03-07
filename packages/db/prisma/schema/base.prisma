@@ -1,7 +1,12 @@
+datasource db {
+  provider = "postgresql"
+}
+
 generator client {
-  provider     = "prisma-client" // rust-free and ESM
+  provider     = "prisma-client"
   output       = "../generated"
   moduleFormat = "esm"
+  runtime      = "workerd"
 }
 
 generator zod {
@@ -12,8 +17,4 @@ generator zod {
 
 generator json {
   provider = "prisma-json-types-generator"
-}
-
-datasource db {
-  provider = "postgresql"
 }

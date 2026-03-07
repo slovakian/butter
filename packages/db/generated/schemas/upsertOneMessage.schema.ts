@@ -1,13 +1,41 @@
-import type { Prisma } from '../../prisma/generated/client';
-import * as z from 'zod';
-import { MessageSelectObjectSchema as MessageSelectObjectSchema } from './objects/MessageSelect.schema';
-import { MessageIncludeObjectSchema as MessageIncludeObjectSchema } from './objects/MessageInclude.schema';
-import { MessageWhereUniqueInputObjectSchema as MessageWhereUniqueInputObjectSchema } from './objects/MessageWhereUniqueInput.schema';
-import { MessageCreateInputObjectSchema as MessageCreateInputObjectSchema } from './objects/MessageCreateInput.schema';
-import { MessageUncheckedCreateInputObjectSchema as MessageUncheckedCreateInputObjectSchema } from './objects/MessageUncheckedCreateInput.schema';
-import { MessageUpdateInputObjectSchema as MessageUpdateInputObjectSchema } from './objects/MessageUpdateInput.schema';
-import { MessageUncheckedUpdateInputObjectSchema as MessageUncheckedUpdateInputObjectSchema } from './objects/MessageUncheckedUpdateInput.schema';
+import * as z from "zod";
+import type { Prisma } from "../../prisma/generated/client";
+import { MessageCreateInputObjectSchema } from "./objects/MessageCreateInput.schema";
+import { MessageIncludeObjectSchema } from "./objects/MessageInclude.schema";
+import { MessageSelectObjectSchema } from "./objects/MessageSelect.schema";
+import { MessageUncheckedCreateInputObjectSchema } from "./objects/MessageUncheckedCreateInput.schema";
+import { MessageUncheckedUpdateInputObjectSchema } from "./objects/MessageUncheckedUpdateInput.schema";
+import { MessageUpdateInputObjectSchema } from "./objects/MessageUpdateInput.schema";
+import { MessageWhereUniqueInputObjectSchema } from "./objects/MessageWhereUniqueInput.schema";
 
-export const MessageUpsertOneSchema: z.ZodType<Prisma.MessageUpsertArgs> = z.object({ select: MessageSelectObjectSchema.optional(), include: MessageIncludeObjectSchema.optional(), where: MessageWhereUniqueInputObjectSchema, create: z.union([ MessageCreateInputObjectSchema, MessageUncheckedCreateInputObjectSchema ]), update: z.union([ MessageUpdateInputObjectSchema, MessageUncheckedUpdateInputObjectSchema ]) }).strict() as unknown as z.ZodType<Prisma.MessageUpsertArgs>;
+export const MessageUpsertOneSchema: z.ZodType<Prisma.MessageUpsertArgs> = z
+	.object({
+		select: MessageSelectObjectSchema.optional(),
+		include: MessageIncludeObjectSchema.optional(),
+		where: MessageWhereUniqueInputObjectSchema,
+		create: z.union([
+			MessageCreateInputObjectSchema,
+			MessageUncheckedCreateInputObjectSchema,
+		]),
+		update: z.union([
+			MessageUpdateInputObjectSchema,
+			MessageUncheckedUpdateInputObjectSchema,
+		]),
+	})
+	.strict() as unknown as z.ZodType<Prisma.MessageUpsertArgs>;
 
-export const MessageUpsertOneZodSchema = z.object({ select: MessageSelectObjectSchema.optional(), include: MessageIncludeObjectSchema.optional(), where: MessageWhereUniqueInputObjectSchema, create: z.union([ MessageCreateInputObjectSchema, MessageUncheckedCreateInputObjectSchema ]), update: z.union([ MessageUpdateInputObjectSchema, MessageUncheckedUpdateInputObjectSchema ]) }).strict();
+export const MessageUpsertOneZodSchema = z
+	.object({
+		select: MessageSelectObjectSchema.optional(),
+		include: MessageIncludeObjectSchema.optional(),
+		where: MessageWhereUniqueInputObjectSchema,
+		create: z.union([
+			MessageCreateInputObjectSchema,
+			MessageUncheckedCreateInputObjectSchema,
+		]),
+		update: z.union([
+			MessageUpdateInputObjectSchema,
+			MessageUncheckedUpdateInputObjectSchema,
+		]),
+	})
+	.strict();

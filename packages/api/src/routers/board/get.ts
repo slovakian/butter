@@ -11,7 +11,7 @@ export const getBySlug = publicProcedure
 		const board = await context.db.board.findUnique({
 			where: { slug: input.slug },
 			include: {
-				items: true,
+				chatrooms: true,
 				theme: true,
 				members: userId
 					? {

@@ -15,7 +15,7 @@ import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AuthBBoardSlugRouteRouteImport } from './routes/_auth/b.$boardSlug/route'
 import { Route as AuthThemesEditIndexRouteImport } from './routes/_auth/themes/edit/index'
 import { Route as AuthBBoardSlugIndexRouteImport } from './routes/_auth/b.$boardSlug/index'
-import { Route as AuthBBoardSlugItemSlugIndexRouteImport } from './routes/_auth/b.$boardSlug/$itemSlug/index'
+import { Route as AuthBBoardSlugChatroomSlugIndexRouteImport } from './routes/_auth/b.$boardSlug/$chatroomSlug/index'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
@@ -46,10 +46,10 @@ const AuthBBoardSlugIndexRoute = AuthBBoardSlugIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthBBoardSlugRouteRoute,
 } as any)
-const AuthBBoardSlugItemSlugIndexRoute =
-  AuthBBoardSlugItemSlugIndexRouteImport.update({
-    id: '/$itemSlug/',
-    path: '/$itemSlug/',
+const AuthBBoardSlugChatroomSlugIndexRoute =
+  AuthBBoardSlugChatroomSlugIndexRouteImport.update({
+    id: '/$chatroomSlug/',
+    path: '/$chatroomSlug/',
     getParentRoute: () => AuthBBoardSlugRouteRoute,
   } as any)
 
@@ -59,14 +59,14 @@ export interface FileRoutesByFullPath {
   '/b/$boardSlug': typeof AuthBBoardSlugRouteRouteWithChildren
   '/b/$boardSlug/': typeof AuthBBoardSlugIndexRoute
   '/themes/edit/': typeof AuthThemesEditIndexRoute
-  '/b/$boardSlug/$itemSlug/': typeof AuthBBoardSlugItemSlugIndexRoute
+  '/b/$boardSlug/$chatroomSlug/': typeof AuthBBoardSlugChatroomSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/': typeof AuthIndexRoute
   '/b/$boardSlug': typeof AuthBBoardSlugIndexRoute
   '/themes/edit': typeof AuthThemesEditIndexRoute
-  '/b/$boardSlug/$itemSlug': typeof AuthBBoardSlugItemSlugIndexRoute
+  '/b/$boardSlug/$chatroomSlug': typeof AuthBBoardSlugChatroomSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -76,7 +76,7 @@ export interface FileRoutesById {
   '/_auth/b/$boardSlug': typeof AuthBBoardSlugRouteRouteWithChildren
   '/_auth/b/$boardSlug/': typeof AuthBBoardSlugIndexRoute
   '/_auth/themes/edit/': typeof AuthThemesEditIndexRoute
-  '/_auth/b/$boardSlug/$itemSlug/': typeof AuthBBoardSlugItemSlugIndexRoute
+  '/_auth/b/$boardSlug/$chatroomSlug/': typeof AuthBBoardSlugChatroomSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -86,14 +86,14 @@ export interface FileRouteTypes {
     | '/b/$boardSlug'
     | '/b/$boardSlug/'
     | '/themes/edit/'
-    | '/b/$boardSlug/$itemSlug/'
+    | '/b/$boardSlug/$chatroomSlug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
     | '/'
     | '/b/$boardSlug'
     | '/themes/edit'
-    | '/b/$boardSlug/$itemSlug'
+    | '/b/$boardSlug/$chatroomSlug'
   id:
     | '__root__'
     | '/_auth'
@@ -102,7 +102,7 @@ export interface FileRouteTypes {
     | '/_auth/b/$boardSlug'
     | '/_auth/b/$boardSlug/'
     | '/_auth/themes/edit/'
-    | '/_auth/b/$boardSlug/$itemSlug/'
+    | '/_auth/b/$boardSlug/$chatroomSlug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,11 +153,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthBBoardSlugIndexRouteImport
       parentRoute: typeof AuthBBoardSlugRouteRoute
     }
-    '/_auth/b/$boardSlug/$itemSlug/': {
-      id: '/_auth/b/$boardSlug/$itemSlug/'
-      path: '/$itemSlug'
-      fullPath: '/b/$boardSlug/$itemSlug/'
-      preLoaderRoute: typeof AuthBBoardSlugItemSlugIndexRouteImport
+    '/_auth/b/$boardSlug/$chatroomSlug/': {
+      id: '/_auth/b/$boardSlug/$chatroomSlug/'
+      path: '/$chatroomSlug'
+      fullPath: '/b/$boardSlug/$chatroomSlug/'
+      preLoaderRoute: typeof AuthBBoardSlugChatroomSlugIndexRouteImport
       parentRoute: typeof AuthBBoardSlugRouteRoute
     }
   }
@@ -165,12 +165,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthBBoardSlugRouteRouteChildren {
   AuthBBoardSlugIndexRoute: typeof AuthBBoardSlugIndexRoute
-  AuthBBoardSlugItemSlugIndexRoute: typeof AuthBBoardSlugItemSlugIndexRoute
+  AuthBBoardSlugChatroomSlugIndexRoute: typeof AuthBBoardSlugChatroomSlugIndexRoute
 }
 
 const AuthBBoardSlugRouteRouteChildren: AuthBBoardSlugRouteRouteChildren = {
   AuthBBoardSlugIndexRoute: AuthBBoardSlugIndexRoute,
-  AuthBBoardSlugItemSlugIndexRoute: AuthBBoardSlugItemSlugIndexRoute,
+  AuthBBoardSlugChatroomSlugIndexRoute: AuthBBoardSlugChatroomSlugIndexRoute,
 }
 
 const AuthBBoardSlugRouteRouteWithChildren =

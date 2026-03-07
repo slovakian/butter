@@ -1,11 +1,31 @@
-import type { Prisma } from '../../prisma/generated/client';
-import * as z from 'zod';
-import { ChatroomSelectObjectSchema as ChatroomSelectObjectSchema } from './objects/ChatroomSelect.schema';
-import { ChatroomIncludeObjectSchema as ChatroomIncludeObjectSchema } from './objects/ChatroomInclude.schema';
-import { ChatroomUpdateInputObjectSchema as ChatroomUpdateInputObjectSchema } from './objects/ChatroomUpdateInput.schema';
-import { ChatroomUncheckedUpdateInputObjectSchema as ChatroomUncheckedUpdateInputObjectSchema } from './objects/ChatroomUncheckedUpdateInput.schema';
-import { ChatroomWhereUniqueInputObjectSchema as ChatroomWhereUniqueInputObjectSchema } from './objects/ChatroomWhereUniqueInput.schema';
+import * as z from "zod";
+import type { Prisma } from "../../prisma/generated/client";
+import { ChatroomIncludeObjectSchema } from "./objects/ChatroomInclude.schema";
+import { ChatroomSelectObjectSchema } from "./objects/ChatroomSelect.schema";
+import { ChatroomUncheckedUpdateInputObjectSchema } from "./objects/ChatroomUncheckedUpdateInput.schema";
+import { ChatroomUpdateInputObjectSchema } from "./objects/ChatroomUpdateInput.schema";
+import { ChatroomWhereUniqueInputObjectSchema } from "./objects/ChatroomWhereUniqueInput.schema";
 
-export const ChatroomUpdateOneSchema: z.ZodType<Prisma.ChatroomUpdateArgs> = z.object({ select: ChatroomSelectObjectSchema.optional(), include: ChatroomIncludeObjectSchema.optional(), data: z.union([ChatroomUpdateInputObjectSchema, ChatroomUncheckedUpdateInputObjectSchema]), where: ChatroomWhereUniqueInputObjectSchema }).strict() as unknown as z.ZodType<Prisma.ChatroomUpdateArgs>;
+export const ChatroomUpdateOneSchema: z.ZodType<Prisma.ChatroomUpdateArgs> = z
+	.object({
+		select: ChatroomSelectObjectSchema.optional(),
+		include: ChatroomIncludeObjectSchema.optional(),
+		data: z.union([
+			ChatroomUpdateInputObjectSchema,
+			ChatroomUncheckedUpdateInputObjectSchema,
+		]),
+		where: ChatroomWhereUniqueInputObjectSchema,
+	})
+	.strict() as unknown as z.ZodType<Prisma.ChatroomUpdateArgs>;
 
-export const ChatroomUpdateOneZodSchema = z.object({ select: ChatroomSelectObjectSchema.optional(), include: ChatroomIncludeObjectSchema.optional(), data: z.union([ChatroomUpdateInputObjectSchema, ChatroomUncheckedUpdateInputObjectSchema]), where: ChatroomWhereUniqueInputObjectSchema }).strict();
+export const ChatroomUpdateOneZodSchema = z
+	.object({
+		select: ChatroomSelectObjectSchema.optional(),
+		include: ChatroomIncludeObjectSchema.optional(),
+		data: z.union([
+			ChatroomUpdateInputObjectSchema,
+			ChatroomUncheckedUpdateInputObjectSchema,
+		]),
+		where: ChatroomWhereUniqueInputObjectSchema,
+	})
+	.strict();

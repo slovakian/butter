@@ -1,12 +1,20 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { AccountScalarWhereInputObjectSchema as AccountScalarWhereInputObjectSchema } from './AccountScalarWhereInput.schema';
-import { AccountUpdateManyMutationInputObjectSchema as AccountUpdateManyMutationInputObjectSchema } from './AccountUpdateManyMutationInput.schema';
-import { AccountUncheckedUpdateManyWithoutUserInputObjectSchema as AccountUncheckedUpdateManyWithoutUserInputObjectSchema } from './AccountUncheckedUpdateManyWithoutUserInput.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { AccountScalarWhereInputObjectSchema } from "./AccountScalarWhereInput.schema";
+import { AccountUncheckedUpdateManyWithoutUserInputObjectSchema } from "./AccountUncheckedUpdateManyWithoutUserInput.schema";
+import { AccountUpdateManyMutationInputObjectSchema } from "./AccountUpdateManyMutationInput.schema";
 
-const makeSchema = () => z.object({
-  where: z.lazy(() => AccountScalarWhereInputObjectSchema),
-  data: z.union([z.lazy(() => AccountUpdateManyMutationInputObjectSchema), z.lazy(() => AccountUncheckedUpdateManyWithoutUserInputObjectSchema)])
-}).strict();
-export const AccountUpdateManyWithWhereWithoutUserInputObjectSchema: z.ZodType<Prisma.AccountUpdateManyWithWhereWithoutUserInput> = makeSchema() as unknown as z.ZodType<Prisma.AccountUpdateManyWithWhereWithoutUserInput>;
-export const AccountUpdateManyWithWhereWithoutUserInputObjectZodSchema = makeSchema();
+const makeSchema = () =>
+	z
+		.object({
+			where: z.lazy(() => AccountScalarWhereInputObjectSchema),
+			data: z.union([
+				z.lazy(() => AccountUpdateManyMutationInputObjectSchema),
+				z.lazy(() => AccountUncheckedUpdateManyWithoutUserInputObjectSchema),
+			]),
+		})
+		.strict();
+export const AccountUpdateManyWithWhereWithoutUserInputObjectSchema: z.ZodType<Prisma.AccountUpdateManyWithWhereWithoutUserInput> =
+	makeSchema() as unknown as z.ZodType<Prisma.AccountUpdateManyWithWhereWithoutUserInput>;
+export const AccountUpdateManyWithWhereWithoutUserInputObjectZodSchema =
+	makeSchema();

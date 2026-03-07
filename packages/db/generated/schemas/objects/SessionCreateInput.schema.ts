@@ -1,16 +1,20 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { UserCreateNestedOneWithoutSessionsInputObjectSchema as UserCreateNestedOneWithoutSessionsInputObjectSchema } from './UserCreateNestedOneWithoutSessionsInput.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { UserCreateNestedOneWithoutSessionsInputObjectSchema } from "./UserCreateNestedOneWithoutSessionsInput.schema";
 
-const makeSchema = () => z.object({
-  expiresAt: z.coerce.date(),
-  token: z.string(),
-  createdAt: z.coerce.date().optional(),
-  ipAddress: z.string().optional().nullable(),
-  userAgent: z.string().optional().nullable(),
-  impersonatedBy: z.string().optional().nullable(),
-  activeOrganizationId: z.string().optional().nullable(),
-  user: z.lazy(() => UserCreateNestedOneWithoutSessionsInputObjectSchema)
-}).strict();
-export const SessionCreateInputObjectSchema: z.ZodType<Prisma.SessionCreateInput> = makeSchema() as unknown as z.ZodType<Prisma.SessionCreateInput>;
+const makeSchema = () =>
+	z
+		.object({
+			expiresAt: z.coerce.date(),
+			token: z.string(),
+			createdAt: z.coerce.date().optional(),
+			ipAddress: z.string().optional().nullable(),
+			userAgent: z.string().optional().nullable(),
+			impersonatedBy: z.string().optional().nullable(),
+			activeOrganizationId: z.string().optional().nullable(),
+			user: z.lazy(() => UserCreateNestedOneWithoutSessionsInputObjectSchema),
+		})
+		.strict();
+export const SessionCreateInputObjectSchema: z.ZodType<Prisma.SessionCreateInput> =
+	makeSchema() as unknown as z.ZodType<Prisma.SessionCreateInput>;
 export const SessionCreateInputObjectZodSchema = makeSchema();

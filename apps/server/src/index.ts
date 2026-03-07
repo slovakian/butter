@@ -106,7 +106,6 @@ app.use("/*", async (c, next) => {
 
 	await next();
 });
-
 app.use(
 	"/api/party/*",
 	partyserverMiddleware({
@@ -119,6 +118,7 @@ app.use(
 		},
 	}),
 );
+// );
 
 app.get("/", (c) => {
 	return c.text("OK");

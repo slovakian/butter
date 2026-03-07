@@ -1,12 +1,20 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { SessionWhereUniqueInputObjectSchema as SessionWhereUniqueInputObjectSchema } from './SessionWhereUniqueInput.schema';
-import { SessionUpdateWithoutUserInputObjectSchema as SessionUpdateWithoutUserInputObjectSchema } from './SessionUpdateWithoutUserInput.schema';
-import { SessionUncheckedUpdateWithoutUserInputObjectSchema as SessionUncheckedUpdateWithoutUserInputObjectSchema } from './SessionUncheckedUpdateWithoutUserInput.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { SessionUncheckedUpdateWithoutUserInputObjectSchema } from "./SessionUncheckedUpdateWithoutUserInput.schema";
+import { SessionUpdateWithoutUserInputObjectSchema } from "./SessionUpdateWithoutUserInput.schema";
+import { SessionWhereUniqueInputObjectSchema } from "./SessionWhereUniqueInput.schema";
 
-const makeSchema = () => z.object({
-  where: z.lazy(() => SessionWhereUniqueInputObjectSchema),
-  data: z.union([z.lazy(() => SessionUpdateWithoutUserInputObjectSchema), z.lazy(() => SessionUncheckedUpdateWithoutUserInputObjectSchema)])
-}).strict();
-export const SessionUpdateWithWhereUniqueWithoutUserInputObjectSchema: z.ZodType<Prisma.SessionUpdateWithWhereUniqueWithoutUserInput> = makeSchema() as unknown as z.ZodType<Prisma.SessionUpdateWithWhereUniqueWithoutUserInput>;
-export const SessionUpdateWithWhereUniqueWithoutUserInputObjectZodSchema = makeSchema();
+const makeSchema = () =>
+	z
+		.object({
+			where: z.lazy(() => SessionWhereUniqueInputObjectSchema),
+			data: z.union([
+				z.lazy(() => SessionUpdateWithoutUserInputObjectSchema),
+				z.lazy(() => SessionUncheckedUpdateWithoutUserInputObjectSchema),
+			]),
+		})
+		.strict();
+export const SessionUpdateWithWhereUniqueWithoutUserInputObjectSchema: z.ZodType<Prisma.SessionUpdateWithWhereUniqueWithoutUserInput> =
+	makeSchema() as unknown as z.ZodType<Prisma.SessionUpdateWithWhereUniqueWithoutUserInput>;
+export const SessionUpdateWithWhereUniqueWithoutUserInputObjectZodSchema =
+	makeSchema();

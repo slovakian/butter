@@ -78,9 +78,11 @@ const RotatingEarth = () => {
 	const groupRef = useRef<THREE.Group>(null);
 	const coords = useLiveCoords();
 	const radius = 2.5; // Increased size further for better resolution
-    
-    // Use a high-contrast map for better ASCII separation (no clouds, clear land/water)
-    const texture = useTexture('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg');
+
+	// Use a high-contrast map for better ASCII separation (no clouds, clear land/water)
+	const texture = useTexture(
+		"https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg",
+	);
 
 	useFrame((_, delta) => {
 		if (groupRef.current) {
@@ -92,14 +94,14 @@ const RotatingEarth = () => {
 		<group ref={groupRef}>
 			{/* Base Earth Sphere with Texture */}
 			<Sphere args={[radius, 64, 64]}>
-				<meshStandardMaterial 
-                    map={texture}
-                    color="white" 
-                    roughness={0.8}
-                    metalness={0.2}
-                />
+				<meshStandardMaterial
+					map={texture}
+					color="white"
+					roughness={0.8}
+					metalness={0.2}
+				/>
 			</Sphere>
-			
+
 			{/* Markers */}
 			{coords.map((coord) => {
 				const pos = latLngToVector3(coord.lat, coord.lng, radius);
@@ -108,7 +110,7 @@ const RotatingEarth = () => {
 						{/* Make markers slightly larger and stick out more */}
 						<sphereGeometry args={[0.15, 8, 8]} />
 						{/* Bright neon green for visibility in ASCII */}
-						<meshBasicMaterial color="#22c55e" /> 
+						<meshBasicMaterial color="#22c55e" />
 					</mesh>
 				);
 			})}
@@ -118,27 +120,27 @@ const RotatingEarth = () => {
 
 export function LiveGlobe() {
 	return (
-		<div className="h-full w-full min-h-[300px] min-w-[300px] flex items-center justify-center">
+		<div className="flex h-full min-h-[300px] w-full min-w-[300px] items-center justify-center">
 			<Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-                <color attach="background" args={['black']} />
-                {/* 
+				<color attach="background" args={["black"]} />
+				{/* 
                     Lighting is crucial for ASCII. 
                     We need strong directional light to create contrast, 
                     but enough ambient so the "dark side" isn't totally invisible if we want full shape.
                 */}
 				<ambientLight intensity={2} />
 				<pointLight position={[10, 10, 10]} intensity={2} />
-                <Suspense fallback={null}>
-				    <RotatingEarth />
-                </Suspense>
-				<AsciiRenderer 
-					fgColor="var(--foreground)" 
-					bgColor="transparent" 
-                    // @ts-ignore - resolution exists in drei types but might be flagged
-                    resolution={0.35} // Higher resolution = smaller, denser characters
-                    // Use a character set that gives good density range
-                    characters=" .:-+*=%@#" 
-                    invert={false} // Ensure dark (water) is empty/sparse, light (land) is dense
+				<Suspense fallback={null}>
+					<RotatingEarth />
+				</Suspense>
+				<AsciiRenderer
+					fgColor="var(--foreground)"
+					bgColor="transparent"
+					// @ts-expect-error - resolution exists in drei types but might be flagged
+					resolution={0.35} // Higher resolution = smaller, denser characters
+					// Use a character set that gives good density range
+					characters=" .:-+*=%@#"
+					invert={false} // Ensure dark (water) is empty/sparse, light (land) is dense
 				/>
 			</Canvas>
 		</div>

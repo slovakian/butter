@@ -1,11 +1,12 @@
 {
-  "extends": "@butter/config/tsconfig.base.json",
-  "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "composite": true
-  },
-  "include": ["src"]
+	"extends": "@butter/config/tsconfig.base.json",
+	"compilerOptions": {
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"outDir": "dist",
+		"composite": true
+	},
+	"include": ["src"],
+	"exclude": ["src/schemas/**"]
 }

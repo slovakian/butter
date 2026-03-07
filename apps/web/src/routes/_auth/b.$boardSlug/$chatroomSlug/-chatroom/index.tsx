@@ -22,7 +22,7 @@ import { api } from "@/utils/orpc";
 
 type ChatroomProps = {
 	boardSlug: string;
-	itemSlug: string;
+	chatroomSlug: string;
 };
 
 // 30 seconds in milliseconds
@@ -35,12 +35,12 @@ type Message = {
 	page_number: number;
 };
 
-export function Chatroom({ boardSlug, itemSlug }: ChatroomProps) {
+export function Chatroom({ boardSlug, chatroomSlug }: ChatroomProps) {
 	const { data: chatroom } = useQuery(
 		api.board.chatroom.getBySlug.queryOptions({
 			input: {
 				boardSlug,
-				chatroomSlug: itemSlug,
+				chatroomSlug: chatroomSlug,
 			},
 			staleTime: Number.POSITIVE_INFINITY,
 		}),
@@ -62,7 +62,7 @@ export function Chatroom({ boardSlug, itemSlug }: ChatroomProps) {
 
 	const socket = usePartySocket({
 		party: "chatroom",
-		room: `${boardSlug}-${itemSlug}`,
+		room: `${boardSlug}-${chatroomSlug}`,
 		host: env.VITE_SERVER_URL,
 		prefix: "api/party",
 		onMessage(event) {
@@ -199,6 +199,7 @@ export function Chatroom({ boardSlug, itemSlug }: ChatroomProps) {
 								msg.timestamp - previousMsgInTime.timestamp > TIME_WINDOW; // Time gap is too large
 
 							return (
+								// eslint-disable-next-line react/no-array-index-key
 								<div
 									key={`${msg.timestamp}-${msg.sender}-${i}`}
 									// Add top margin only if it's a new group to separate conversations

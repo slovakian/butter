@@ -3,16 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { api } from "@/utils/orpc";
 
 type SidebarNavProps = {
-	items: {
+	chatrooms: {
 		id: number;
 		name: string;
 		slug: string;
-		type: string;
 	}[];
 	slug: string;
 };
 
-export function SidebarNav({ items, slug }: SidebarNavProps) {
+export function SidebarNav({ chatrooms, slug }: SidebarNavProps) {
 	const { data: board } = useQuery(
 		api.board.getBySlug.queryOptions({
 			input: {
@@ -35,17 +34,17 @@ export function SidebarNav({ items, slug }: SidebarNavProps) {
 						General
 					</summary>
 					<ul className="mt-1 flex flex-col gap-0.5 pl-1">
-						{items.map((item) => (
-							<li key={item.id}>
+						{chatrooms.map((chatroom) => (
+							<li key={chatroom.id}>
 								<Link
-									to="/b/$boardSlug/$itemSlug"
-									params={{ boardSlug: slug, itemSlug: item.slug }}
+									to="/b/$boardSlug/$chatroomSlug"
+									params={{ boardSlug: slug, chatroomSlug: chatroom.slug }}
 									className="block cursor-pointer px-1 py-0.5 text-xs hover:bg-accent hover:text-accent-foreground"
 									activeProps={{
 										className: "bg-accent text-accent-foreground font-bold",
 									}}
 								>
-									{item.type === "Chatroom" ? "💬" : "📄"} {item.name}
+									💬 {chatroom.name}
 								</Link>
 							</li>
 						))}

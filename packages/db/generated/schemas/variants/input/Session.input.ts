@@ -1,17 +1,19 @@
-import * as z from 'zod';
+import * as z from "zod";
 // prettier-ignore
-export const SessionInputSchema = z.object({
-    id: z.number().int(),
-    expiresAt: z.date(),
-    token: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-    ipAddress: z.string().optional().nullable(),
-    userAgent: z.string().optional().nullable(),
-    userId: z.number().int(),
-    user: z.unknown(),
-    impersonatedBy: z.string().optional().nullable(),
-    activeOrganizationId: z.string().optional().nullable()
-}).strict();
+export const SessionInputSchema = z
+	.object({
+		id: z.number().int(),
+		expiresAt: z.date(),
+		token: z.string(),
+		createdAt: z.date(),
+		updatedAt: z.date(),
+		ipAddress: z.string().optional().nullable(),
+		userAgent: z.string().optional().nullable(),
+		userId: z.number().int(),
+		user: z.unknown(),
+		impersonatedBy: z.string().optional().nullable(),
+		activeOrganizationId: z.string().optional().nullable(),
+	})
+	.strict();
 
 export type SessionInputType = z.infer<typeof SessionInputSchema>;

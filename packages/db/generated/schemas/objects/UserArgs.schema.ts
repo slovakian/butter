@@ -1,11 +1,14 @@
-import * as z from 'zod';
-import type { Prisma } from '../../../prisma/generated/client';
-import { UserSelectObjectSchema as UserSelectObjectSchema } from './UserSelect.schema';
-import { UserIncludeObjectSchema as UserIncludeObjectSchema } from './UserInclude.schema'
+import * as z from "zod";
+import type { Prisma } from "../../../prisma/generated/client";
+import { UserIncludeObjectSchema } from "./UserInclude.schema";
+import { UserSelectObjectSchema } from "./UserSelect.schema";
 
-const makeSchema = () => z.object({
-  select: z.lazy(() => UserSelectObjectSchema).optional(),
-  include: z.lazy(() => UserIncludeObjectSchema).optional()
-}).strict();
+const makeSchema = () =>
+	z
+		.object({
+			select: z.lazy(() => UserSelectObjectSchema).optional(),
+			include: z.lazy(() => UserIncludeObjectSchema).optional(),
+		})
+		.strict();
 export const UserArgsObjectSchema = makeSchema();
 export const UserArgsObjectZodSchema = makeSchema();
