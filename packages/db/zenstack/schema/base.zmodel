@@ -1,9 +1,0 @@
-import "./auth"
-import "./theme"
-import "./board/board"
-import "./board/chatroom"
-
-datasource db {
-  provider = "postgresql"
-  url = env("DATABASE_URL")
-}

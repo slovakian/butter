@@ -1,0 +1,14 @@
+import type { Prisma } from '../../prisma/generated/client';
+import * as z from 'zod';
+import { MessageOrderByWithRelationInputObjectSchema as MessageOrderByWithRelationInputObjectSchema } from './objects/MessageOrderByWithRelationInput.schema';
+import { MessageWhereInputObjectSchema as MessageWhereInputObjectSchema } from './objects/MessageWhereInput.schema';
+import { MessageWhereUniqueInputObjectSchema as MessageWhereUniqueInputObjectSchema } from './objects/MessageWhereUniqueInput.schema';
+import { MessageCountAggregateInputObjectSchema as MessageCountAggregateInputObjectSchema } from './objects/MessageCountAggregateInput.schema';
+import { MessageMinAggregateInputObjectSchema as MessageMinAggregateInputObjectSchema } from './objects/MessageMinAggregateInput.schema';
+import { MessageMaxAggregateInputObjectSchema as MessageMaxAggregateInputObjectSchema } from './objects/MessageMaxAggregateInput.schema';
+import { MessageAvgAggregateInputObjectSchema as MessageAvgAggregateInputObjectSchema } from './objects/MessageAvgAggregateInput.schema';
+import { MessageSumAggregateInputObjectSchema as MessageSumAggregateInputObjectSchema } from './objects/MessageSumAggregateInput.schema';
+
+export const MessageAggregateSchema: z.ZodType<Prisma.MessageAggregateArgs> = z.object({ orderBy: z.union([MessageOrderByWithRelationInputObjectSchema, MessageOrderByWithRelationInputObjectSchema.array()]).optional(), where: MessageWhereInputObjectSchema.optional(), cursor: MessageWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), MessageCountAggregateInputObjectSchema ]).optional(), _min: MessageMinAggregateInputObjectSchema.optional(), _max: MessageMaxAggregateInputObjectSchema.optional(), _avg: MessageAvgAggregateInputObjectSchema.optional(), _sum: MessageSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.MessageAggregateArgs>;
+
+export const MessageAggregateZodSchema = z.object({ orderBy: z.union([MessageOrderByWithRelationInputObjectSchema, MessageOrderByWithRelationInputObjectSchema.array()]).optional(), where: MessageWhereInputObjectSchema.optional(), cursor: MessageWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), MessageCountAggregateInputObjectSchema ]).optional(), _min: MessageMinAggregateInputObjectSchema.optional(), _max: MessageMaxAggregateInputObjectSchema.optional(), _avg: MessageAvgAggregateInputObjectSchema.optional(), _sum: MessageSumAggregateInputObjectSchema.optional() }).strict();

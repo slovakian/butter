@@ -1,0 +1,45 @@
+model Board {
+    id          Int          @id @default(autoincrement())
+    name        String
+    slug        String       @unique
+    logo        String?
+    isOfficial  Boolean      @default(false)
+    createdAt   DateTime
+    metadata    String       @default("{}")
+    members     Member[]
+    invitations Invitation[]
+
+    themeId Int?
+    theme   Theme? @relation("BoardTheme", fields: [themeId], references: [id])
+
+    chatrooms Chatroom[]
+
+    @@map("boards")
+}
+
+model Member {
+    id        Int      @id @default(autoincrement())
+    boardId   Int
+    board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    userId    Int
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    role      String   @default("member")
+    createdAt DateTime
+
+    @@map("members")
+}
+
+model Invitation {
+    id        Int      @id @default(autoincrement())
+    boardId   Int
+    board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+    email     String
+    role      String?
+    status    String   @default("pending")
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    inviterId Int
+    user      User     @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+    @@map("invitations")
+}

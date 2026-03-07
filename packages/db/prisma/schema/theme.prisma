@@ -1,0 +1,18 @@
+model Theme {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  isDark Boolean @default(false)
+
+  /// [ThemeVariables]
+  variables Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId Int?
+  user   User? @relation("ThemeCreator", fields: [userId], references: [id], onDelete: SetNull)
+
+  usersUsing  User[]  @relation("UserTheme")
+  boardsUsing Board[] @relation("BoardTheme")
+}

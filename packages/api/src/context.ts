@@ -1,12 +1,11 @@
 import type { AuthClient, Session } from "@butter/auth";
 import type { DbClient } from "@butter/db";
-import type { CloudflareEnv } from "../../env/env";
 
 export type CreateContextOptions = {
 	req: Request;
 	db: DbClient;
 	auth: AuthClient;
-	env: CloudflareEnv;
+	env: Env;
 };
 
 export type CreateContextOutput = {
@@ -16,7 +15,7 @@ export type CreateContextOutput = {
 		client: AuthClient;
 		session: Session | null;
 	};
-	env: CloudflareEnv;
+	env: Env;
 };
 
 export async function createContext({
@@ -34,7 +33,7 @@ export async function createContext({
 				headers: req.headers,
 			}),
 		},
-		env: env as CloudflareEnv,
+		env: env as Env,
 	};
 }
 

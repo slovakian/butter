@@ -1,0 +1,14 @@
+import type { Prisma } from '../../../db/prisma/generated/client';
+import * as z from 'zod';
+import { ChatroomOrderByWithRelationInputObjectSchema as ChatroomOrderByWithRelationInputObjectSchema } from './objects/ChatroomOrderByWithRelationInput.schema';
+import { ChatroomWhereInputObjectSchema as ChatroomWhereInputObjectSchema } from './objects/ChatroomWhereInput.schema';
+import { ChatroomWhereUniqueInputObjectSchema as ChatroomWhereUniqueInputObjectSchema } from './objects/ChatroomWhereUniqueInput.schema';
+import { ChatroomCountAggregateInputObjectSchema as ChatroomCountAggregateInputObjectSchema } from './objects/ChatroomCountAggregateInput.schema';
+import { ChatroomMinAggregateInputObjectSchema as ChatroomMinAggregateInputObjectSchema } from './objects/ChatroomMinAggregateInput.schema';
+import { ChatroomMaxAggregateInputObjectSchema as ChatroomMaxAggregateInputObjectSchema } from './objects/ChatroomMaxAggregateInput.schema';
+import { ChatroomAvgAggregateInputObjectSchema as ChatroomAvgAggregateInputObjectSchema } from './objects/ChatroomAvgAggregateInput.schema';
+import { ChatroomSumAggregateInputObjectSchema as ChatroomSumAggregateInputObjectSchema } from './objects/ChatroomSumAggregateInput.schema';
+
+export const ChatroomAggregateSchema: z.ZodType<Prisma.ChatroomAggregateArgs> = z.object({ orderBy: z.union([ChatroomOrderByWithRelationInputObjectSchema, ChatroomOrderByWithRelationInputObjectSchema.array()]).optional(), where: ChatroomWhereInputObjectSchema.optional(), cursor: ChatroomWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ChatroomCountAggregateInputObjectSchema ]).optional(), _min: ChatroomMinAggregateInputObjectSchema.optional(), _max: ChatroomMaxAggregateInputObjectSchema.optional(), _avg: ChatroomAvgAggregateInputObjectSchema.optional(), _sum: ChatroomSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ChatroomAggregateArgs>;
+
+export const ChatroomAggregateZodSchema = z.object({ orderBy: z.union([ChatroomOrderByWithRelationInputObjectSchema, ChatroomOrderByWithRelationInputObjectSchema.array()]).optional(), where: ChatroomWhereInputObjectSchema.optional(), cursor: ChatroomWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), ChatroomCountAggregateInputObjectSchema ]).optional(), _min: ChatroomMinAggregateInputObjectSchema.optional(), _max: ChatroomMaxAggregateInputObjectSchema.optional(), _avg: ChatroomAvgAggregateInputObjectSchema.optional(), _sum: ChatroomSumAggregateInputObjectSchema.optional() }).strict();

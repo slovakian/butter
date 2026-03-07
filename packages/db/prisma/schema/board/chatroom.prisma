@@ -1,0 +1,25 @@
+model Chatroom {
+    id      Int    @id @default(autoincrement())
+    name    String
+    slug    String
+    boardId Int
+    board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+    messages Message[]
+
+    @@unique([boardId, slug])
+    @@map("chats")
+}
+
+model Message {
+    id         Int      @id @default(autoincrement())
+    content    String
+    pageNumber Int
+    chatroomId Int
+    chatroom   Chatroom @relation(fields: [chatroomId], references: [id])
+    userId     Int
+    user       User     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+    @@index([chatroomId, pageNumber]) // Optimizes fetching specific pages later
+    @@map("messages")
+}

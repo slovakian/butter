@@ -1,3 +1,4 @@
+import { createIsomorphicFn } from "@tanstack/react-start";
 import { getCookie } from "@tanstack/react-start/server";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -11,14 +12,16 @@ import {
 } from "@/components/ui/dialog";
 import { useAuth } from "@/features/auth/query";
 
-export function getHasVisited(): boolean {
-	if (typeof window === "undefined") {
-		// Server-side: reads synchronously from the request context
+// 1. Create the isomorphic function to safely split environments
+export const getHasVisited = createIsomorphicFn()
+	.server(() => {
+		// Server-side: safely reads from the request context
 		return !!getCookie("butt3r.visited");
-	}
-	// Client-side: reads synchronously from the browser
-	return document.cookie.includes("butt3r.visited=true");
-}
+	})
+	.client(() => {
+		// Client-side: reads synchronously from the browser
+		return document.cookie.includes("butt3r.visited=true");
+	});
 
 export function setHasVisitedClient() {
 	// 1 year max-age, available across the whole site
@@ -28,7 +31,7 @@ export function setHasVisitedClient() {
 export function WelcomeDialog() {
 	const { data: auth } = useAuth();
 
-	// Synchronously check state. If they are logged in OR have visited, don't show.
+	// 2. Synchronously check state using the isomorphic function
 	const shouldShow = !auth?.user && !getHasVisited();
 
 	// We only need state to handle the user closing the modal locally

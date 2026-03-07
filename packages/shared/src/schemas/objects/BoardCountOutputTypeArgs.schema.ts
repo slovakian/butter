@@ -1,0 +1,9 @@
+import * as z from 'zod';
+import type { Prisma } from '../../../../db/prisma/generated/client';
+import { BoardCountOutputTypeSelectObjectSchema as BoardCountOutputTypeSelectObjectSchema } from './BoardCountOutputTypeSelect.schema'
+
+const makeSchema = () => z.object({
+  select: z.lazy(() => BoardCountOutputTypeSelectObjectSchema).optional()
+}).strict();
+export const BoardCountOutputTypeArgsObjectSchema = makeSchema();
+export const BoardCountOutputTypeArgsObjectZodSchema = makeSchema();

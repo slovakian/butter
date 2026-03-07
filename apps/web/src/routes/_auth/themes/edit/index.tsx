@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { File } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { File, Pencil, Save } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
+import { toast } from "sonner";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,10 +17,10 @@ import {
 	useThemeEditor,
 } from "@/features/themes/editor/provider";
 import { tokyoNightTheme, yotsubaTheme } from "@/features/themes/editor/themes";
-import { fetchTheme } from "@/features/themes/fns";
 import { buildThemeStyles } from "@/features/themes/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
+import { cn, deepEqual } from "@/lib/utils";
+import { api } from "@/utils/orpc";
 import { CssEditor } from "./-components/css-editor";
 // import { DarkSelector } from "./-components/dark-selector";
 import {
@@ -28,15 +30,32 @@ import {
 } from "./-components/editor-tabs";
 import { JsonEditor } from "./-components/json-editor";
 import { MenuBar } from "./-components/menu-bar";
+import { ThemeNameEditor } from "./-components/name-editor";
 import { Showcase } from "./-components/showcase";
-import { ThemeFilename } from "./-components/theme-name";
+import { ThemeName } from "./-components/theme-name";
 
 export const Route = createFileRoute("/_auth/themes/edit/")({
 	validateSearch: z.object({
-		id: z.string().optional(),
+		id: z.int().optional(),
 	}),
-	loader: async () => {
-		const theme = await fetchTheme();
+	loaderDeps: ({ search: { id } }) => ({ id }),
+	loader: async ({ deps: { id } }) => {
+		let theme = null;
+
+		if (id !== undefined) {
+			try {
+				theme = await api.theme.get.byId.call({
+					id,
+				});
+			} catch (error) {
+				console.error("Failed to fetch theme:", error);
+				// If theme not found, redirect to create mode
+				throw redirect({
+					to: "/themes/edit",
+				});
+			}
+		}
+
 		return { theme };
 	},
 	staleTime: Number.POSITIVE_INFINITY,
@@ -45,24 +64,89 @@ export const Route = createFileRoute("/_auth/themes/edit/")({
 
 function RouteComponent() {
 	const { theme } = Route.useLoaderData();
+	const initialData = theme ?? DEFAULT_THEME;
 
 	return (
-		<ThemeEditorProvider initialData={theme ?? DEFAULT_THEME}>
-			<ThemeEditorContent />
+		<ThemeEditorProvider initialData={initialData}>
+			<ThemeEditorContent initialData={initialData} />
 		</ThemeEditorProvider>
 	);
 }
 
-function ThemeEditorContent() {
+function ThemeEditorContent({ initialData }: { initialData: any }) {
 	const isMobile = useIsMobile();
-	const { variables } = useThemeEditor((state) => state);
+	const { variables, name, isDark } = useThemeEditor((state) => state);
+	const navigate = useNavigate();
 
-	// 2. Consume the jotai atom instead of local state
 	const [activeTab, setActiveTab] = useState<"json" | "css">("json");
 
-	const { isDark } = useThemeEditor((state) => state);
-
 	const currentTheme = useTheme();
+
+	const isUpdate = !!initialData.id;
+
+	// Determine if the theme is dirty (has changes)
+	// For new themes (no ID), we allow saving even if unchanged (as per user request)
+	// For existing themes, we check against initial data
+	const isDirty =
+		!isUpdate ||
+		!deepEqual(
+			{
+				name,
+				isDark,
+				variables,
+			},
+			{
+				name: initialData.name,
+				isDark: initialData.isDark,
+				variables: initialData.variables,
+			},
+		);
+
+	const createMutation = useMutation(
+		api.theme.create.mutationOptions({
+			onSuccess: (data) => {
+				toast.success("Theme created successfully");
+				navigate({
+					to: "/themes/edit",
+					search: { id: data.id },
+					replace: true,
+				});
+			},
+			onError: (error) => {
+				toast.error(error.message);
+			},
+		}),
+	);
+
+	const updateMutation = useMutation(
+		api.theme.update.mutationOptions({
+			onSuccess: () => {
+				toast.success("Theme updated successfully");
+			},
+			onError: (error) => {
+				toast.error(error.message);
+			},
+		}),
+	);
+
+	const handleSave = () => {
+		if (isUpdate) {
+			updateMutation.mutate({
+				id: initialData.id,
+				name,
+				isDark,
+				variables,
+			});
+		} else {
+			createMutation.mutate({
+				name,
+				isDark,
+				variables,
+			});
+		}
+	};
+
+	const isPending = createMutation.isPending || updateMutation.isPending;
 
 	return (
 		<div className="flex h-screen w-full flex-col overflow-hidden bg-background text-foreground">
@@ -84,12 +168,12 @@ function ThemeEditorContent() {
 						{/* Padding preserved exactly as requested */}
 						<EditorTabsList className="pt-1 pl-8">
 							<EditorTabsTrigger value="json">
-								<ThemeFilename maxLength={10} />
-								.json
+								<ThemeName asFilename={true} maxLength={10} />
+								<span className="opacity-50">/</span> json
 							</EditorTabsTrigger>
 							<EditorTabsTrigger value="css">
-								<ThemeFilename maxLength={10} />
-								.css
+								<ThemeName asFilename={true} maxLength={10} />
+								<span className="opacity-50">/</span> css
 							</EditorTabsTrigger>
 						</EditorTabsList>
 					</EditorTabs>
@@ -97,7 +181,36 @@ function ThemeEditorContent() {
 
 				{/* Right Side: Vertically centered as usual, with its independent bottom border */}
 				<div className="flex h-full flex-1 items-center justify-end gap-4 border-b px-4 text-xs">
-					Random
+					<ThemeNameEditor>
+						{({ openDialog }) => (
+							<div className="flex items-center gap-2">
+								<span className="font-medium text-muted-foreground">
+									<ThemeName />
+								</span>
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={openDialog}
+									className="h-6 w-6"
+								>
+									<Pencil className="h-3 w-3" />
+								</Button>
+							</div>
+						)}
+					</ThemeNameEditor>
+
+					<div className="h-4 w-px bg-border" />
+
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={handleSave}
+						disabled={!isDirty || isPending}
+						className="h-6 gap-1.5 px-2 font-normal text-xs"
+					>
+						<Save className="h-3 w-3" />
+						{isUpdate ? "Update" : "Publish"}
+					</Button>
 				</div>
 			</div>
 

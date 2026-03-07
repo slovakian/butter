@@ -1,0 +1,19 @@
+generator client {
+  provider     = "prisma-client" // rust-free and ESM
+  output       = "../generated"
+  moduleFormat = "esm"
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "../../../shared/src/schemas"
+  config   = "schema/zod-generator.config.json"
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+}

@@ -10,12 +10,13 @@
 		}
 	},
 	"scripts": {
-		"auth:generate": "bun x auth generate --config ./src/lib/auth.ts --output ./src/_schema"
+		"auth:generate": "bun x auth generate --config ./src/lib/_auth_for_migrations.ts --output ./src/_schema"
 	},
 	"dependencies": {
+		"@better-auth/prisma-adapter": "^1.5.4",
 		"@butter/db": "workspace:*",
 		"@butter/env": "workspace:*",
-		"@zenstackhq/better-auth": "^3.3.3",
+		"@butter/shared": "workspace:*",
 		"better-auth": "catalog:",
 		"dotenv": "catalog:",
 		"zod": "catalog:"

@@ -1,0 +1,21 @@
+import * as z from 'zod';
+import type { Prisma } from '../../../../db/prisma/generated/client';
+
+
+const makeSchema = () => z.object({
+  id: z.number().int().optional(),
+  accountId: z.string(),
+  providerId: z.string(),
+  userId: z.number().int(),
+  accessToken: z.string().optional().nullable(),
+  refreshToken: z.string().optional().nullable(),
+  idToken: z.string().optional().nullable(),
+  accessTokenExpiresAt: z.coerce.date().optional().nullable(),
+  refreshTokenExpiresAt: z.coerce.date().optional().nullable(),
+  scope: z.string().optional().nullable(),
+  password: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
+}).strict();
+export const AccountCreateManyInputObjectSchema: z.ZodType<Prisma.AccountCreateManyInput> = makeSchema() as unknown as z.ZodType<Prisma.AccountCreateManyInput>;
+export const AccountCreateManyInputObjectZodSchema = makeSchema();

@@ -76,13 +76,27 @@ export const themeVariablesSchema = z.object({
 	topbarRing: oklchSchema,
 
 	// Layout
-	radius: remSchema.nullish(), // Optional since it usually only exists on :root
+	radius: remSchema,
 });
+
+export const themeNameSchema = z
+	.string()
+	.min(1, "Name is required")
+	.max(50, "Name must be less than 50 characters")
+	.trim()
+	.regex(
+		/^[a-zA-Z0-9 _-]+$/,
+		"Name can only contain letters, numbers, spaces, hyphens, and underscores",
+	)
+	.refine(
+		(name) => !/[-_ ]{2,}/.test(name),
+		"Name cannot contain consecutive spaces, hyphens, or underscores",
+	);
 
 export const themeSchema = z.object({
 	id: z.int(),
 	userId: z.int().nullable(),
-	name: z.string(),
+	name: themeNameSchema,
 	isDark: z.boolean(),
 	variables: themeVariablesSchema,
 	createdAt: z.date(),

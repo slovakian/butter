@@ -12,6 +12,9 @@
 		"./themes/parsers": {
 			"default": "./src/themes/parsers.ts"
 		},
+		"./schemas": {
+			"default": "./src/schemas/index.ts"
+		},
 		"./*": {
 			"default": "./src/*.ts"
 		}

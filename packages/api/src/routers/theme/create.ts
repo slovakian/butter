@@ -2,7 +2,7 @@ import { themeInsertSchema } from "@butter/shared";
 import { protectedProcedure } from "../../procedures";
 
 export const createTheme = protectedProcedure
-	.input(themeInsertSchema)
+	.input(themeInsertSchema.omit({ userId: true }))
 	.handler(async ({ input, context }) => {
 		const { db, auth } = context;
 		const userId = Number(auth.session.user.id);

@@ -33,13 +33,15 @@ app.use(
 		origin: env.CORS_ORIGIN,
 		allowMethods: ["GET", "POST", "OPTIONS"],
 		allowHeaders: ["Content-Type", "Authorization"],
+		exposeHeaders: ["Content-Length"],
+		maxAge: 600,
 		credentials: true,
 	}),
 );
 
 app.use("*", async (c, next) => {
 	const { db, pool } = createDb();
-	const auth = createAuth(db);
+	const auth = createAuth(db, c.env);
 	c.set("db", db);
 	c.set("auth", auth);
 

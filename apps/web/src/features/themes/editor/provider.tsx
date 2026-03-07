@@ -20,7 +20,7 @@ export type ThemeEditorStore = ThemeEditorState & ThemeEditorActions;
 // Helper to create the store
 const createThemeEditorStore = (initProps?: Partial<ThemeEditorState>) => {
 	const DEFAULT_PROPS: ThemeEditorState = {
-		name: "",
+		name: "Untitled",
 		isDark: false,
 		variables: {} as ThemeVariables,
 	};

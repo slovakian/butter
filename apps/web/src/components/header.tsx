@@ -1,8 +1,14 @@
 import { Link } from "@tanstack/react-router";
 
-import UserMenu from "./user-menu";
+import { AnonMenu } from "@/components/topbar/anon-menu";
+import { UserMenu } from "@/components/topbar/user-menu";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/features/auth/query";
 
 export default function Header() {
+	const { data: session, isPending } = useAuth();
+
 	const links = [
 		{ to: "/", label: "Home" },
 		{ to: "/dashboard", label: "Dashboard" },
@@ -33,6 +39,7 @@ export default function Header() {
 					<nav className="flex gap-4">
 						{links.map(({ to, label }) => {
 							return (
+								// @ts-expect-error - Route types might be incomplete
 								<Link key={to} to={to}>
 									{label}
 								</Link>
@@ -43,7 +50,19 @@ export default function Header() {
 
 				{/* Right side: User Menu */}
 				<div className="flex items-center gap-2">
-					<UserMenu />
+					{isPending ? (
+						<Skeleton className="h-9 w-24" />
+					) : session?.user ? (
+						session.user.isAnonymous ? (
+							<AnonMenu>anon user</AnonMenu>
+						) : (
+							<UserMenu>user menu</UserMenu>
+						)
+					) : (
+						<Link to="/login">
+							<Button variant="outline">Sign In</Button>
+						</Link>
+					)}
 				</div>
 			</div>
 			<hr />

@@ -1,0 +1,15 @@
+import * as z from 'zod';
+import type { Prisma } from '../../../../db/prisma/generated/client';
+
+
+const makeSchema = () => z.object({
+  id: z.number().int().optional(),
+  boardId: z.number().int(),
+  email: z.string(),
+  role: z.string().optional().nullable(),
+  status: z.string().optional(),
+  expiresAt: z.coerce.date(),
+  createdAt: z.coerce.date().optional()
+}).strict();
+export const InvitationUncheckedCreateWithoutUserInputObjectSchema: z.ZodType<Prisma.InvitationUncheckedCreateWithoutUserInput> = makeSchema() as unknown as z.ZodType<Prisma.InvitationUncheckedCreateWithoutUserInput>;
+export const InvitationUncheckedCreateWithoutUserInputObjectZodSchema = makeSchema();

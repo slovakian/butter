@@ -17,7 +17,7 @@
 			"@orpc/openapi": "^1.13.6",
 			"@orpc/zod": "^1.13.6",
 			"@orpc/experimental-ratelimit": "^1.13.6",
-			"better-auth": "^1.4.18",
+			"better-auth": "^1.5.3",
 			"alchemy": "^0.85.1",
 			"wrangler": "^4.67.0",
 			"@prisma/client": "^7.2.0",

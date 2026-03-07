@@ -1,0 +1,10 @@
+import * as z from 'zod';
+import type { Prisma } from '../../../../db/prisma/generated/client';
+import { SortOrderSchema } from '../enums/SortOrder.schema'
+
+const makeSchema = () => z.object({
+  id: SortOrderSchema.optional(),
+  themeId: SortOrderSchema.optional()
+}).strict();
+export const BoardSumOrderByAggregateInputObjectSchema: z.ZodType<Prisma.BoardSumOrderByAggregateInput> = makeSchema() as unknown as z.ZodType<Prisma.BoardSumOrderByAggregateInput>;
+export const BoardSumOrderByAggregateInputObjectZodSchema = makeSchema();

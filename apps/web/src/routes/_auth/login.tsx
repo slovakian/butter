@@ -6,7 +6,8 @@ import SignUpForm from "@/components/sign-up-form";
 
 export const Route = createFileRoute("/_auth/login")({
 	beforeLoad: ({ context }) => {
-		if (context.session) {
+		console.log("auth route, session on server: ", context.session);
+		if (context.session?.user) {
 			throw redirect({ to: "/" });
 		}
 	},

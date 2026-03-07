@@ -1,7 +1,6 @@
 import type { ThemeInsert } from "@butter/shared/themes/types";
 
 export const DEFAULT_THEME = {
-	name: "Minecraft",
 	isDark: true,
 	// oklch colors and rem radius
 	variables: {
@@ -47,4 +46,4 @@ export const DEFAULT_THEME = {
 		topbarBorder: "0.5 0.02 90",
 		topbarRing: "0.6 0.18 145",
 	},
-} satisfies Omit<ThemeInsert, "userId" | "id">;
+} satisfies Omit<ThemeInsert, "userId" | "id" | "name">;

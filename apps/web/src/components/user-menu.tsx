@@ -14,7 +14,7 @@ import { authClient } from "@/features/auth/client";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
-export default function UserMenu() {
+export default function UserMenu({ children }: { children: React.ReactNode }) {
 	const navigate = useNavigate();
 	const { data: session, isPending } = authClient.useSession();
 
@@ -33,7 +33,7 @@ export default function UserMenu() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant="outline" />}>
-				{session.user.name}
+				{children}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="bg-card">
 				<DropdownMenuGroup>

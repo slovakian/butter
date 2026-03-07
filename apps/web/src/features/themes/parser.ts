@@ -35,6 +35,14 @@ export const THEME_VAR_MAP: Record<keyof ThemeVariables, string> = {
 	sidebarAccentForeground: "sidebar-accent-foreground",
 	sidebarBorder: "sidebar-border",
 	sidebarRing: "sidebar-ring",
+	topbar: "topbar",
+	topbarForeground: "topbar-foreground",
+	topbarPrimary: "topbar-primary",
+	topbarPrimaryForeground: "topbar-primary-foreground",
+	topbarAccent: "topbar-accent",
+	topbarAccentForeground: "topbar-accent-foreground",
+	topbarBorder: "topbar-border",
+	topbarRing: "topbar-ring",
 };
 
 // Reverse map for parsing
@@ -55,7 +63,7 @@ export function formatThemeToCss(theme: ThemeVariables): string {
 		if (value === undefined) continue;
 
 		if (key === "radius") {
-			css += `\t--${cssVar}: ${value};\n`;
+			css += `\t--${cssVar}: ${value}rem;\n`;
 		} else {
 			css += `\t--${cssVar}: oklch(${value});\n`;
 		}
@@ -80,7 +88,9 @@ export function parseCssToTheme(css: string): Record<string, string> {
 		let trimmedValue = value.trim();
 
 		// For color variables, strip the oklch() wrapper if present
-		if (key !== "radius") {
+		if (key === "radius") {
+			trimmedValue = trimmedValue.replace("rem", "").trim();
+		} else {
 			const oklchMatch = trimmedValue.match(/^oklch\((.*)\)$/i);
 			if (oklchMatch) {
 				trimmedValue = oklchMatch[1].trim();

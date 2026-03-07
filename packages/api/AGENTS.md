@@ -159,3 +159,33 @@ The agent **must** update this `AGENTS.md` file to reflect those new structural 
 ### Type Assertions & Casting
 - **Avoid `as`**: Type assertions (e.g., `variable as User`) are dangerous and should be avoided unless strictly necessary for platform-specific reasons.
 - **Preference**: Use **Type Guards** (functions returning `x is T`) or **Zod Parsing** to ensure data matches the expected shape at runtime.
+
+
+## 6. Prisma Zod Generator Integration
+
+We use `prisma-zod-generator` to automatically generate Zod schemas from our Prisma schema. This ensures our validation logic stays in sync with our database schema.
+
+### Importing Schemas
+**Rule**: Always import generated Zod schemas from the shared package:
+```typescript
+import { UserSchema, UserCreateInputSchema } from '@butter/shared/schemas';
+```
+
+### Validation in ORPC
+ORPC supports both `.input()` and `.output()` validation. You should prefer to use both if possible to ensure full type safety.
+
+- **Input Validation**: Use the generated **Input Schemas** (e.g., `UserCreateInputSchema`, `UserWhereInputSchema`) for `.input()`.
+- **Output Validation**: Use the generated **Result Schemas** or **Pure Model Schemas** (e.g., `UserSchema`) for `.output()`.
+
+### Schema Variants
+The generator produces different types of schemas to suit different needs:
+
+1.  **Pure Models** (e.g., `UserSchema`): Represents the model exactly as defined in Prisma. Useful for output validation.
+2.  **Input Schemas** (e.g., `UserCreateInputSchema`): Represents the input arguments for Prisma Client operations. Essential for input validation.
+3.  **Result Schemas**: Represents the return types of Prisma Client operations.
+
+
+### Useful Tips
+- **Drift Elimination**: Using these schemas eliminates drift between your API validation and database schema.
+- **Type Safety**: Provides end-to-end type safety from the database to the API.
+- **Customization**: The schemas can be extended or refined using standard Zod methods (e.g., `.omit()`, `.extend()`) if the generated schema needs strictly localized modification for a specific procedure.

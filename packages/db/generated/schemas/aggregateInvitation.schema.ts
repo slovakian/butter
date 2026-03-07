@@ -1,0 +1,14 @@
+import type { Prisma } from '../../prisma/generated/client';
+import * as z from 'zod';
+import { InvitationOrderByWithRelationInputObjectSchema as InvitationOrderByWithRelationInputObjectSchema } from './objects/InvitationOrderByWithRelationInput.schema';
+import { InvitationWhereInputObjectSchema as InvitationWhereInputObjectSchema } from './objects/InvitationWhereInput.schema';
+import { InvitationWhereUniqueInputObjectSchema as InvitationWhereUniqueInputObjectSchema } from './objects/InvitationWhereUniqueInput.schema';
+import { InvitationCountAggregateInputObjectSchema as InvitationCountAggregateInputObjectSchema } from './objects/InvitationCountAggregateInput.schema';
+import { InvitationMinAggregateInputObjectSchema as InvitationMinAggregateInputObjectSchema } from './objects/InvitationMinAggregateInput.schema';
+import { InvitationMaxAggregateInputObjectSchema as InvitationMaxAggregateInputObjectSchema } from './objects/InvitationMaxAggregateInput.schema';
+import { InvitationAvgAggregateInputObjectSchema as InvitationAvgAggregateInputObjectSchema } from './objects/InvitationAvgAggregateInput.schema';
+import { InvitationSumAggregateInputObjectSchema as InvitationSumAggregateInputObjectSchema } from './objects/InvitationSumAggregateInput.schema';
+
+export const InvitationAggregateSchema: z.ZodType<Prisma.InvitationAggregateArgs> = z.object({ orderBy: z.union([InvitationOrderByWithRelationInputObjectSchema, InvitationOrderByWithRelationInputObjectSchema.array()]).optional(), where: InvitationWhereInputObjectSchema.optional(), cursor: InvitationWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), InvitationCountAggregateInputObjectSchema ]).optional(), _min: InvitationMinAggregateInputObjectSchema.optional(), _max: InvitationMaxAggregateInputObjectSchema.optional(), _avg: InvitationAvgAggregateInputObjectSchema.optional(), _sum: InvitationSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.InvitationAggregateArgs>;
+
+export const InvitationAggregateZodSchema = z.object({ orderBy: z.union([InvitationOrderByWithRelationInputObjectSchema, InvitationOrderByWithRelationInputObjectSchema.array()]).optional(), where: InvitationWhereInputObjectSchema.optional(), cursor: InvitationWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), InvitationCountAggregateInputObjectSchema ]).optional(), _min: InvitationMinAggregateInputObjectSchema.optional(), _max: InvitationMaxAggregateInputObjectSchema.optional(), _avg: InvitationAvgAggregateInputObjectSchema.optional(), _sum: InvitationSumAggregateInputObjectSchema.optional() }).strict();

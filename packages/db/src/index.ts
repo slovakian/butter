@@ -1,32 +1,26 @@
 import { env } from "@butter/env/server";
-import { Pool } from "@neondatabase/serverless";
-import { ZenStackClient } from "@zenstackhq/orm";
-import { PostgresDialect } from "@zenstackhq/orm/dialects/postgres";
-import { schema } from "../zenstack/generated/schema";
+import type { Pool } from "@neondatabase/serverless";
+import { PrismaNeonHttp } from "@prisma/adapter-neon";
+import { PrismaClient } from "../prisma/generated/client";
+import "./types";
 
-export const createDb = () => {
-	const pool = new Pool({
-		connectionString: env.DATABASE_URL,
-	});
+export * from "../prisma/generated/client";
 
-	const db = new ZenStackClient(schema, {
-		dialect: new PostgresDialect({
-			pool,
-		}),
-	});
+export const createDb = (): { db: PrismaClient; pool: Pool } => {
+	const connectionString = env.DATABASE_URL;
+	const adapter = new PrismaNeonHttp(connectionString, {});
+	const db = new PrismaClient({ adapter });
+
+	// Mock pool to satisfy return type and allow cleanup
+	const pool = {
+		end: () => db.$disconnect(),
+	} as unknown as Pool;
 
 	return { db, pool };
 };
 
 export type DbInstance = ReturnType<typeof createDb>;
-export type DbClient = DbInstance["db"];
+export type DbClient = PrismaClient;
 
-const pool = new Pool({
-	connectionString: env.DATABASE_URL,
-});
-
-export const tempDb = new ZenStackClient(schema, {
-	dialect: new PostgresDialect({
-		pool,
-	}),
-});
+const adapter = new PrismaNeonHttp(env.DATABASE_URL, {});
+export const tempDb = new PrismaClient({ adapter });

@@ -1,0 +1,7 @@
+import type { Prisma } from '../../../db/prisma/generated/client';
+import * as z from 'zod';
+import { ThemeWhereInputObjectSchema as ThemeWhereInputObjectSchema } from './objects/ThemeWhereInput.schema';
+
+export const ThemeDeleteManySchema: z.ZodType<Prisma.ThemeDeleteManyArgs> = z.object({ where: ThemeWhereInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.ThemeDeleteManyArgs>;
+
+export const ThemeDeleteManyZodSchema = z.object({ where: ThemeWhereInputObjectSchema.optional() }).strict();

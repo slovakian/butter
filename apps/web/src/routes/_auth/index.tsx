@@ -42,6 +42,7 @@ function HomeComponent() {
 			<WelcomeDialog />
 			<TopBar />
 			{/* <Header /> */}
+			{/* put the live globe to the right of the title text!!!! */}
 			<div className="container mx-auto max-w-4xl space-y-8 px-4 py-8">
 				<pre className="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
 				<section className="rounded-lg border p-6">
