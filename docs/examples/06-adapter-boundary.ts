@@ -14,7 +14,17 @@ declare const db: unknown
 
 // --- Out of the box --------------------------------------------------------
 
-export const withPrisma = Butter.make().adapter(PrismaAdapter(prisma)).build()
+export const withPrisma = Butter.make()
+  .adapter(
+    PrismaAdapter(prisma, {
+      // Butter internal model id → Prisma client key (storage only)
+      tables: {
+        user: "contributor",
+        organization: "publication",
+      },
+    })
+  )
+  .build()
 
 export const withDrizzle = Butter.make().adapter(DrizzleAdapter(db)).build()
 

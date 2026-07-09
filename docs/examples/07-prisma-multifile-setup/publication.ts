@@ -1,20 +1,17 @@
 /**
- * Conceptual example — not executable library code.
+ * Conceptual — extension as a module you own or import.
  *
- * Extensions contribute models + capabilities to the graph.
- * They do not mutate a single inferred options object.
+ * Could live in `butter/extensions/organization` and be re-aliased here,
+ * or be an app-local extension. Either way: one file, one concern.
  */
 
 import { Effect, Schema } from "effect"
-import { Butter, defineExtension } from "./_aspirational"
+import { defineExtension } from "../_aspirational"
 
-/**
- * A "publication" extension — same job as Better Auth's organization plugin,
- * but named for the app's domain via aliases (not via a separate namespace map).
- */
 export const PublicationExtension = defineExtension({
   id: "publication",
 
+  // Stable internal model ids (public names come from aliases.ts)
   models: {
     organization: Schema.Struct({
       id: Schema.String,
@@ -55,27 +52,3 @@ export const PublicationExtension = defineExtension({
     },
   },
 })
-
-export const auth = Butter.make()
-  .extension(PublicationExtension)
-  .alias({
-    models: {
-      organization: "publication", // type + client.publication.*
-      member: "staff",
-      user: "contributor",
-    },
-    methods: {
-      "organization.create": "create",
-      "organization.inviteMember": "invite",
-      "session.get": "current",
-    },
-  })
-  .build()
-
-/**
- * Composition rule:
- * - Extension contributes under stable ids
- * - Model alias is the public namespace
- * - Method alias is the leaf only
- *   → client.publication.create / client.publication.invite / client.session.current
- */

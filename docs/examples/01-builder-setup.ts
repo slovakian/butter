@@ -3,17 +3,21 @@
  *
  * Thin builder compiles to an Effect Layer graph.
  * Authors configure; Effect composes.
+ *
+ * For a realistic multi-file Prisma walkthrough, see
+ * `07-prisma-multifile-setup/`.
  */
 
 import { Effect, Layer } from "effect"
-// aspirational:
-// import { Butter, PrismaAdapter } from "butter"
-// import { prisma } from "./db"
+import type { AliasMap, AuthContract } from "./_aspirational"
 
 declare const Butter: {
   make: () => ButterBuilder
 }
-declare const PrismaAdapter: (client: unknown) => Adapter
+declare const PrismaAdapter: (
+  client: unknown,
+  options?: { tables?: Record<string, string> }
+) => Adapter
 type Adapter = { readonly _tag: "Adapter" }
 
 interface ButterBuilder {
@@ -31,26 +35,10 @@ interface ButterBuilder {
   build: () => AuthInstance
 }
 
-interface AliasMap {
-  models?: Record<string, string>
-  namespaces?: Record<string, string>
-  /** Stable capability id → public method leaf only */
-  methods?: Record<string, string>
-}
-
 interface AuthInstance {
-  /** Effect Layer that provides all auth services */
   readonly layer: Layer.Layer<never, never, never>
-  /** Shared contract projected to client + RPC */
   readonly contract: AuthContract
-  /** Server-side capability caller (internal IDs or public aliases) */
   readonly use: <A, E, R>(capability: string, input?: unknown) => Effect.Effect<A, E, R>
-}
-
-interface AuthContract {
-  readonly models: Record<string, unknown>
-  readonly procedures: Record<string, unknown>
-  readonly aliases: Required<AliasMap>
 }
 
 declare const prisma: unknown
