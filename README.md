@@ -10,6 +10,11 @@ Effect-native authentication library. A better-Auth alternative.
 
 - `packages/butter` — the core library
 
+## Vision (define stage)
+
+- [`docs/ideas/butter-vision.md`](./docs/ideas/butter-vision.md) — composition model, assumptions, non-goals
+- [`docs/examples/`](./docs/examples/) — illustrative TypeScript for the intended DX (not a working implementation yet)
+
 ## Better Auth reference graph
 
 This repo commits an Understand Anything analysis of upstream Better Auth (`packages/better-auth`) so agents can explore auth architecture without re-cloning or re-analyzing from scratch. See [AGENTS.md](./AGENTS.md) for access instructions.
