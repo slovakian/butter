@@ -5,8 +5,18 @@
 
 import { Effect, Layer, Schema } from "effect"
 
+/**
+ * Aliases are independent axes — never a single flat "capability → public symbol" map.
+ *
+ * Public path = namespaces[ns] + "." + methods["ns.method"]
+ * Example: organization.create → publication.create
+ */
 export type AliasMap = {
+  /** Stable model id → public model name */
   models?: Record<string, string>
+  /** Stable capability namespace → public client/RPC namespace */
+  namespaces?: Record<string, string>
+  /** Stable capability id (`ns.method`) → public method name only */
   methods?: Record<string, string>
 }
 
@@ -15,6 +25,7 @@ export type AuthContract = {
   readonly procedures: Record<string, unknown>
   readonly aliases: {
     models: Record<string, string>
+    namespaces: Record<string, string>
     methods: Record<string, string>
   }
 }
@@ -48,7 +59,7 @@ export type ButterBuilder = {
 const emptyContract: AuthContract = {
   models: {},
   procedures: {},
-  aliases: { models: {}, methods: {} },
+  aliases: { models: {}, namespaces: {}, methods: {} },
 }
 
 const builder = (): ButterBuilder => {
@@ -82,8 +93,12 @@ export const createButterClient = (_options: {
   contract: AuthContract
   baseUrl: string
 }) =>
-  new Proxy({} as Record<string, (...args: Array<unknown>) => Promise<unknown>>, {
-    get: () => async () => null,
+  // Nested proxy: client[namespace][method](...)
+  new Proxy({} as Record<string, Record<string, (...args: Array<unknown>) => Promise<unknown>>>, {
+    get: () =>
+      new Proxy({} as Record<string, (...args: Array<unknown>) => Promise<unknown>>, {
+        get: () => async () => null,
+      }),
   })
 
 export const toOrpcRouter = (_contract: AuthContract) => ({})

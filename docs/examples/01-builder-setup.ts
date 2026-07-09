@@ -33,6 +33,8 @@ interface ButterBuilder {
 
 interface AliasMap {
   models?: Record<string, string>
+  namespaces?: Record<string, string>
+  /** Stable capability id → public method leaf only */
   methods?: Record<string, string>
 }
 

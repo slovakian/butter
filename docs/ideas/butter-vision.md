@@ -22,7 +22,7 @@ What it got wrong is the **composition substrate**. Auth is assembled as one con
 Butter keeps the product truths and changes the substrate:
 
 1. **Capabilities, not a god-object.** Auth is a graph of named capabilities (`session.get`, `credential.signIn`, `organization.invite`, …). Extensions contribute nodes, schemas, and handlers. They do not mutate one inferred bag of options.
-2. **Stable internal IDs, public aliases.** Core and extensions speak stable capability and model IDs. Apps rename models (`user` → `contributor`) and methods (`getSession` → `current`) for their domain. Client, RPC, and docs expose the public names.
+2. **Stable internal IDs, public aliases.** Core and extensions speak stable capability and model IDs. Apps rename along **independent axes**: models (`user` → `contributor`), namespaces (`organization` → `publication`), and method leaves (`inviteMember` → `invite`). The public path stays hierarchical (`client.publication.invite`), never a flattened root symbol. Client, RPC, and docs expose those public names.
 3. **Override and augment are core.** Replace a capability, or wrap it to enrich the result. Custom session is not a special plugin — it is the normal composition story.
 4. **One contract module.** Server, client, and RPC all project from the same built contract. No parallel client plugin list just to keep types aligned.
 5. **Adapters and RPC at the edge.** Prisma and Drizzle adapters first. oRPC first as the RPC projection (tRPC later). Apps reuse the RPC layer they already have.
@@ -37,7 +37,7 @@ Effect is the engine: Services, Layers, and Schema. Day-1 DX is a thin builder t
 | Builder → Layers | Effect already models dependency graphs; the builder is sugar that emits a Layer | Keeping sugar from becoming another opaque config object |
 | Additive type composition | Each extension returns typed contributions; the build step intersects/unions them explicitly | TypeScript UX for rename + override without cleverness overload |
 | Shared contract | One schema/procedure artifact projected three ways | Package boundaries when server and client live apart |
-| Alias surface | Internal IDs stay stable; public names are a map applied at the projection boundary | End-to-end rename across client methods, RPC paths, and errors |
+| Alias surface | Internal IDs stay stable; public path = `namespaces[ns] + methodLeaf` at the projection boundary | Keeping three alias maps consistent end-to-end (models, namespaces, methods) |
 | Override / augment | Middleware-shaped handlers over capability IDs | Defining safe defaults so overrides cannot silently break auth invariants |
 
 Better Auth’s limitations are evidence that the *composition model* is wrong, not proof that Effect magically fixes auth. Effect helps only if Butter refuses to recreate “array of plugins mutates one inferred type.”
@@ -45,7 +45,7 @@ Better Auth’s limitations are evidence that the *composition model* is wrong, 
 ## Key Assumptions to Validate
 
 - [ ] A thin builder can compile to Layers and stay readable after 2–3 extensions
-- [ ] Model + method rename flows to client and RPC without leaking core names into app code
+- [ ] Independent model / namespace / method rename flows to client and RPC without leaking core names into app code
 - [ ] Override and augment compose without plugin-order bugs
 - [ ] A shared contract removes server/client type drift (the `inferAdditionalFields` class of hacks)
 - [ ] Session-kernel docs/examples are enough to prove the bet before chasing feature parity
@@ -69,10 +69,30 @@ Docs only — no production library implementation yet.
 - **Raw Layer-only public API** — builder sugar is required for adoption
 - **Cards-on-the-table “Effect required to understand your auth”** — Effect is the engine; literacy is optional at the builder layer
 
+### Alias design (decided for vision)
+
+Capabilities are addressed internally as `namespace.method` (e.g. `organization.create`).
+
+Public projection uses **three independent maps**:
+
+| Map | Renames | Example |
+|-----|---------|---------|
+| `models` | Data/shape names | `organization` → `publication` |
+| `namespaces` | Client/RPC grouping | `organization` → `publication` |
+| `methods` | Leaf operation only | `organization.create` → `create` (or `start`) |
+
+Result: `client.publication.create`, not a flattened `client.startPublication`.
+
+**Why not a flat `methods: { "organization.create": "startPublication" }` map?**  
+That was the first-draft shortcut in the examples: one map, one string, done. It accidentally collapsed namespace and method into a single public symbol. That fights the mental model (“methods are properties of the name you gave the client”) and makes bulk rename worse — renaming a whole extension’s namespace would require rewriting every method entry. Independent maps match the product intent: swap the namespace, swap a leaf, or both.
+
+**Default when an alias is omitted:** public name equals the stable id segment (`organization.create` → `client.organization.create`).
+
 ## Open Questions
 
 - Exact builder API: fluent chain vs declarative manifest vs both (manifest preferred for agents)?
-- Do public HTTP/RPC paths always follow method aliases, or are routes independently aliasable?
+- Should `models` and `namespaces` usually stay in lockstep (one `rename: { organization: "publication" }` helper), or always be separate maps?
+- Do public HTTP/RPC paths always follow namespace + method aliases, or are routes independently aliasable?
 - Is the contract a separate export (`auth.contract`) or only inferred from the built instance?
 - How much invariant protection do overrides get (can you replace `session.get` with something that drops `userId`)?
 - First extension after session kernel: organizations-like, or credentials/email-password?

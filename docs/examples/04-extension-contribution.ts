@@ -66,9 +66,14 @@ export const auth = Butter.make()
       member: "staff",
       user: "contributor",
     },
+    namespaces: {
+      organization: "publication",
+      session: "session",
+    },
     methods: {
-      "organization.create": "startPublication",
-      "organization.inviteMember": "inviteStaff",
+      // method leaf only — namespace comes from `namespaces`
+      "organization.create": "create",
+      "organization.inviteMember": "invite",
       "session.get": "current",
     },
   })
@@ -77,7 +82,8 @@ export const auth = Butter.make()
 /**
  * Composition rule:
  * - Extension contributes under stable ids
- * - App aliases for DX
+ * - App aliases namespace and method independently
+ *   → client.publication.create / client.publication.invite / client.session.current
  * - session.activeOrganizationId is a schema contribution, not a
  *   side effect that other plugins must specially re-infer
  */

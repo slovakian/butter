@@ -21,10 +21,14 @@ export const auth = Butter.make()
       organization: "publication",
       member: "staff",
     },
+    namespaces: {
+      session: "session",
+      organization: "publication",
+    },
     methods: {
       "session.get": "current",
-      "organization.create": "startPublication",
-      "organization.inviteMember": "inviteStaff",
+      "organization.create": "create",
+      "organization.inviteMember": "invite",
     },
   })
   .build()
@@ -32,7 +36,7 @@ export const auth = Butter.make()
 /** Shared contract — importable from server and client packages as types */
 export const contract = auth.contract
 
-// --- Client projection (public method names) -------------------------------
+// --- Client projection (public namespace + method) --------------------------
 
 export const client = createButterClient({
   contract,
@@ -40,8 +44,8 @@ export const client = createButterClient({
 })
 
 declare function demoClient() {
-  // public names only
-  return client.current()
+  // hierarchy preserved: namespace then method
+  return client.session.current()
 }
 
 // --- oRPC projection (reuse the app's RPC layer) ---------------------------
@@ -56,10 +60,10 @@ export const authRouter = toOrpcRouter(contract)
  *     posts: postsRouter,
  *   }
  *
- * Procedure names follow aliases:
- *   auth.current
- *   auth.startPublication
- *   auth.inviteStaff
+ * Procedure paths follow independent aliases:
+ *   auth.session.current
+ *   auth.publication.create
+ *   auth.publication.invite
  *
  * HTTP endpoints remain available as an alternate projection of the
  * same contract for apps that want Better Auth-style route handlers.
@@ -70,7 +74,7 @@ export const authRouter = toOrpcRouter(contract)
 import { Effect } from "effect"
 
 export const requireContributor = Effect.gen(function* () {
-  // Server may call by public alias or stable id — both resolve via contract
-  const session = yield* auth.use("current")
+  // Server may call by public path or stable id — both resolve via contract
+  const session = yield* auth.use("session.current")
   return session
 })
