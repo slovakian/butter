@@ -1,0 +1,13 @@
+{
+  "lastAnalyzedAt": "2026-07-09T12:52:09Z",
+  "gitCommitHash": "f59a0ee7895a024ddd4c5c387344173888e17be4",
+  "version": "1.0.0",
+  "analyzedFiles": 294,
+  "source": "better-auth/better-auth",
+  "sourcePath": "packages/better-auth",
+  "notes": "Analyzed upstream Better Auth core package for Butter agent reference. Tests excluded via .understandignore.",
+  "analyzedPackage": "better-auth",
+  "upstreamRepo": "https://github.com/better-auth/better-auth",
+  "upstreamCommit": "f59a0ee7895a024ddd4c5c387344173888e17be4",
+  "purpose": "Upstream Better Auth core package knowledge graph for Butter agents to explore auth architecture, plugins, adapters, and client SDKs."
+}

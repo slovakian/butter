@@ -1,0 +1,12 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+
+# Exclude tests — focus graph on production auth library surface
+*.test.*
+*.spec.*
+*.snap
+**/__tests__/**
+**/test/**
+**/tests/**
+
+# Heavy generated / lock artifacts already covered by defaults
