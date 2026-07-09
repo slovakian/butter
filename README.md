@@ -2,9 +2,17 @@
 
 Effect-native authentication library. A better-Auth alternative.
 
+## Agent instructions
+
+- **[AGENTS.md](./AGENTS.md)** — how agents should work in this repo, including the permanent Better Auth [Understand Anything](https://github.com/Egonex-AI/Understand-Anything) knowledge graph under [`.understand-anything/`](./.understand-anything/)
+
 ## Packages
 
 - `packages/butter` — the core library
+
+## Better Auth reference graph
+
+This repo commits an Understand Anything analysis of upstream Better Auth (`packages/better-auth`) so agents can explore auth architecture without re-cloning or re-analyzing from scratch. See [AGENTS.md](./AGENTS.md) for access instructions.
 
 ## Tooling
 
