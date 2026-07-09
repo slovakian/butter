@@ -2,6 +2,11 @@
 
 Effect-native authentication library. A better-Auth alternative.
 
+## Documentation
+
+- [Docs index](./docs/README.md) — guides for humans and agents
+- [Better Auth reference](./docs/better-auth-reference.md) — how agents should look up the [Better Auth](https://github.com/better-auth/better-auth) GitHub repo and [llms.txt](https://www.better-auth.com/llms.txt) docs when building Butter
+
 ## Packages
 
 - `packages/butter` — the core library
