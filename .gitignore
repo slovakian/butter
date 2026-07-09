@@ -30,3 +30,9 @@ coverage
 
 # AI agent worktrees
 .claude/worktrees/
+
+# Understand Anything generated artifacts (keep knowledge-graph.json if committed)
+.understand-anything/intermediate/
+.understand-anything/diff-overlay.json
+.understand-anything/tmp/
+.understand-anything/.trash-*/
