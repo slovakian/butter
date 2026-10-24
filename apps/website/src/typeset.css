@@ -1,0 +1,366 @@
+/* ==========================================================================
+   shadcn/typeset — Owned typography stylesheet for HTML and rendered markdown
+   https://ui.shadcn.com/docs/typeset
+   ========================================================================== */
+
+@layer components {
+  .typeset {
+    --typeset-font-body: var(--font-sans, inherit);
+    --typeset-font-heading: var(--font-heading, var(--font-sans, inherit));
+    --typeset-font-mono:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+
+    --typeset-size: 1rem;
+    --typeset-leading: 1.75;
+    --typeset-flow: 1.25em;
+
+    font-family: var(--typeset-font-body);
+    font-size: var(--typeset-size);
+    line-height: var(--typeset-leading);
+    color: var(--foreground);
+  }
+
+  /* Context presets */
+  .typeset-docs {
+    --typeset-size: 15px;
+    --typeset-leading: 1.75;
+    --typeset-flow: 1.4em;
+  }
+
+  .typeset-compact {
+    --typeset-size: 13.5px;
+    --typeset-leading: 1.6;
+    --typeset-flow: 1em;
+  }
+
+  .typeset-reading {
+    --typeset-size: 17px;
+    --typeset-leading: 1.85;
+    --typeset-flow: 1.6em;
+  }
+
+  /* Low-specificity element styles via :where() for seamless utility overrides */
+  .typeset :where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--typeset-font-heading);
+    color: var(--foreground);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    scroll-margin-top: 5rem;
+  }
+
+  .typeset :where(h1) {
+    font-size: 2.15em;
+    line-height: 1.2;
+    margin-top: calc(var(--typeset-flow) * 1.8);
+    margin-bottom: calc(var(--typeset-flow) * 0.75);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .typeset :where(h2) {
+    font-size: 1.55em;
+    line-height: 1.3;
+    margin-top: calc(var(--typeset-flow) * 1.6);
+    margin-bottom: calc(var(--typeset-flow) * 0.6);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.35em;
+  }
+
+  .typeset :where(h3) {
+    font-size: 1.25em;
+    line-height: 1.4;
+    margin-top: calc(var(--typeset-flow) * 1.3);
+    margin-bottom: calc(var(--typeset-flow) * 0.5);
+  }
+
+  .typeset :where(h4) {
+    font-size: 1.1em;
+    line-height: 1.4;
+    margin-top: var(--typeset-flow);
+    margin-bottom: calc(var(--typeset-flow) * 0.4);
+  }
+
+  .typeset :where(p) {
+    margin-top: 0;
+    margin-bottom: var(--typeset-flow);
+  }
+
+  .typeset :where(a) {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--muted-foreground);
+    transition:
+      color 0.15s ease,
+      text-decoration-color 0.15s ease;
+  }
+
+  .typeset :where(a:hover) {
+    color: var(--primary);
+    text-decoration-color: var(--primary);
+  }
+
+  .typeset :where(strong) {
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  .typeset :where(em) {
+    font-style: italic;
+  }
+
+  .typeset :where(ul) {
+    list-style-type: disc;
+    margin-top: 0;
+    margin-bottom: var(--typeset-flow);
+    padding-left: 1.5em;
+  }
+
+  .typeset :where(ol) {
+    list-style-type: decimal;
+    margin-top: 0;
+    margin-bottom: var(--typeset-flow);
+    padding-left: 1.5em;
+  }
+
+  .typeset :where(li) {
+    margin-bottom: calc(var(--typeset-flow) * 0.35);
+  }
+
+  .typeset :where(li > ul, li > ol) {
+    margin-top: calc(var(--typeset-flow) * 0.25);
+    margin-bottom: 0;
+  }
+
+  .typeset :where(blockquote) {
+    margin-top: 0;
+    margin-bottom: var(--typeset-flow);
+    padding-left: 1.1em;
+    border-left: 3px solid var(--border);
+    font-style: italic;
+    color: var(--muted-foreground);
+  }
+
+  .typeset :where(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin-top: calc(var(--typeset-flow) * 2);
+    margin-bottom: calc(var(--typeset-flow) * 2);
+  }
+
+  .typeset :where(table) {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: var(--typeset-flow);
+    border-collapse: collapse;
+    font-size: 0.9em;
+  }
+
+  .typeset :where(th, td) {
+    padding: 0.65em 0.85em;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .typeset :where(th) {
+    font-weight: 600;
+    background-color: var(--muted);
+    color: var(--foreground);
+  }
+
+  .typeset :where(tr:nth-child(even) td) {
+    background-color: color-mix(in oklch, var(--muted) 40%, transparent);
+  }
+
+  .typeset :where(:not(pre) > code) {
+    font-family: var(--typeset-font-mono);
+    font-size: 0.875em;
+    padding: 0.15em 0.35em;
+    border-radius: calc(var(--radius) * 0.6);
+    background-color: var(--muted);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+  }
+
+  .typeset :where(pre) {
+    font-family: var(--typeset-font-mono);
+    font-size: 0.85em;
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: var(--typeset-flow);
+    padding: 1rem;
+    border-radius: var(--radius);
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .typeset :where(pre code) {
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+  }
+
+  /* Anchor headings */
+  .typeset :where(.anchor-heading) {
+    margin-left: 0.4em;
+    color: var(--muted-foreground);
+    opacity: 0;
+    text-decoration: none;
+    font-weight: 400;
+    transition: opacity 0.15s ease;
+  }
+
+  .typeset
+    :where(
+      h1:hover .anchor-heading,
+      h2:hover .anchor-heading,
+      h3:hover .anchor-heading
+    ) {
+    opacity: 1;
+  }
+
+  /* Escape hatch */
+  .typeset .not-typeset,
+  .typeset [data-not-typeset="true"] {
+    all: revert;
+  }
+}
+
+/* ==========================================================================
+   TanStack Highlight Theming (GitHub Light & GitHub Dark)
+   ========================================================================== */
+
+:root {
+  --th-background: color-mix(in oklch, var(--card) 60%, transparent);
+  --th-token: #24292f;
+  --th-attr: #0550ae;
+  --th-code-inline: #953800;
+  --th-command: #8250df;
+  --th-comment: #6e7781;
+  --th-deleted: #cf222e;
+  --th-function: #8250df;
+  --th-heading: #0550ae;
+  --th-inserted: #1a7f37;
+  --th-keyword: #cf222e;
+  --th-link: #0969da;
+  --th-literal: #0550ae;
+  --th-meta: #57606a;
+  --th-number: #0550ae;
+  --th-operator: #8250df;
+  --th-property: #0550ae;
+  --th-selector: #116329;
+  --th-string: #0a7f64;
+  --th-tag: #116329;
+  --th-type: #953800;
+  --th-variable: #953800;
+}
+
+.dark {
+  --th-background: color-mix(in oklch, var(--card) 60%, transparent);
+  --th-token: #c9d1d9;
+  --th-attr: #79c0ff;
+  --th-code-inline: #ffa657;
+  --th-command: #d2a8ff;
+  --th-comment: #8b949e;
+  --th-deleted: #ff7b72;
+  --th-function: #d2a8ff;
+  --th-heading: #79c0ff;
+  --th-inserted: #7ee787;
+  --th-keyword: #ff7b72;
+  --th-link: #58a6ff;
+  --th-literal: #79c0ff;
+  --th-meta: #8b949e;
+  --th-number: #79c0ff;
+  --th-operator: #d2a8ff;
+  --th-property: #79c0ff;
+  --th-selector: #7ee787;
+  --th-string: #a5d6ff;
+  --th-tag: #7ee787;
+  --th-type: #ffa657;
+  --th-variable: #ffa657;
+}
+
+pre.th-code,
+pre.tm-code {
+  overflow-x: auto;
+  padding: 1rem;
+  background: var(--th-background);
+  color: var(--th-token);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.th-token {
+  color: var(--th-token);
+}
+.th-attr {
+  color: var(--th-attr);
+}
+.th-code-inline {
+  color: var(--th-code-inline);
+}
+.th-command {
+  color: var(--th-command);
+}
+.th-comment {
+  color: var(--th-comment);
+}
+.th-deleted {
+  color: var(--th-deleted);
+}
+.th-function {
+  color: var(--th-function);
+}
+.th-heading {
+  color: var(--th-heading);
+}
+.th-inserted {
+  color: var(--th-inserted);
+}
+.th-keyword {
+  color: var(--th-keyword);
+}
+.th-link {
+  color: var(--th-link);
+}
+.th-literal {
+  color: var(--th-literal);
+}
+.th-meta {
+  color: var(--th-meta);
+}
+.th-number {
+  color: var(--th-number);
+}
+.th-operator {
+  color: var(--th-operator);
+}
+.th-property {
+  color: var(--th-property);
+}
+.th-selector {
+  color: var(--th-selector);
+}
+.th-string {
+  color: var(--th-string);
+}
+.th-tag {
+  color: var(--th-tag);
+}
+.th-type {
+  color: var(--th-type);
+}
+.th-variable {
+  color: var(--th-variable);
+}
+.th-line {
+  display: inline-block;
+  min-width: 100%;
+  width: max-content;
+}

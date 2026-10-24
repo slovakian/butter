@@ -12,6 +12,8 @@
     "@base-ui/react": "catalog:",
     "@fontsource-variable/inter": "catalog:",
     "@tailwindcss/vite": "catalog:",
+    "@tanstack/highlight": "catalog:",
+    "@tanstack/markdown": "catalog:",
     "@tanstack/react-devtools": "catalog:",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-router-devtools": "catalog:",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
+    "@shadcn/lint": "catalog:",
     "@tanstack/devtools-vite": "catalog:",
     "@tanstack/router-cli": "catalog:",
     "@types/react": "catalog:",

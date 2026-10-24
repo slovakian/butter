@@ -35,6 +35,7 @@ export default defineConfig({
     jsPlugins: [
       { name: "vite-plus", specifier: "vite-plus/oxlint-plugin" },
       { name: "anti-slop", specifier: "./tools/oxlint/anti-slop/index.ts" },
+      { name: "shadcn", specifier: "@shadcn/lint" },
     ],
     options: { typeAware: true, typeCheck: true },
     rules: {
@@ -57,6 +58,9 @@ export default defineConfig({
       "anti-slop/require-readable-spacing": "error",
       "anti-slop/require-safety-comment-for-type-assertion": "error",
       "oxc/no-accumulating-spread": "error",
+      "shadcn/no-arbitrary-values": "warn",
+      "shadcn/no-raw-colors": "warn",
+      "shadcn/no-restyle": "warn",
       "vite-plus/prefer-vite-plus-imports": "error",
     },
   },

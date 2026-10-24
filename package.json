@@ -8,13 +8,15 @@
     "ready": "vp check && vp run -r test && vp run -r build",
     "dev": "vp run website#dev",
     "check": "ultracite check",
-    "fix": "ultracite fix"
+    "fix": "ultracite fix",
+    "lint:shadcn": "oxlint apps"
   },
   "devDependencies": {
     "@alchemy.run/cloudflare": "catalog:",
     "@alchemy.run/github": "2.0.0-beta.84",
     "@effect/platform-node": "catalog:",
     "@oxlint/plugins": "catalog:",
+    "@shadcn/lint": "catalog:",
     "alchemy": "2.0.0-beta.84",
     "effect": "catalog:",
     "oxfmt": "catalog:",

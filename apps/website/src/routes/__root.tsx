@@ -6,142 +6,141 @@ import {
   createRootRoute,
 } from "@tanstack/react-router";
 
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Badge } from "@/components/ui/badge";
+
 import appCss from "../styles.css?url";
 
+const themeInitScript = `(function(){try{var t=localStorage.getItem('butter-theme')||'system';var d=t==='dark'||(t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})()`;
+
 const NotFound = () => (
-  <main className="container mx-auto flex flex-col items-center justify-center p-8 pt-24 text-center">
-    <span className="mb-4 text-6xl">🧈</span>
-    <h1 className="text-foreground text-3xl font-bold tracking-tight">
-      404 - Not Found
+  <main className="container mx-auto flex max-w-2xl flex-1 flex-col items-center justify-center p-8 pt-24 text-center">
+    <span className="mb-4 text-5xl">🧈</span>
+    <h1 className="text-foreground text-2xl font-bold tracking-tight">
+      404 - Document Not Found
     </h1>
-    <p className="text-muted-foreground mt-2">
-      This route does not exist in Butter.
+    <p className="text-muted-foreground mt-2 text-sm">
+      This section or document does not exist in the Butter specification.
     </p>
     <Link
-      className="bg-primary text-primary-foreground hover:bg-primary/90 mt-6 rounded-full px-4 py-2 text-sm font-medium transition-colors"
-      search={{ tab: "overview" }}
+      className="bg-primary text-primary-foreground hover:bg-primary/90 mt-6 rounded-md px-4 py-2 text-xs font-medium transition-colors"
       to="/"
     >
-      Return Home
+      Return to Reference Document
     </Link>
   </main>
 );
 
 const RootDocument = () => (
-  <html className="dark scroll-smooth" lang="en">
+  <html className="scroll-smooth" lang="en">
     <head>
       <HeadContent />
+      <script>{themeInitScript}</script>
     </head>
-    <body className="bg-background text-foreground min-h-screen font-sans antialiased selection:bg-amber-400/20 selection:text-amber-200">
-      <header className="border-border/40 bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur-md">
-        <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link
-            className="group flex items-center gap-2"
-            search={{ tab: "overview" }}
-            to="/"
-          >
-            <span className="text-2xl transition-transform duration-200 group-hover:scale-110">
-              🧈
-            </span>
-            <span className="bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-400 bg-clip-text text-xl font-bold tracking-tight text-transparent">
-              butter
-            </span>
-            <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-2 py-0.5 text-xs font-medium text-amber-300">
-              v1
-            </span>
-          </Link>
+    <body className="bg-background text-foreground selection:bg-primary/20 selection:text-primary flex min-h-screen flex-col font-sans antialiased">
+      <ThemeProvider defaultTheme="system" storageKey="butter-theme">
+        <header className="border-border/60 bg-background/90 sticky top-0 z-50 w-full border-b backdrop-blur-sm">
+          <div className="container mx-auto flex h-14 max-w-4xl items-center justify-between px-4 sm:px-6">
+            <Link className="group flex items-center gap-2" to="/">
+              <span className="text-xl transition-transform duration-200 group-hover:scale-110">
+                🧈
+              </span>
+              <span className="text-foreground text-sm font-semibold tracking-tight">
+                butter
+              </span>
+              <Badge variant="outline">v1.0 spec</Badge>
+            </Link>
 
-          <nav className="text-muted-foreground hidden items-center gap-6 text-sm font-medium md:flex">
-            <Link
-              className="hover:text-foreground transition-colors"
-              search={{ tab: "overview" }}
-              to="/"
-            >
-              Overview
-            </Link>
-            <Link
-              className="hover:text-foreground transition-colors"
-              search={{ tab: "comparison" }}
-              to="/"
-            >
-              vs Better Auth
-            </Link>
-            <Link
-              className="hover:text-foreground transition-colors"
-              search={{ tab: "strengths-weaknesses" }}
-              to="/"
-            >
-              Trade-offs
-            </Link>
-            <Link
-              className="hover:text-foreground transition-colors"
-              search={{ tab: "code" }}
-              to="/"
-            >
-              Effect Code
-            </Link>
-            <Link
-              className="hover:text-foreground transition-colors"
-              to="/slices"
-            >
-              Slices
-            </Link>
-          </nav>
+            <nav className="text-muted-foreground hidden items-center gap-5 text-xs font-medium sm:flex">
+              <a
+                className="hover:text-foreground transition-colors"
+                href="#philosophy"
+              >
+                Philosophy
+              </a>
+              <a
+                className="hover:text-foreground transition-colors"
+                href="#vs-better-auth"
+              >
+                vs Better Auth
+              </a>
+              <a
+                className="hover:text-foreground transition-colors"
+                href="#invariants"
+              >
+                Invariants
+              </a>
+              <a
+                className="hover:text-foreground transition-colors"
+                href="#slices"
+              >
+                Slices
+              </a>
+              <a
+                className="hover:text-foreground transition-colors"
+                href="#code"
+              >
+                Effect Code
+              </a>
+            </nav>
 
-          <div className="flex items-center gap-3">
-            <a
-              className="border-border bg-card/60 text-foreground hover:bg-accent flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors"
-              href="https://github.com/slovakian/butter"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <span>GitHub</span>
-              <span className="text-muted-foreground">↗</span>
-            </a>
+            <div className="flex items-center gap-2">
+              <a
+                className="border-border bg-muted/40 text-foreground hover:bg-accent flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors"
+                href="https://github.com/slovakian/butter"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>GitHub</span>
+                <span className="text-muted-foreground">↗</span>
+              </a>
+              <ThemeToggle />
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <main className="min-h-[calc(100vh-8rem)]">
-        <Outlet />
-      </main>
+        <main className="flex-1">
+          <Outlet />
+        </main>
 
-      <footer className="border-border/40 bg-card/30 text-muted-foreground border-t py-8 text-center text-xs">
-        <div className="container mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <span>🧈</span>
-            <span>
-              Butter Auth — Distributed code & agent guidance you own.
-            </span>
+        <footer className="border-border/40 text-muted-foreground border-t py-8 text-xs">
+          <div className="container mx-auto flex max-w-4xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+            <div className="flex items-center gap-2">
+              <span>🧈</span>
+              <span>
+                Butter Auth — Distributed code & agent guidance you own.
+              </span>
+            </div>
+            <div className="flex items-center gap-4 text-xs">
+              <a
+                className="hover:text-foreground underline underline-offset-2"
+                href="https://auth.pilcrowonpaper.com"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Pilcrow&apos;s Auth Book
+              </a>
+              <a
+                className="hover:text-foreground underline underline-offset-2"
+                href="https://effect.website"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Effect
+              </a>
+              <a
+                className="hover:text-foreground underline underline-offset-2"
+                href="https://github.com/slovakian/butter"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Repository
+              </a>
+            </div>
           </div>
-          <div className="flex items-center gap-4 text-xs">
-            <a
-              className="hover:text-foreground underline underline-offset-2"
-              href="https://auth.pilcrowonpaper.com"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Pilcrow&apos;s Auth Book
-            </a>
-            <a
-              className="hover:text-foreground underline underline-offset-2"
-              href="https://effect.website"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Effect
-            </a>
-            <a
-              className="hover:text-foreground underline underline-offset-2"
-              href="https://alchemy.run"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Alchemy on Cloudflare
-            </a>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </ThemeProvider>
 
       <Scripts />
     </body>
@@ -171,12 +170,13 @@ export const Route = createRootRoute({
         name: "viewport",
       },
       {
-        content: "Butter 🧈 | Agent-First Distributed Auth Architecture",
+        content:
+          "Butter 🧈 | Public Reference Specification & Distributed Auth",
         name: "title",
       },
       {
         content:
-          "Distributed auth code and agent guidance you copy into and own in your repo. Pilcrow's Auth Book, Effect v4, atomic SQL, and no shared account tables.",
+          "Public architectural reference specification for Butter Auth. Distributed code and agent skills you own in your codebase. Inspired by Pilcrow's Auth Book and Effect v4.",
         name: "description",
       },
     ],
