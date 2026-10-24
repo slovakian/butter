@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConfigRouteImport } from './routes/config'
 import { Route as SlicesRouteImport } from './routes/slices'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigRoute = ConfigRouteImport.update({
+  id: '/config',
+  path: '/config',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlicesRoute = SlicesRouteImport.update({
@@ -25,27 +31,31 @@ const SlicesRoute = SlicesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/config': typeof ConfigRoute
   '/slices': typeof SlicesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/config': typeof ConfigRoute
   '/slices': typeof SlicesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/config': typeof ConfigRoute
   '/slices': typeof SlicesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/slices'
+  fullPaths: '/' | '/config' | '/slices'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/slices'
-  id: '__root__' | '/' | '/slices'
+  to: '/' | '/config' | '/slices'
+  id: '__root__' | '/' | '/config' | '/slices'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConfigRoute: typeof ConfigRoute
   SlicesRoute: typeof SlicesRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/config': {
+      id: '/config'
+      path: '/config'
+      fullPath: '/config'
+      preLoaderRoute: typeof ConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/slices': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConfigRoute: ConfigRoute,
   SlicesRoute: SlicesRoute,
 }
 export const routeTree = rootRouteImport
