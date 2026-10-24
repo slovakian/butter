@@ -49,39 +49,33 @@ const RootDocument = () => (
               <span className="text-foreground text-sm font-semibold tracking-tight">
                 butter
               </span>
-              <Badge variant="outline">v1.0 spec</Badge>
+              <Badge variant="outline">Overview</Badge>
             </Link>
 
             <nav className="text-muted-foreground hidden items-center gap-5 text-xs font-medium sm:flex">
               <a
                 className="hover:text-foreground transition-colors"
-                href="#philosophy"
+                href="#what-is-butter"
               >
-                Philosophy
+                Overview
               </a>
               <a
                 className="hover:text-foreground transition-colors"
-                href="#vs-better-auth"
+                href="#how-it-works"
               >
-                vs Better Auth
+                How It Works
               </a>
               <a
                 className="hover:text-foreground transition-colors"
-                href="#invariants"
+                href="#architecture-at-a-glance"
               >
-                Invariants
+                Architecture
               </a>
               <a
                 className="hover:text-foreground transition-colors"
-                href="#slices"
+                href="#project-status"
               >
-                Slices
-              </a>
-              <a
-                className="hover:text-foreground transition-colors"
-                href="#code"
-              >
-                Effect Code
+                Status
               </a>
             </nav>
 
