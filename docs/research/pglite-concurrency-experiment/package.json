@@ -1,0 +1,15 @@
+{
+  "name": "pglite-concurrency-experiment",
+  "private": true,
+  "type": "module",
+  "description": "Throwaway: do races in a 'consume verification code' Adapter show up on PGlite, pglite-socket, and real Postgres? Research for slovakian/butter#23.",
+  "scripts": {
+    "race": "node race.mjs"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.11",
+    "@electric-sql/pglite-socket": "0.2.14",
+    "embedded-postgres": "18.4.0-beta.17",
+    "pg": "8.23.1"
+  }
+}
