@@ -1,6 +1,14 @@
 # Butter Auth (butter)
 
-Vite+ monorepo for **Butter Auth** ("Butter"), configured with Oxlint, Oxfmt, Ultracite presets, and Anti-Slop AST rules.
+**Butter Auth** ("Butter") is an auth system you own. Instead of installing a library with one fixed model of auth, you copy security-critical auth code into your repo through a [shadcn registry](https://ui.shadcn.com/docs/registry), and your coding agent builds the rest for your stack, guided by Butter's Skills and checked by shipped Invariant tests.
+
+**Guiding light:** [Pilcrow's Auth Book](https://auth.pilcrowonpaper.com/). Butter's defaults follow it, and its Skills point agents to it before they touch auth code.
+
+- [Design](docs/design.md): what Butter is and what we are building
+- [Glossary](GLOSSARY.md): the project's vocabulary
+- [Architecture decisions](docs/adr)
+
+This repo is a Vite+ monorepo configured with Oxlint, Oxfmt, Ultracite presets, and Anti-Slop AST rules.
 
 ## Toolchain & Stack
 
