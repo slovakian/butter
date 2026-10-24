@@ -1,0 +1,1 @@
+select id, emial from users where id = :id::uuid

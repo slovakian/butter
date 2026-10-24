@@ -1,0 +1,9 @@
+import getSession from "./get_session.sql";
+
+declare const db: import("@electric-sql/pglite").PGlite;
+
+const session = await getSession.run(db, { id: "abc" });
+// Expect an error: email is a string, not a number.
+export const wrong: number | undefined = session?.email;
+// Expect an error: id param is text.
+await getSession.run(db, { id: 1 });
