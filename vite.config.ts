@@ -18,6 +18,8 @@ const ignorePatterns = [
     ".pi/**",
     ".roo/**",
     ".windsurf/**",
+    "apps/website/src/routeTree.gen.ts",
+    "apps/website/src/components/ui/**",
     "tools/oxlint/anti-slop/**",
   ]),
 ];

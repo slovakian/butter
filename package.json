@@ -4,13 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "alchemy": "alchemy",
     "ready": "vp check && vp run -r test && vp run -r build",
     "dev": "vp run website#dev",
     "check": "ultracite check",
     "fix": "ultracite fix"
   },
   "devDependencies": {
+    "@alchemy.run/cloudflare": "catalog:",
+    "@alchemy.run/github": "2.0.0-beta.84",
+    "@effect/platform-node": "catalog:",
     "@oxlint/plugins": "catalog:",
+    "alchemy": "2.0.0-beta.84",
+    "effect": "catalog:",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
