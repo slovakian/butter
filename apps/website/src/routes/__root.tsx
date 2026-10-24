@@ -55,28 +55,34 @@ const RootDocument = () => (
             <nav className="text-muted-foreground hidden items-center gap-5 text-xs font-medium sm:flex">
               <a
                 className="hover:text-foreground transition-colors"
-                href="#what-is-butter"
+                href="/#what-is-butter"
               >
                 Overview
               </a>
               <a
                 className="hover:text-foreground transition-colors"
-                href="#how-it-works"
+                href="/#how-it-works"
               >
                 How It Works
               </a>
               <a
                 className="hover:text-foreground transition-colors"
-                href="#architecture-at-a-glance"
+                href="/#architecture-at-a-glance"
               >
                 Architecture
               </a>
               <a
                 className="hover:text-foreground transition-colors"
-                href="#project-status"
+                href="/#project-status"
               >
                 Status
               </a>
+              <Link
+                className="hover:text-foreground transition-colors"
+                to="/config"
+              >
+                Configurator
+              </Link>
             </nav>
 
             <div className="flex items-center gap-2">
