@@ -1,0 +1,19 @@
+{
+  "name": "proto-sessions-skeleton",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "npx tsx --test tests/login-invariant.test.ts",
+    "check:date": "npx tsx src/date-decoding-check.ts",
+    "check:types": "npx tsc --noEmit"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.5.11",
+    "effect": "^4.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  }
+}
