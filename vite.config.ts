@@ -21,6 +21,7 @@ const ignorePatterns = [
     "apps/website/src/routeTree.gen.ts",
     "apps/website/src/components/ui/**",
     "tools/oxlint/anti-slop/**",
+    "prototypes/**",
   ]),
 ];
 

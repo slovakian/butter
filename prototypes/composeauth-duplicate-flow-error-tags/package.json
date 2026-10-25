@@ -1,0 +1,5 @@
+{
+  "name": "proto-composeauth-reject-duplicate-flow",
+  "private": true,
+  "type": "module"
+}
