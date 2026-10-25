@@ -1,0 +1,19 @@
+{
+  "name": "research-slice-contract-extension",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc -p .",
+    "run-all": "for f in a-rebuild b-extension-points c-schema d-class-and-readd e-layer-contribution f-rpc-custom g-middleware h-data-first i-registry-2fa; do tsx src/$f.ts; done"
+  },
+  "dependencies": {
+    "@orpc/client": "2.0.0-beta.46",
+    "@orpc/contract": "2.0.0-beta.46",
+    "@orpc/effect": "2.0.0-beta.46",
+    "@orpc/openapi": "2.0.0-beta.46",
+    "@orpc/server": "2.0.0-beta.46",
+    "effect": "4.0.6",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}
