@@ -67,4 +67,7 @@ export default defineConfig({
   run: {
     cache: true,
   },
+  staged: {
+    "*": "vpx tools/check-token-limit.ts",
+  },
 });

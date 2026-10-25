@@ -9,7 +9,8 @@
     "dev": "vp run website#dev",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "lint:shadcn": "oxlint apps"
+    "lint:shadcn": "oxlint apps",
+    "prepare": "vp hooks enable"
   },
   "devDependencies": {
     "@alchemy.run/cloudflare": "catalog:",
