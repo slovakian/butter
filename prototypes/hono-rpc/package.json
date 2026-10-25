@@ -1,0 +1,19 @@
+{
+  "name": "hono-proto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@hono/standard-validator": "^0.4.0",
+    "effect": "^4.0.6",
+    "hono": "^4.13.14",
+    "typescript": "^5.9.3"
+  }
+}
