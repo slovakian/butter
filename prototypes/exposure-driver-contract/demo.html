@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exposure Driver Contract Prototype (Issue #15)</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body>
+
+<header>
+  <h1>Exposure Driver Contract Prototype</h1>
+  <p class="subtitle">
+    Testing how Butter Auth Exposure Invariant tests run against sharply different Exposure styles
+    (Effect RPC vs Next.js Server Actions) and exploring where the contract breaks.
+  </p>
+</header>
+
+<!-- Walkthrough Scenarios Tabs -->
+<div class="card" style="margin-bottom: 1.5rem;">
+  <h2>Guided Walkthroughs (The Break Points)</h2>
+  <div class="tabs">
+    <button class="tab active" onclick="selectTab(0)">1. CSRF Status Code Trap</button>
+    <button class="tab" onclick="selectTab(1)">2. Missing Origin Header</button>
+    <button class="tab" onclick="selectTab(2)">3. Server Actions Navigation Wall</button>
+    <button class="tab" onclick="selectTab(3)">4. Cookies & Cache-Control</button>
+  </div>
+  <div id="tab-content"></div>
+</div>
+
+<div class="grid">
+  <!-- Driver Controls & Free Play -->
+  <div class="card">
+    <h2>Driver Controls (Free Play)</h2>
+    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+      Select Exposure Style to drive:
+    </p>
+    <div class="btn-group">
+      <button id="btn-driver-effect" class="active" onclick="setDriver('effect')">Effect RPC</button>
+      <button id="btn-driver-next-hybrid" onclick="setDriver('next-hybrid')">Next.js (Actions + Route)</button>
+      <button id="btn-driver-next-only" onclick="setDriver('next-actions-only')">Next.js (Actions Only)</button>
+    </div>
+
+    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+      Dispatch Invariant Actions:
+    </p>
+    <div class="btn-group">
+      <button onclick="dispatch('signInValid')">Same-Origin Sign In</button>
+      <button onclick="dispatch('signInAttack')" style="color: var(--danger);">Cross-Origin Attack</button>
+      <button onclick="dispatch('signInMissingOrigin')">Missing-Origin Request</button>
+      <button onclick="dispatch('oauthStart')">OAuth Start (GET)</button>
+      <button onclick="dispatch('oauthCallback')">OAuth Callback (Valid)</button>
+      <button onclick="dispatch('oauthTampered')">OAuth Callback (Tampered)</button>
+      <button onclick="resetState()">Reset State</button>
+    </div>
+
+    <div id="action-summary" class="alert">
+      Ready. Select a walkthrough tab or click any action above.
+    </div>
+  </div>
+
+  <!-- Invariants & Verification Status -->
+  <div class="card">
+    <h2>Exposure Invariants Status</h2>
+    <ul class="prop-list" id="invariants-list"></ul>
+  </div>
+</div>
+
+<div class="grid">
+  <!-- Current Request & Response State -->
+  <div class="card">
+    <h2>Last Exposure Response</h2>
+    <ul class="prop-list" id="response-props"></ul>
+    <h3 style="font-size: 0.875rem; margin: 0.75rem 0 0.25rem;">Response Headers</h3>
+    <pre id="response-headers">{}</pre>
+  </div>
+
+  <!-- Store State & Issued Cookies -->
+  <div class="card">
+    <h2>Client Cookies & Server Store</h2>
+    <h3 style="font-size: 0.875rem; margin-bottom: 0.25rem;">Active Cookies (Client Store)</h3>
+    <pre id="cookies-state">{}</pre>
+    <h3 style="font-size: 0.875rem; margin: 0.75rem 0 0.25rem;">Active Server Sessions</h3>
+    <pre id="sessions-state">[]</pre>
+  </div>
+</div>
+
+<script src="demo.js"></script>
+</body>
+</html>
