@@ -4,10 +4,6 @@
 
 **Guiding light:** [Pilcrow's Auth Book](https://auth.pilcrowonpaper.com/). Butter's defaults follow it, and its Skills point agents to it before they touch auth code.
 
-- [Design](docs/design.md): what Butter is and what we are building
-- [Glossary](GLOSSARY.md): the project's vocabulary
-- [Architecture decisions](docs/adr)
-
 This repo is a Vite+ monorepo configured with Oxlint, Oxfmt, Ultracite presets, and Anti-Slop AST rules.
 
 ## Toolchain & Stack

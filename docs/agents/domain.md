@@ -17,10 +17,6 @@ Single-context repo:
 /
 ├── GLOSSARY.md
 ├── docs/adr/
-│   ├── 0001-full-renames-and-invariant-based-fixes.md
-│   ├── 0002-canonical-sql-is-the-data-contract.md
-│   ├── 0003-butter-stops-at-flows.md
-│   └── 0004-each-slice-owns-its-ports.md
 ├── apps/
 └── packages/
 ```
@@ -35,4 +31,4 @@ If the concept you need isn't in the glossary yet, that's a signal: either you'r
 
 If your output contradicts an existing ADR, surface it explicitly rather than silently overriding:
 
-> _Contradicts ADR-0003 (Butter stops at flows), but worth reopening because…_
+> _Contradicts ADR-NNNN (<title>), but worth reopening because…_
