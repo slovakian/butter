@@ -7,7 +7,11 @@ catalogMode: prefer
 
 catalog:
   "@types/node": ^26.6.5
+  oxfmt: ^0.79.0
+  oxlint: ^1.94.0
+  tsrs: 7.1.0-beta.tsrs4
   typescript: ^7.0.2
+  ultracite: 8.3.1
   vite: npm:@voidzero-dev/vite-plus-core@8.3.8001
   vite-plus: 1.8.0
 overrides:
